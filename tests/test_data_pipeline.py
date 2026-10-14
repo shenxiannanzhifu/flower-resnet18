@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 sys.stdout.reconfigure(encoding="utf-8")
 sys.stderr.reconfigure(encoding="utf-8")
-from data_utils import CLASSES, inspect_image, read_attributions, group_duplicates, split_groups
+from data_utils import CLASSES, inspect_image, read_attributions, group_duplicates, split_groups, apply_review_exclusions
 from download_data import validate_member
 from verify_data import verify_invariants
 
@@ -97,7 +97,7 @@ class DataPipelineTests(unittest.TestCase):
                              for label, name in enumerate(CLASSES) for group in range(6) for copy in range(2)])
 
     def test_reviewed_pair_joins_hash_miss_without_deleting(self):
-        """人工确认关系要能补足哈希漏检，同时不能把不同像素样本误删。"""
+        """视觉确认关系要能补足哈希漏检，同时不能把不同像素样本误删。"""
         frame = pd.DataFrame([{"relative_path": f"sunflowers/{i}.jpg", "class_name": "sunflowers",
                                "label": 3, "status": "valid", "sha256": str(i), "pixel_sha256": str(i),
                                "source_id": str(i), "phash": h}
@@ -106,6 +106,19 @@ class DataPipelineTests(unittest.TestCase):
         result, _ = group_duplicates(frame, reviewed_pairs=reviewed)
         self.assertEqual(result.duplicate_group.nunique(), 1)
         self.assertEqual(result.included.sum(), 2)
+
+    def test_review_exclusion_preserves_label_and_rejects_unknown_path(self):
+        """明显噪声被隔离但不改标签；复核表拼错路径必须报错，不能默默跳过。"""
+        frame = self.fixture()
+        frame["exclusion_reason"] = ""
+        path = frame.iloc[0].relative_path
+        reviews = pd.DataFrame([{"relative_path": path, "reason": "明显非目标图片"}])
+        result = apply_review_exclusions(frame, reviews)
+        self.assertFalse(result.iloc[0].included)
+        self.assertEqual(result.iloc[0].label, frame.iloc[0].label)
+        reviews.loc[0, "relative_path"] = "unknown.jpg"
+        with self.assertRaises(ValueError):
+            apply_review_exclusions(frame, reviews)
 
     def test_split_is_grouped_stratified_and_reproducible(self):
         frame = self.fixture()

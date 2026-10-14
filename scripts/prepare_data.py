@@ -19,7 +19,7 @@ import pandas as pd
 from PIL import Image, ImageOps
 
 from data_utils import CLASSES, SPLITS, RATIOS, LICENSE_URL
-from data_utils import inspect_image, read_attributions, group_duplicates, split_groups
+from data_utils import inspect_image, read_attributions, group_duplicates, split_groups, apply_review_exclusions
 from download_data import EXPECTED_SHA256, sha256_file
 
 
@@ -80,7 +80,7 @@ def plot_gallery(items, raw_root, output, columns, attributions):
     """输入 [(图片编号, 相对路径, 标题)]，生成图片网格并返回逐图署名记录。"""
     columns = min(columns, len(items))
     rows = math.ceil(len(items) / columns)
-    fig, axes = plt.subplots(rows, columns, figsize=(columns * 3, rows * 2.7), squeeze=False)
+    fig, axes = plt.subplots(rows, columns, figsize=(max(columns * 3, 6), rows * 2.7), squeeze=False)
     credits = []
     for axis in axes.flat:
         axis.axis("off")
@@ -156,6 +156,10 @@ def build_report(frame, edges, moments, targets, config, raw_root, report_dir, a
         for path in rng.choice(candidates, size=3, replace=False):
             samples.append((f"S{len(samples)+1:02d}", str(path), class_name + " / train"))
     credits = plot_gallery(samples, raw_root, report_dir / "samples.jpg", 3, attributions)
+    noise_paths = frame[frame.exclusion_reason == "visual_label_noise"].relative_path.tolist()
+    if noise_paths:
+        items = [(f"E{index+1:02d}", path, "excluded / label noise") for index, path in enumerate(noise_paths)]
+        credits.extend(plot_gallery(items, raw_root, report_dir / "excluded_review.jpg", 3, attributions))
     pairs = edges[edges.kind.isin(["phash_candidate", "reviewed_scene"])].reset_index(drop=True)
     for page in range(math.ceil(len(pairs) / 10)):
         items = []
@@ -181,6 +185,7 @@ def prepare(args):
     if paths != set(attributions):
         raise ValueError(f"图片与署名不能一一对应：缺少署名 {len(paths-set(attributions))}，缺少图片 {len(set(attributions)-paths)}。")
     reviewed = pd.read_csv(args.review_pairs, keep_default_na=False)
+    exclusions = pd.read_csv(args.review_exclusions, keep_default_na=False)
     records, moments = [], {}
     for index, path in enumerate(image_paths, 1):
         row, values = inspect_image(path, raw_root)
@@ -189,10 +194,12 @@ def prepare(args):
         if index % 500 == 0:
             print(f"已检查 {index}/{len(image_paths)} 张图片", flush=True)
     frame, edges = group_duplicates(pd.DataFrame(records), args.phash_distance, reviewed)
+    frame = apply_review_exclusions(frame, exclusions)
     frame, targets = split_groups(frame, args.seed)
     fingerprint = hashlib.sha256("\n".join(frame.relative_path + ":" + frame.sha256).encode()).hexdigest()
     config = {"seed": args.seed, "ratios": RATIOS.tolist(), "phash_bits": 63,
               "phash_distance": args.phash_distance, "reviewed_pairs_sha256": sha256_file(args.review_pairs),
+              "reviewed_exclusions_sha256": sha256_file(args.review_exclusions),
               "dataset_fingerprint": fingerprint, "official_archive_sha256": EXPECTED_SHA256,
               "raw_path_base": "data/raw/flower_photos", "class_to_idx": dict(zip(CLASSES, range(len(CLASSES))))}
     old_config = output_dir / "split_config.json"
@@ -219,6 +226,7 @@ def main():
     parser.add_argument("--output-dir", type=Path, default=PROJECT_ROOT / "data/processed")
     parser.add_argument("--report-dir", type=Path, default=PROJECT_ROOT / "reports/local/data")
     parser.add_argument("--review-pairs", type=Path, default=PROJECT_ROOT / "configs/duplicate_review.csv")
+    parser.add_argument("--review-exclusions", type=Path, default=PROJECT_ROOT / "configs/excluded_review.csv")
     parser.add_argument("--seed", type=int, default=42, help="只控制分组分配和训练样本展示；验收后不要随意修改。")
     parser.add_argument("--phash-distance", type=int, default=8, choices=range(0, 17), metavar="0..16",
                         help="63 位 pHash 的候选阈值，默认 8；近似候选不据此删除。")

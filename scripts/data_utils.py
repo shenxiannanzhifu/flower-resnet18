@@ -126,15 +126,15 @@ def group_duplicates(frame, phash_distance=8, reviewed_pairs=None):
             if distance <= phash_distance:
                 connect(left, right, "phash_candidate", distance)
 
-    # 感知哈希可能漏掉裁剪版本；人工确认的额外关系也必须可追溯、可复现。
+    # 感知哈希可能漏掉裁剪版本；视觉确认的额外关系也必须可追溯、可复现。
     if reviewed_pairs is not None:
         lookup = dict(zip(frame.relative_path, frame.index))
         for pair in reviewed_pairs.itertuples(index=False):
             if pair.left not in lookup or pair.right not in lookup or not pair.reason.strip():
-                raise ValueError("人工复核表存在未知图片或空的理由。")
+                raise ValueError("视觉复核表存在未知图片或空的理由。")
             left, right = lookup[pair.left], lookup[pair.right]
             if frame.at[left, "status"] != "valid" or frame.at[right, "status"] != "valid":
-                raise ValueError("人工复核表引用了无法解码的图片。")
+                raise ValueError("视觉复核表引用了无法解码的图片。")
             distance = (int(frame.at[left, "phash"], 16) ^ int(frame.at[right, "phash"], 16)).bit_count()
             connect(left, right, "reviewed_scene", distance)
 
@@ -157,6 +157,19 @@ def group_duplicates(frame, phash_distance=8, reviewed_pairs=None):
             frame.loc[removed, ["included", "exclusion_reason"]] = [False, "duplicate_pixels"]
             frame.loc[removed, "duplicate_of"] = group.iloc[0].relative_path
     return frame, pd.DataFrame(edges, columns=["left", "right", "kind", "distance"])
+
+
+def apply_review_exclusions(frame, exclusions):
+    """输入审计表及带理由的视觉排除表；隔离明显标签噪声，保留原始标签和文件。"""
+    frame = frame.copy()
+    for row in exclusions.itertuples(index=False):
+        mask = frame.relative_path == row.relative_path
+        if mask.sum() != 1 or not row.reason.strip():
+            raise ValueError("视觉排除表存在未知/重复路径或空的理由。")
+        if not frame.loc[mask, "included"].all():
+            raise ValueError("视觉排除表重复引用了已被其他规则排除的图片。")
+        frame.loc[mask, ["included", "exclusion_reason"]] = [False, "visual_label_noise"]
+    return frame
 
 
 def split_groups(frame, seed=42):

@@ -81,11 +81,17 @@ def verify(args):
         expected = frame[frame.split == split].reset_index(drop=True)
         pd.testing.assert_frame_equal(saved, expected)
     reviewed = pd.read_csv(args.review_pairs, keep_default_na=False)
-    require(sha256_file(args.review_pairs) == config["reviewed_pairs_sha256"], "人工复核配置已改变，请重新准备数据。")
+    require(sha256_file(args.review_pairs) == config["reviewed_pairs_sha256"], "视觉复核配置已改变，请重新准备数据。")
     lookup = frame.set_index("relative_path")
     for pair in reviewed.itertuples(index=False):
         left, right = lookup.loc[pair.left], lookup.loc[pair.right]
-        require(left.duplicate_group == right.duplicate_group, "人工复核图片未放入同一组。")
+        require(left.duplicate_group == right.duplicate_group, "视觉复核图片未放入同一组。")
+    require(sha256_file(args.review_exclusions) == config["reviewed_exclusions_sha256"], "视觉排除配置已改变。")
+    exclusions = pd.read_csv(args.review_exclusions, keep_default_na=False)
+    for row in exclusions.itertuples(index=False):
+        sample = lookup.loc[row.relative_path]
+        require(not sample.included and sample.split == "excluded" and sample.exclusion_reason == "visual_label_noise",
+                "视觉排除样本错误地进入了子集。")
     report = {"status": "PASS", "verified_at": datetime.now().astimezone().isoformat(),
               "manifest_rows": len(frame), "included_images": len(active),
               "raw_files_hash_verified": len(frame), "attribution_coverage": len(credits),
@@ -93,7 +99,7 @@ def verify(args):
               "known_duplicate_cross_split_pairs": 0, "manifest_sha256": sha256_file(directory / "manifest.csv"),
               "checks": ["类别映射与路径唯一", "子集互斥、覆盖与每类齐全", "无效/剔除样本隔离",
                          "原图逐文件 SHA-256", "字节/像素/照片 ID/重复组无跨集",
-                         "独立两两检查跨子集 pHash", "人工复核关系", "子集 CSV 与总清单完全一致", "完整署名覆盖"]}
+                         "独立两两检查跨子集 pHash", "视觉复核关系与排除清单", "子集 CSV 与总清单完全一致", "完整署名覆盖"]}
     args.report_dir.mkdir(parents=True, exist_ok=True)
     (args.report_dir / "verification.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n",
                                                       encoding="utf-8", newline="\n")
@@ -108,6 +114,7 @@ def main():
     parser.add_argument("--processed-dir", type=Path, default=PROJECT_ROOT / "data/processed")
     parser.add_argument("--report-dir", type=Path, default=PROJECT_ROOT / "reports/local/data")
     parser.add_argument("--review-pairs", type=Path, default=PROJECT_ROOT / "configs/duplicate_review.csv")
+    parser.add_argument("--review-exclusions", type=Path, default=PROJECT_ROOT / "configs/excluded_review.csv")
     verify(parser.parse_args())
 
 
