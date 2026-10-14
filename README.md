@@ -2,7 +2,7 @@
 
 这是“后端 AI 方向第一阶段”考核项目。使用 Python、NumPy、Pandas、Matplotlib 和 PyTorch，从数据分析逐步推进到手写 ResNet-18、训练、评估和新图片预测。
 
-当前开发阶段为 **v0.1：项目初始化与环境验证**。只实现环境检查；尚未下载花卉数据、编写 ResNet 或训练模型。每个阶段通过验收后提交并打标签，等待确认后再进入下一版本。所有版本沿用本目录和同一 Git 仓库。
+当前完成 **v0.1：项目初始化与环境验证**，CPU 与 CUDA 实际运算检查均通过。只实现环境检查；尚未下载花卉数据、编写 ResNet 或训练模型。每个阶段通过验收后提交并打标签，等待确认后再进入下一版本。所有版本沿用本目录和同一 Git 仓库。
 
 ## 现在如何运行
 
@@ -56,7 +56,7 @@ py -3.12 -m venv .venv
 & '.\.venv\Scripts\python.exe' scripts\check_env.py --device cuda
 ```
 
-两份安装清单应**分两条命令**执行：PyTorch 专用源并不提供全部数据分析包。`requirements-lock.txt` 会记录本次实际安装的全部包版本；需要精确复现时使用：
+两份安装清单应**分两条命令**执行：PyTorch 专用源并不提供全部数据分析包。`requirements-lock.txt` 记录本次实际安装的 25 项包版本（pip 安装器单独记在文件头）；需要精确复现时使用：
 
 ```powershell
 & '.\.venv\Scripts\python.exe' -m pip install --index-url https://pypi.org/simple --extra-index-url https://download.pytorch.org/whl/cu128 -r requirements-lock.txt

@@ -1,0 +1,7 @@
+[PASS] python_venv
+[PASS] dependency_imports
+[PASS] numpy_pandas_matplotlib
+[PASS] pillow_torchvision
+[PASS] torch_cpu
+报告：C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\reports\local\environment.json
+ENV CHECK PASSED

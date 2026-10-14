@@ -33,6 +33,7 @@ C:\Users\Cipher\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\
 2. Windows CIM 硬件查询被沙箱拒绝；改用只读的 Windows 内存 API、CPU 注册表信息和 `nvidia-smi`，没有提升系统权限。
 3. Python `venv` 建立成功，但其 `ensurepip` 创建的 0700 临时目录在本沙箱中不可访问。直接将基础 Python 自带的官方 pip wheel 解压到该 venv 的 site-packages，完成引导。后续安装进程只让工作区内的临时目录继承已有 ACL；辅助脚本放在工作区 work/，没有改全局 ACL 或关闭沙箱。正常用户终端可按 README 的标准 venv 命令操作。
 4. 最初将常规依赖和 CUDA 依赖在同一 pip 调用中安装，PyTorch 专用源没有 Pandas，解析失败，未完成安装。改为先从 PyPI 安装常规依赖，再从 PyTorch 官方源安装匹配的 CUDA 包。README 固定用两条命令，避免重复这个问题。
+5. PyTorch 官方索引指向的 download-r2 域名下载 3.46 GB 主安装包时长时间无进展，已中止该下载。改用同属 PyTorch 官方的 download.pytorch.org 域名分段下载相同 wheel，完整校验 SHA-256 后从本地 wheel 安装；没有改用第三方包。官方索引和下载文件的 SHA-256 均为 `0ad925202387f4e7314302a1b4f8860fa824357f9b1466d7992bf276370ebcff`。临时下载及安装辅助文件仅位于工作区 work/，不进入项目 Git。
 
 ## 验证范围
 

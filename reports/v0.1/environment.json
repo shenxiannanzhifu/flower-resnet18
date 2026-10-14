@@ -1,0 +1,113 @@
+{
+  "project_version": "v0.1",
+  "checked_at": "2026-10-14T19:31:18.381023+08:00",
+  "scope": "环境检查，非数据集统计、模型训练或正式实验",
+  "requested_device": "cuda",
+  "status": "PASS",
+  "hardware": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "logical_cpus": 24,
+    "disk_free_gib": 138.63,
+    "ram_total_gib": 31.43,
+    "ram_available_gib": 13.47,
+    "cpu": "Intel(R) Core(TM) Ultra 9 275HX",
+    "nvidia_smi": "NVIDIA GeForce RTX 5060 Laptop GPU, 592.01, 8151 MiB"
+  },
+  "checks": [
+    {
+      "name": "python_venv",
+      "status": "PASS",
+      "details": {
+        "python": "3.12.14",
+        "isolated_venv": true
+      }
+    },
+    {
+      "name": "dependency_imports",
+      "status": "PASS",
+      "details": {
+        "numpy": "2.2.6",
+        "pandas": "2.2.3",
+        "matplotlib": "3.10.3",
+        "PIL": "11.2.1",
+        "torch": "2.8.0+cu128",
+        "torchvision": "0.23.0+cu128"
+      }
+    },
+    {
+      "name": "numpy_pandas_matplotlib",
+      "status": "PASS",
+      "details": {
+        "row_means": [
+          1.0,
+          4.0,
+          7.0,
+          10.0
+        ],
+        "group_means": {
+          "A": 2.5,
+          "B": 8.5
+        },
+        "figure": "dependency_smoke.png",
+        "data_kind": "synthetic_smoke_test"
+      }
+    },
+    {
+      "name": "pillow_torchvision",
+      "status": "PASS",
+      "details": {
+        "shape": [
+          3,
+          16,
+          16
+        ],
+        "dtype": "torch.float32"
+      }
+    },
+    {
+      "name": "torch_cpu",
+      "status": "PASS",
+      "details": {
+        "device": "cpu",
+        "matrix_and_gradient": "verified",
+        "convolution_output_shape": [
+          2,
+          8,
+          16,
+          16
+        ]
+      }
+    },
+    {
+      "name": "torch_cuda",
+      "status": "PASS",
+      "details": {
+        "device": "cuda",
+        "matrix_and_gradient": "verified",
+        "convolution_output_shape": [
+          2,
+          8,
+          16,
+          16
+        ],
+        "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU",
+        "vram_gib": 7.96,
+        "compute_capability": [
+          12,
+          0
+        ],
+        "torch_cuda_runtime": "12.8",
+        "compiled_architectures": [
+          "sm_61",
+          "sm_70",
+          "sm_75",
+          "sm_80",
+          "sm_86",
+          "sm_90",
+          "sm_100",
+          "sm_120"
+        ]
+      }
+    }
+  ]
+}
