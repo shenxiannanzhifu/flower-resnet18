@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "verified_at": "2026-10-14T21:39:55.011343+08:00",
+  "same_seed": 42,
+  "byte_identical_files": {
+    "manifest.csv": "1ecbac0b600441c608fa99b40eb7035a3f6af0dc021e66205ef5d4e2f2cca1c3",
+    "train.csv": "18cf070240acdcae2cf13bfb50561cc9b990d85a6725c0f941432315c5c006a9",
+    "val.csv": "0d470f232c892fdcdcb788c03d97b4bbee386720080ee15c88935f299118f975",
+    "test.csv": "1aa57b454030ebc9b6cbb8e245f4e4484c66414d6a8d8590f23b871e57cb6e83",
+    "duplicate_edges.csv": "e99a673e85d21f1a3c73435d3895d5cec2f96163917ceb7e5bd2c3ab0edbc8f8",
+    "class_to_idx.json": "43b43854dddbf1ffe7686e341b2737c8167d71ceb775cb8401b481ca3813e569",
+    "split_config.json": "f7f5b2222526682242e14cd5c080e3a038a86c8bb9a203cb30ba4fe4aeb90e6c"
+  }
+}

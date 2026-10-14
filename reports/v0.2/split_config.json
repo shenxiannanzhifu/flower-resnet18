@@ -1,0 +1,22 @@
+{
+  "seed": 42,
+  "ratios": [
+    0.7,
+    0.15,
+    0.15
+  ],
+  "phash_bits": 63,
+  "phash_distance": 8,
+  "reviewed_pairs_sha256": "720efa3bf27aa7413a31502f7685e5f1a95b4c7f1dae3f22e4b4c2f63db14ef0",
+  "reviewed_exclusions_sha256": "0907d0325b4ed31118610b5e011e8637dea64212a95ede12c51e67249a41963b",
+  "dataset_fingerprint": "5798821fd49c61e50aa3819a0b5262ac2cf687282f84014519a81afd32ecae08",
+  "official_archive_sha256": "4c54ace7911aaffe13a365c34f650e71dd5bf1be0a58b464e5a7183e3e595d9c",
+  "raw_path_base": "data/raw/flower_photos",
+  "class_to_idx": {
+    "daisy": 0,
+    "dandelion": 1,
+    "roses": 2,
+    "sunflowers": 3,
+    "tulips": 4
+  }
+}

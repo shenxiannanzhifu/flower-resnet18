@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "verified_at": "2026-10-14T21:21:39.454855+08:00",
+  "manifest_rows": 3670,
+  "included_images": 3665,
+  "raw_files_hash_verified": 3670,
+  "attribution_coverage": 3670,
+  "split_counts": {
+    "train": 2564,
+    "val": 551,
+    "test": 550
+  },
+  "known_duplicate_cross_split_pairs": 0,
+  "manifest_sha256": "1ecbac0b600441c608fa99b40eb7035a3f6af0dc021e66205ef5d4e2f2cca1c3",
+  "checks": [
+    "类别映射与路径唯一",
+    "子集互斥、覆盖与每类齐全",
+    "无效/剔除样本隔离",
+    "原图逐文件 SHA-256",
+    "字节/像素/照片 ID/重复组无跨集",
+    "独立两两检查跨子集 pHash",
+    "视觉复核关系与排除清单",
+    "子集 CSV 与总清单完全一致",
+    "完整署名覆盖"
+  ]
+}

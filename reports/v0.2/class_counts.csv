@@ -1,0 +1,6 @@
+class_name,raw,included,train,val,test,excluded
+daisy,633,633,443,95,95,0
+dandelion,898,898,628,135,135,0
+roses,641,639,447,96,96,2
+sunflowers,699,697,488,105,104,2
+tulips,799,798,558,120,120,1

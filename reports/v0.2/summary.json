@@ -1,0 +1,173 @@
+{
+  "version": "v0.2",
+  "generated_at": "2026-10-14T21:22:01.334906+08:00",
+  "parameters": {
+    "seed": 42,
+    "ratios": [
+      0.7,
+      0.15,
+      0.15
+    ],
+    "phash_bits": 63,
+    "phash_distance": 8,
+    "reviewed_pairs_sha256": "720efa3bf27aa7413a31502f7685e5f1a95b4c7f1dae3f22e4b4c2f63db14ef0",
+    "reviewed_exclusions_sha256": "0907d0325b4ed31118610b5e011e8637dea64212a95ede12c51e67249a41963b",
+    "dataset_fingerprint": "5798821fd49c61e50aa3819a0b5262ac2cf687282f84014519a81afd32ecae08",
+    "official_archive_sha256": "4c54ace7911aaffe13a365c34f650e71dd5bf1be0a58b464e5a7183e3e595d9c",
+    "raw_path_base": "data/raw/flower_photos",
+    "class_to_idx": {
+      "daisy": 0,
+      "dandelion": 1,
+      "roses": 2,
+      "sunflowers": 3,
+      "tulips": 4
+    }
+  },
+  "raw_images": 3670,
+  "valid_images": 3670,
+  "invalid_images": 0,
+  "included_images": 3665,
+  "excluded_reasons": {
+    "conflicting_exact_labels": 2,
+    "duplicate_pixels": 2,
+    "visual_label_noise": 1
+  },
+  "split_counts": {
+    "train": 2564,
+    "val": 551,
+    "test": 550
+  },
+  "class_counts": [
+    {
+      "class_name": "daisy",
+      "raw": 633,
+      "included": 633,
+      "train": 443,
+      "val": 95,
+      "test": 95,
+      "excluded": 0
+    },
+    {
+      "class_name": "dandelion",
+      "raw": 898,
+      "included": 898,
+      "train": 628,
+      "val": 135,
+      "test": 135,
+      "excluded": 0
+    },
+    {
+      "class_name": "roses",
+      "raw": 641,
+      "included": 639,
+      "train": 447,
+      "val": 96,
+      "test": 96,
+      "excluded": 2
+    },
+    {
+      "class_name": "sunflowers",
+      "raw": 699,
+      "included": 697,
+      "train": 488,
+      "val": 105,
+      "test": 104,
+      "excluded": 2
+    },
+    {
+      "class_name": "tulips",
+      "raw": 799,
+      "included": 798,
+      "train": 558,
+      "val": 120,
+      "test": 120,
+      "excluded": 1
+    }
+  ],
+  "target_counts_by_split_and_class": [
+    [
+      443,
+      628,
+      447,
+      488,
+      558
+    ],
+    [
+      95,
+      135,
+      96,
+      105,
+      120
+    ],
+    [
+      95,
+      135,
+      96,
+      104,
+      120
+    ]
+  ],
+  "duplicate_edge_counts": {
+    "phash_candidate": 30,
+    "sha256": 3,
+    "pixel_sha256": 3,
+    "source_id": 1,
+    "reviewed_scene": 1
+  },
+  "multi_image_groups": 26,
+  "largest_group": 4,
+  "cross_label_groups": 1,
+  "group_split_leakage": 0,
+  "size_quantiles": {
+    "quantiles": [
+      0,
+      0.25,
+      0.5,
+      0.75,
+      1
+    ],
+    "width": [
+      143.0,
+      320.0,
+      320.0,
+      500.0,
+      1024.0
+    ],
+    "height": [
+      159.0,
+      240.0,
+      240.0,
+      333.0,
+      442.0
+    ],
+    "aspect_ratio": [
+      0.5958333333333333,
+      1.256281407035176,
+      1.3445378151260505,
+      1.5015015015015014,
+      5.475935828877005
+    ]
+  },
+  "train_rgb_statistics": {
+    "mean": [
+      0.46700469962355246,
+      0.42495439509016114,
+      0.3080673648529544
+    ],
+    "std": [
+      0.30091305645179284,
+      0.27254480840007467,
+      0.2975062780068606
+    ],
+    "scale": "0..1",
+    "pixel_count": 269331402,
+    "method": "训练子集原始 RGB 像素加权；未缩放/裁剪/增强"
+  },
+  "clean_class_imbalance_ratio": 1.4186413902053712,
+  "manifest_sha256": "1ecbac0b600441c608fa99b40eb7035a3f6af0dc021e66205ef5d4e2f2cca1c3",
+  "limitations": [
+    "近似分组为保守的数据质量规则，不代表所有成员是完全相同图片。",
+    "pHash 对大幅裁剪、旋转或不同视角可能漏检，不能保证所有潜在近重复已发现。",
+    "未人工逐张确认全部类别标签；训练/验证/测试只用于本数据集评估，不能代表真实场景泛化。"
+  ]
+}

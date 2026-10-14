@@ -1,0 +1,79 @@
+figure,image_id,relative_path,author,source_url,license_url,modification
+samples.jpg,S01,daisy/4820415253_15bc3b6833_n.jpg,Vincent_AF,https://www.flickr.com/photos/archetypefotografie/4820415253/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+samples.jpg,S02,daisy/1396526833_fb867165be_n.jpg,dion gillard,https://www.flickr.com/photos/diongillard/1396526833/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+samples.jpg,S03,daisy/5722473541_ffac1ae67e_n.jpg,Audrey,https://www.flickr.com/photos/audreyjm529/5722473541/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+samples.jpg,S04,dandelion/14065420729_9b388bf7cb_m.jpg,Thomas,https://www.flickr.com/photos/boretom/14065420729/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+samples.jpg,S05,dandelion/5598591979_ed9af1b3e9_n.jpg,dw_ross,https://www.flickr.com/photos/dw_ross/5598591979/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+samples.jpg,S06,dandelion/7719263062_3c8a307a5d.jpg,Tony Court,https://www.flickr.com/photos/38211875@N00/7719263062/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+samples.jpg,S07,roses/353897245_5453f35a8e.jpg,Milica Sekulic,https://www.flickr.com/photos/ywds/353897245/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+samples.jpg,S08,roses/921984328_a60076f070_m.jpg,tinyfroglet,https://www.flickr.com/photos/tinyfroglet/921984328/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+samples.jpg,S09,roses/5333437251_ce0aa6925d_n.jpg,Valdiney Pimenta,https://www.flickr.com/photos/valdiney/5333437251/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+samples.jpg,S10,sunflowers/40410686_272bc66faf_m.jpg,Ctd 2005,https://www.flickr.com/photos/kikisdad/40410686/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+samples.jpg,S11,sunflowers/6145005439_ef6e07f9c6_n.jpg,Rachel Kramer,https://www.flickr.com/photos/rkramer62/6145005439/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+samples.jpg,S12,sunflowers/15054753070_4f6ae0e763_m.jpg,Erik Drost,https://www.flickr.com/photos/edrost88/15054753070/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+samples.jpg,S13,tulips/3459922572_bc8516b5fe_m.jpg,Emanuello Brigant,https://www.flickr.com/photos/palingzp/3459922572/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+samples.jpg,S14,tulips/16951623209_00fb7ec1b1_n.jpg,Yutaka Seki,https://www.flickr.com/photos/yutakaseki/16951623209/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+samples.jpg,S15,tulips/14054827092_f359f5fcbd_m.jpg,betancourt,https://www.flickr.com/photos/thebetancourts/14054827092/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+excluded_review.jpg,E01,roses/3713368809_eba7fa2fbf_m.jpg,Antony Stanley,https://www.flickr.com/photos/antonystanley/3713368809/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_1.jpg,P01-L,daisy/10466290366_cc72e33532.jpg,South African Tourism,https://www.flickr.com/photos/south-african-tourism/10466290366/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_1.jpg,P01-R,daisy/10994032453_ac7f8d9e2e.jpg,South African Tourism,https://www.flickr.com/photos/south-african-tourism/10994032453/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_1.jpg,P02-L,daisy/10993710036_2033222c91.jpg,South African Tourism,https://www.flickr.com/photos/south-african-tourism/10993710036/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_1.jpg,P02-R,daisy/10993818044_4c19b86c82.jpg,South African Tourism,https://www.flickr.com/photos/south-african-tourism/10993818044/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_1.jpg,P03-L,daisy/19177263840_6a316ea639.jpg,Javcon117*,https://www.flickr.com/photos/javcon117/19177263840/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_1.jpg,P03-R,daisy/19178753159_a471bf4b6b.jpg,Javcon117*,https://www.flickr.com/photos/javcon117/19178753159/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_1.jpg,P04-L,dandelion/17161833794_e1d92259d2_m.jpg,Martin Dvoracek,https://www.flickr.com/photos/118382614@N04/17161833794/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_1.jpg,P04-R,dandelion/18304194360_2a4a0be631_m.jpg,Martin Dvoracek,https://www.flickr.com/photos/118382614@N04/18304194360/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_1.jpg,P05-L,dandelion/17482158576_86c5ebc2f8.jpg,greyloch,https://www.flickr.com/photos/greyloch/17482158576/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_1.jpg,P05-R,dandelion/23192507093_2e6ec77bef_n.jpg,greyloch,https://www.flickr.com/photos/greyloch/23192507093/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_1.jpg,P06-L,dandelion/284497199_93a01f48f6.jpg,strelitzia ---,https://www.flickr.com/photos/strelitzia/284497199/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_1.jpg,P06-R,dandelion/284497233_c19801752c.jpg,strelitzia ---,https://www.flickr.com/photos/strelitzia/284497233/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_1.jpg,P07-L,dandelion/3365850019_8158a161a8_n.jpg,Marcelo César Augusto Romeo,https://www.flickr.com/photos/tanozzo/3365850019/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_1.jpg,P07-R,dandelion/8689302980_9bd2f7b9fe_n.jpg,Maggie McCain,https://www.flickr.com/photos/vamcmag/8689302980/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_1.jpg,P08-L,dandelion/4278757393_bca8415ed4_n.jpg,Horia Varlan,https://www.flickr.com/photos/horiavarlan/4278757393/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_1.jpg,P08-R,dandelion/4654848357_9549351e0b_n.jpg,Horia Varlan,https://www.flickr.com/photos/horiavarlan/4654848357/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_1.jpg,P09-L,dandelion/4669006062_6b3d260037_n.jpg,Manu,https://www.flickr.com/photos/seven_of9/4669006062/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_1.jpg,P09-R,dandelion/9200211647_be34ce978b.jpg,Boris Kasimov,https://www.flickr.com/photos/kasio69/9200211647/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_1.jpg,P10-L,dandelion/506659320_6fac46551e.jpg,Dan Zen,https://www.flickr.com/photos/danzen/506659320/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_1.jpg,P10-R,dandelion/506660896_c903cca1f0.jpg,Dan Zen,https://www.flickr.com/photos/danzen/506660896/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_2.jpg,P11-L,dandelion/8689302100_be76a16ccc_n.jpg,Maggie McCain,https://www.flickr.com/photos/vamcmag/8689302100/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_2.jpg,P11-R,dandelion/8689302980_9bd2f7b9fe_n.jpg,Maggie McCain,https://www.flickr.com/photos/vamcmag/8689302980/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_2.jpg,P12-L,dandelion/8979062599_86cac547b8.jpg,Mark Michaelis,https://www.flickr.com/photos/mmichaelis/8979062599/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_2.jpg,P12-R,dandelion/8980273068_cf7e8b880a_n.jpg,Mark Michaelis,https://www.flickr.com/photos/mmichaelis/8980273068/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_2.jpg,P13-L,roses/12406418663_af20dc225f_n.jpg,Taryn Nefdt,https://www.flickr.com/photos/taryn_nefdt/12406418663/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_2.jpg,P13-R,roses/12407768513_3440238148_n.jpg,Taryn Nefdt,https://www.flickr.com/photos/taryn_nefdt/12407768513/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_2.jpg,P14-L,roses/13279526615_a3b0059bec.jpg,Mark Engelbrecht,https://www.flickr.com/photos/menegue/13279526615/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_2.jpg,P14-R,roses/13342823005_16d3df58df_n.jpg,Mark Engelbrecht,https://www.flickr.com/photos/menegue/13342823005/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_2.jpg,P15-L,roses/15922772266_1167a06620.jpg,ProFlowers,https://www.flickr.com/photos/proflowers/15922772266/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_2.jpg,P15-R,tulips/15922772266_1167a06620.jpg,ProFlowers,https://www.flickr.com/photos/proflowers/15922772266/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_2.jpg,P16-L,roses/1775233884_12ff5a124f.jpg,Clyde Robinson,https://www.flickr.com/photos/crobj/1775233884/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_2.jpg,P16-R,roses/2093263381_afd51358a3.jpg,Clyde Robinson,https://www.flickr.com/photos/crobj/2093263381/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_2.jpg,P17-L,roses/4608559939_3487bf3b62_n.jpg,Larry Johnson,https://www.flickr.com/photos/drljohnson/4608559939/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_2.jpg,P17-R,roses/4609168052_3d4e1d3804_n.jpg,Larry Johnson,https://www.flickr.com/photos/drljohnson/4609168052/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_2.jpg,P18-L,sunflowers/14741866338_bdc8bfc8d5_n.jpg,Ron Cogswell,https://www.flickr.com/photos/22711505@N05/14741866338/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_2.jpg,P18-R,sunflowers/14925398301_55a180f919_n.jpg,Ron Cogswell,https://www.flickr.com/photos/22711505@N05/14925398301/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_2.jpg,P19-L,sunflowers/14741866338_bdc8bfc8d5_n.jpg,Ron Cogswell,https://www.flickr.com/photos/22711505@N05/14741866338/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_2.jpg,P19-R,sunflowers/14925398441_107f3e0304_n.jpg,Ron Cogswell,https://www.flickr.com/photos/22711505@N05/14925398441/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_2.jpg,P20-L,sunflowers/14889392928_9742aed45b_m.jpg,Mike Mozart,https://www.flickr.com/photos/jeepersmedia/14889392928/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_2.jpg,P20-R,sunflowers/15066430311_fb57fa92b0_m.jpg,Mike Mozart,https://www.flickr.com/photos/jeepersmedia/15066430311/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_3.jpg,P21-L,sunflowers/14925398301_55a180f919_n.jpg,Ron Cogswell,https://www.flickr.com/photos/22711505@N05/14925398301/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_3.jpg,P21-R,sunflowers/14925398441_107f3e0304_n.jpg,Ron Cogswell,https://www.flickr.com/photos/22711505@N05/14925398441/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_3.jpg,P22-L,sunflowers/15069459615_7e0fd61914_n.jpg,Mike Mozart,https://www.flickr.com/photos/jeepersmedia/15069459615/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_3.jpg,P22-R,sunflowers/15072973261_73e2912ef2_n.jpg,Mike Mozart,https://www.flickr.com/photos/jeepersmedia/15072973261/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_3.jpg,P23-L,sunflowers/17433282043_441b0a07f4_n.jpg,Image Catalog,https://www.flickr.com/photos/image-catalog/17433282043/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_3.jpg,P23-R,sunflowers/22429946721_e17a12cb39_n.jpg,Image Catalog,https://www.flickr.com/photos/image-catalog/22429946721/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_3.jpg,P24-L,sunflowers/2588234269_c4bfd0d8b9_n.jpg,Kathy Kimpel,https://www.flickr.com/photos/kkimpel/2588234269/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_3.jpg,P24-R,sunflowers/2588453601_66f2a03cca_n.jpg,Kathy Kimpel,https://www.flickr.com/photos/kkimpel/2588453601/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_3.jpg,P25-L,sunflowers/2823659190_afdabee45c.jpg,Ray Dumas,https://www.flickr.com/photos/rtdphotography/2823659190/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_3.jpg,P25-R,sunflowers/2979133707_84aab35b5d.jpg,Ray Dumas,https://www.flickr.com/photos/rtdphotography/2979133707/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_3.jpg,P26-L,sunflowers/6606809995_edee55b770_m.jpg,Bosque Village,https://www.flickr.com/photos/thebosque/6606809995/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_3.jpg,P26-R,sunflowers/6606813305_c992231d29_m.jpg,Bosque Village,https://www.flickr.com/photos/thebosque/6606813305/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_3.jpg,P27-L,tulips/10163955604_ae0b830975_n.jpg,Jocelyn Kinghorn,https://www.flickr.com/photos/joceykinghorn/10163955604/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_3.jpg,P27-R,tulips/10164073235_f29931d91e.jpg,Jocelyn Kinghorn,https://www.flickr.com/photos/joceykinghorn/10164073235/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_3.jpg,P28-L,tulips/12916135413_dafcf3089e_n.jpg,Mike Mozart,https://www.flickr.com/photos/jeepersmedia/12916135413/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_3.jpg,P28-R,tulips/12916441224_2ed63596f8_n.jpg,Mike Mozart,https://www.flickr.com/photos/jeepersmedia/12916441224/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_3.jpg,P29-L,tulips/2333321040_3960b9d67e_n.jpg,liz west,https://www.flickr.com/photos/calliope/2333321040/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_3.jpg,P29-R,tulips/2344751399_71620039f2_n.jpg,liz west,https://www.flickr.com/photos/calliope/2344751399/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_3.jpg,P30-L,tulips/5635347336_bc1400e939_n.jpg,Scooter Lowrimore,https://www.flickr.com/photos/vesparado/5635347336/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_3.jpg,P30-R,tulips/5700394524_dc6f8fa9cd_n.jpg,Scooter Lowrimore,https://www.flickr.com/photos/vesparado/5700394524/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_4.jpg,P31-L,sunflowers/14889392928_9742aed45b_m.jpg,Mike Mozart,https://www.flickr.com/photos/jeepersmedia/14889392928/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件
+duplicate_pairs_4.jpg,P31-R,sunflowers/15069459615_7e0fd61914_n.jpg,Mike Mozart,https://www.flickr.com/photos/jeepersmedia/15069459615/,https://creativecommons.org/licenses/by/2.0/,缩放为展示缩略图；未改写原始文件

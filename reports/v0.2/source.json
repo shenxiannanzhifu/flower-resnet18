@@ -1,0 +1,11 @@
+{
+  "dataset": "TensorFlow flower_photos / tf_flowers",
+  "source_url": "https://storage.googleapis.com/download.tensorflow.org/example_images/flower_photos.tgz",
+  "checksum_source": "https://raw.githubusercontent.com/tensorflow/datasets/master/tensorflow_datasets/datasets/tf_flowers/checksums.tsv",
+  "archive_bytes": 228813984,
+  "archive_sha256": "4c54ace7911aaffe13a365c34f650e71dd5bf1be0a58b464e5a7183e3e595d9c",
+  "verified_files": 3671,
+  "verified_at": "2026-10-14T21:39:57.972781+08:00",
+  "raw_directory": "raw/flower_photos",
+  "license_file": "raw/flower_photos/LICENSE.txt"
+}
