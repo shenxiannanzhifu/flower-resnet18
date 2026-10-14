@@ -1,0 +1,5 @@
+# RTX 50 系列使用 CUDA 12.8 构建；无需另外安装完整 CUDA Toolkit。
+# torchvision 后续只用于图片变换等基础工具，不调用现成 ResNet。
+--index-url https://download.pytorch.org/whl/cu128
+torch==2.8.0+cu128
+torchvision==0.23.0+cu128

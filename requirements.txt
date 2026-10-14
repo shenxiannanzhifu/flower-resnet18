@@ -1,0 +1,5 @@
+# 常规依赖；使用 Python 3.12，先安装本文件，再安装 requirements-cu128.txt。
+numpy==2.2.6
+pandas==2.2.3
+matplotlib==3.10.3
+Pillow==11.2.1

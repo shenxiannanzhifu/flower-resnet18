@@ -1,0 +1,35 @@
+# 独立环境、Python 缓存、编辑器和系统临时文件。
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# 原始数据、模型及本地试运行产物不进入 Git。
+data/*
+!data/README.md
+artifacts/*
+!artifacts/README.md
+reports/local/
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.zip
+*.tar
+*.tgz
+*.tar.gz
+*.mp4
+*.mov
+
+# 密钥及个人配置；示例文件可明确解除忽略。
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials*.json
+secrets*.json

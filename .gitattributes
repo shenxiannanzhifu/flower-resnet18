@@ -1,0 +1,9 @@
+# 源码、说明和依赖清单统一保存为 LF；PowerShell 也可直接读取。
+* text=auto
+.gitattributes text eol=lf
+.gitignore text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.json text eol=lf
+*.png binary
