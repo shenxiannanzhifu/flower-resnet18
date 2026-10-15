@@ -1,0 +1,11 @@
+已检查 500/3670 张图片
+已检查 1000/3670 张图片
+已检查 1500/3670 张图片
+已检查 2000/3670 张图片
+已检查 2500/3670 张图片
+已检查 3000/3670 张图片
+已检查 3500/3670 张图片
+原始 3670；保留 3664；划分 {'train': 2564, 'val': 551, 'test': 549}
+清单：C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\data\processed-v0.2.1-final-recheck
+报告：C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\reports\local\data-v0.2.1-final-recheck
+DATA PREPARATION PASSED

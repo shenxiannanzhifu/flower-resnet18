@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "verified_at": "2026-10-15T17:31:18.421411+08:00",
+  "baseline_version": "v0.2",
+  "revised_version": "v0.2.1",
+  "candidate_pairs": 45,
+  "already_grouped_pairs": 30,
+  "new_candidates": 15,
+  "added_scene_relations": 1,
+  "other_new_candidates_without_confirmed_link": 14,
+  "candidate_reproduction_byte_identical": true,
+  "raw_sha256_and_labels_unchanged": true,
+  "newly_excluded_label_noise": [
+    "tulips/17078716890_68e0723389_n.jpg"
+  ],
+  "split_changed_images": 1678,
+  "group_id_changed_images": 1,
+  "baseline_manifest_sha256": "1ecbac0b600441c608fa99b40eb7035a3f6af0dc021e66205ef5d4e2f2cca1c3",
+  "revised_manifest_sha256": "eeb451a41a9f0a71aadaaa0a1606ee055e4f6c8cbcfd06bc8401d097b424db86",
+  "scene_pair": {
+    "left": "sunflowers/4933230395_7930697335_m.jpg",
+    "right": "sunflowers/4933230547_394f618009_m.jpg",
+    "before": [
+      "train",
+      "val"
+    ],
+    "after": [
+      "train",
+      "train"
+    ],
+    "original_phash_distance": 20,
+    "transformed_phash_distance": 8
+  },
+  "review_scope": "45 对候选已逐对查看；C0010/C0039 加查原图；生成 3670 张联系表不代表全量标签已复核。",
+  "limitations": [
+    "AI 辅助复核不等于专家标注；未确认关系的候选仍有不确定性。",
+    "有限变换不能穷尽近重复；不保证零噪声或所有泄漏已排除。",
+    "合组导致固定种子下的组顺序改变，已重新划分；当前没有任何模型训练/成绩用于选划分。"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-10-15T17:44:30.273659+08:00",
+  "tracked_files_checked_before_this_report": 89,
+  "largest_tracked_file_bytes": 960508,
+  "old_v01_v02_reports_unchanged": true,
+  "v02_tag_unchanged": true,
+  "excluded_environment_raw_data_local_artifacts": true,
+  "common_secret_pattern_matches": 0,
+  "scope": "已跟踪文件路径、大小及常见凭据模式检查，不宣称穷尽所有可能的敏感信息。"
+}

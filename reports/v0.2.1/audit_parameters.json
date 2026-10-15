@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-10-15T17:19:19.874750+08:00",
+  "images": 3670,
+  "variants": [
+    "original",
+    "rotate90",
+    "rotate180",
+    "rotate270",
+    "mirror",
+    "crop80_center",
+    "crop80_tl",
+    "crop80_tr",
+    "crop80_bl",
+    "crop80_br",
+    "crop60_center",
+    "crop60_tl",
+    "crop60_tr",
+    "crop60_bl",
+    "crop60_br"
+  ],
+  "distance_threshold": 8,
+  "candidate_pairs": 45,
+  "baseline_manifest_sha256": "1ecbac0b600441c608fa99b40eb7035a3f6af0dc021e66205ef5d4e2f2cca1c3",
+  "status": "materials_generated_not_reviewed",
+  "limits": "有限变换候选检索，不保证穷尽裁剪、任意角旋转及不同视角；视觉复核另行记录。"
+}
