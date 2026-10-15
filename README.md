@@ -141,7 +141,9 @@ PDF 要求持续提交，首次同步已经完成；之后在各阶段验收后�
 
 已配置的 `main` 是主分支。后续需要独立开发分支时在本仓库创建并保留正常合并历史，不复制项目目录。可用 `git branch --show-current` 查看当前分支。
 
-2026-10-15 已核实远端 `main` 与 `v0.2` 一致；在原有 `fix/data-quality-review` 分支接续未提交的审计脚本，分次提交候选工具/分组修复、视觉发现的标签噪声修复及验收材料。已通过验收并快进合入本地 `main`，本地 `v0.2.1` 标签指向 `1fc0d87`。**远程推送尚未成功**：Git HTTPS 程序在推送时崩溃，停止重复重试，排障说明另作新提交保留，未移动标签。可用 `git log v0.2..main --oneline` 和 `git status --short --branch` 查看本地历史；网络与 Git 恢复后推送 `main` 和 `refs/tags/v0.2.1`，不要强制推送。详情见 [推送故障记录](docs/git-push-troubleshooting.md)。
+2026-10-15 在原有 `fix/data-quality-review` 分支接续未提交的审计脚本，分次提交候选工具/分组修复、视觉发现的标签噪声修复及验收材料，随后快进合入 `main`。**v0.2.1 已实际同步 GitHub**：20:51（北京时间）通过隔离的 Python Git 传输工具上传原有四笔提交及标签，重新读取远端确认 main 为 `d7aad41`，`v0.2.1` 仍指向验收提交 `1fc0d87`，旧标签没有移动。此次同步状态说明另作新提交。证明见 `reports/v0.2.1/github-sync.json`；可用 `git log v0.2..main --oneline` 查看正常开发历史。
+
+系统 `git-remote-https.exe` 曾在推送时崩溃，本次绕过该进程完成真实 Git 对象传输，没有重新创建提交、强制推送、禁用证书校验或改变项目依赖。系统 Git 崩溃根因仍未定位，不宣称常规 `git push` 已修复。详情见 [推送故障与恢复记录](docs/git-push-troubleshooting.md)。
 
 ## 本阶段建议理解的三个知识点
 

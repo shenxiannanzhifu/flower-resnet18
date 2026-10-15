@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "verified_at": "2026-10-15T20:51:08.521784+08:00",
+  "remote": "https://github.com/shenxiannanzhifu/flower-resnet18.git",
+  "transport": "Dulwich 0.24.10 HTTPS with certificate verification",
+  "atomic": true,
+  "old_tags_unchanged": true,
+  "remote_refs": {
+    "refs/heads/main": "d7aad41178ff1fa7209057fb92cfd70e9365fc38",
+    "refs/tags/v0.1": "fba227e819c561690fba4b5e20b79b50ad4a5414",
+    "refs/tags/v0.2": "f8dd3fb33e5737faaca9ae2c113221452baaf686",
+    "refs/tags/v0.2.1": "1f2dee57d59fb80fc94f7920f70efbed6db7b5bf",
+    "refs/tags/v0.1^{}": "5b959dbdab8275cdfe026fe675ca0b6a5ba4a881",
+    "refs/tags/v0.2^{}": "d7bec82c9d6342db3fdf030bd5aa2cee45d258fa",
+    "refs/tags/v0.2.1^{}": "1fc0d876a602aab4d7ca78bdca2d33440feadb67"
+  }
+}
