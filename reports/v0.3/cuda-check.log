@@ -1,0 +1,5 @@
+train: images=[8, 3, 224, 224], labels=[8], logits=[8, 5]
+val: images=[8, 3, 224, 224], labels=[8], logits=[8, 5]
+Parameters: 11,179,077
+Report: C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\reports\v0.3\cuda\model-check.json
+MODEL CHECK PASSED — 随机权重结构检查通过，未训练模型。

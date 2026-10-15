@@ -1,0 +1,9 @@
+MODEL CHECK FAILED: [WinError 5] 拒绝访问。
+Exception ignored in: <function _MultiProcessingDataLoaderIter.__del__ at 0x000002D4E9A6B600>
+Traceback (most recent call last):
+  File "C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\.venv\Lib\site-packages\torch\utils\data\dataloader.py", line 1664, in __del__
+    self._shutdown_workers()
+  File "C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\.venv\Lib\site-packages\torch\utils\data\dataloader.py", line 1595, in _shutdown_workers
+    if not self._shutdown:
+           ^^^^^^^^^^^^^^
+AttributeError: '_MultiProcessingDataLoaderIter' object has no attribute '_shutdown'

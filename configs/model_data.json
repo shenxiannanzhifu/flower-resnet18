@@ -1,0 +1,10 @@
+{
+  "raw_dir": "data/raw/flower_photos",
+  "processed_dir": "data/processed-v0.2.1",
+  "statistics_file": "reports/v0.2.1/summary.json",
+  "image_size": 224,
+  "eval_resize": 256,
+  "train_crop_scale": [0.7, 1.0],
+  "train_crop_ratio": [0.75, 1.3333333333333333],
+  "horizontal_flip_probability": 0.5
+}

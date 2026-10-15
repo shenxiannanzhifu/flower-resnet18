@@ -1,0 +1,327 @@
+{
+  "status": "PASS",
+  "version": "v0.3",
+  "verified_at": "2026-10-15T21:32:07.520595+08:00",
+  "purpose": "随机初始化模型的结构与数据接口检查，不是训练或分类成绩",
+  "python": "3.12.14",
+  "torch": "2.8.0+cu128",
+  "device": "cuda",
+  "device_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+  "seed": 42,
+  "num_workers": 0,
+  "batch_size": 8,
+  "parameter_count": 11179077,
+  "class_to_idx": {
+    "daisy": 0,
+    "dandelion": 1,
+    "roses": 2,
+    "sunflowers": 3,
+    "tulips": 4
+  },
+  "manifest_sha256": "eeb451a41a9f0a71aadaaa0a1606ee055e4f6c8cbcfd06bc8401d097b424db86",
+  "preprocessing": {
+    "raw_dir": "data/raw/flower_photos",
+    "processed_dir": "data/processed-v0.2.1",
+    "statistics_file": "reports/v0.2.1/summary.json",
+    "image_size": 224,
+    "eval_resize": 256,
+    "train_crop_scale": [
+      0.7,
+      1.0
+    ],
+    "train_crop_ratio": [
+      0.75,
+      1.3333333333333333
+    ],
+    "horizontal_flip_probability": 0.5
+  },
+  "normalization": {
+    "mean": [
+      0.46911663812425636,
+      0.4268518017926893,
+      0.30624300013356764
+    ],
+    "std": [
+      0.30228516449065507,
+      0.27245040348420235,
+      0.29791277998623494
+    ],
+    "scale": "0..1",
+    "pixel_count": 268090022,
+    "method": "训练子集原始 RGB 像素加权；未缩放/裁剪/增强"
+  },
+  "batches": {
+    "train": {
+      "dataset_size": 2564,
+      "input_shape": [
+        8,
+        3,
+        224,
+        224
+      ],
+      "label_dtype": "torch.int64",
+      "output_shape": [
+        8,
+        5
+      ],
+      "finite_input_and_logits": true,
+      "stage_shapes": {
+        "stem.0": [
+          8,
+          64,
+          112,
+          112
+        ],
+        "stem": [
+          8,
+          64,
+          56,
+          56
+        ],
+        "layer1": [
+          8,
+          64,
+          56,
+          56
+        ],
+        "layer2": [
+          8,
+          128,
+          28,
+          28
+        ],
+        "layer3": [
+          8,
+          256,
+          14,
+          14
+        ],
+        "layer4": [
+          8,
+          512,
+          7,
+          7
+        ],
+        "avgpool": [
+          8,
+          512,
+          1,
+          1
+        ],
+        "fc": [
+          8,
+          5
+        ]
+      },
+      "samples": [
+        {
+          "relative_path": "roses/9160289562_ab2718d19b.jpg",
+          "label": 2
+        },
+        {
+          "relative_path": "dandelion/3005677730_2662753d3f_m.jpg",
+          "label": 1
+        },
+        {
+          "relative_path": "dandelion/5740633858_8fd54c23c9_n.jpg",
+          "label": 1
+        },
+        {
+          "relative_path": "sunflowers/21349789961_18ba1af5b7_n.jpg",
+          "label": 3
+        },
+        {
+          "relative_path": "dandelion/2634665077_597910235f_m.jpg",
+          "label": 1
+        },
+        {
+          "relative_path": "sunflowers/4933823300_39fd4420b6.jpg",
+          "label": 3
+        },
+        {
+          "relative_path": "roses/3203779656_3580151ea4_m.jpg",
+          "label": 2
+        },
+        {
+          "relative_path": "tulips/14044685976_0064faed21.jpg",
+          "label": 4
+        }
+      ]
+    },
+    "val": {
+      "dataset_size": 551,
+      "input_shape": [
+        8,
+        3,
+        224,
+        224
+      ],
+      "label_dtype": "torch.int64",
+      "output_shape": [
+        8,
+        5
+      ],
+      "finite_input_and_logits": true,
+      "stage_shapes": {
+        "stem.0": [
+          8,
+          64,
+          112,
+          112
+        ],
+        "stem": [
+          8,
+          64,
+          56,
+          56
+        ],
+        "layer1": [
+          8,
+          64,
+          56,
+          56
+        ],
+        "layer2": [
+          8,
+          128,
+          28,
+          28
+        ],
+        "layer3": [
+          8,
+          256,
+          14,
+          14
+        ],
+        "layer4": [
+          8,
+          512,
+          7,
+          7
+        ],
+        "avgpool": [
+          8,
+          512,
+          1,
+          1
+        ],
+        "fc": [
+          8,
+          5
+        ]
+      },
+      "samples": [
+        {
+          "relative_path": "daisy/10140303196_b88d3d6cec.jpg",
+          "label": 0
+        },
+        {
+          "relative_path": "daisy/10172379554_b296050f82_n.jpg",
+          "label": 0
+        },
+        {
+          "relative_path": "daisy/102841525_bd6628ae3c.jpg",
+          "label": 0
+        },
+        {
+          "relative_path": "daisy/10555815624_dc211569b0.jpg",
+          "label": 0
+        },
+        {
+          "relative_path": "daisy/10559679065_50d2b16f6d.jpg",
+          "label": 0
+        },
+        {
+          "relative_path": "daisy/107592979_aaa9cdfe78_m.jpg",
+          "label": 0
+        },
+        {
+          "relative_path": "daisy/10993710036_2033222c91.jpg",
+          "label": 0
+        },
+        {
+          "relative_path": "daisy/10993818044_4c19b86c82.jpg",
+          "label": 0
+        }
+      ]
+    }
+  },
+  "residual_checks": [
+    {
+      "case": "identity",
+      "input_shape": [
+        2,
+        3,
+        15,
+        17
+      ],
+      "output_shape": [
+        2,
+        3,
+        15,
+        17
+      ],
+      "zero_residual_equals_shortcut": true
+    },
+    {
+      "case": "channel_projection",
+      "input_shape": [
+        2,
+        3,
+        15,
+        17
+      ],
+      "output_shape": [
+        2,
+        5,
+        15,
+        17
+      ],
+      "zero_residual_equals_shortcut": true
+    },
+    {
+      "case": "spatial_projection",
+      "input_shape": [
+        2,
+        3,
+        15,
+        17
+      ],
+      "output_shape": [
+        2,
+        3,
+        8,
+        9
+      ],
+      "zero_residual_equals_shortcut": true
+    },
+    {
+      "case": "channel_and_spatial_projection",
+      "input_shape": [
+        2,
+        3,
+        15,
+        17
+      ],
+      "output_shape": [
+        2,
+        5,
+        8,
+        9
+      ],
+      "zero_residual_equals_shortcut": true
+    }
+  ],
+  "validation_preprocessing_repeatable": true,
+  "batchnorm_buffers_unchanged": true,
+  "gradients_created": false,
+  "weights_saved": false,
+  "test_images_used": 0,
+  "cuda_peak_allocated_mib": 109.96484375,
+  "source_sha256": {
+    "src/model.py": "a01ca9f6e48e6f32ebb6e533d1a8870797f6c195c37e42bee2a860861096cb1f",
+    "src/data.py": "e726d9d24607b1410328630942f0b5d60b1e17637fbdc436a4cd0f6c56778110",
+    "scripts/check_model.py": "253efacd94bde825b2eea35d6f6c02ea34e31122767dc92e0f0cd717a73045d5",
+    "configs/model_data.json": "1db325e4f49287690914013e98766bff886ca2582e82affcb9102ef1846667b0"
+  }
+}
