@@ -111,8 +111,8 @@ def main():
     """命令行入口；任何约束失败都以非零退出码阻止误用数据。"""
     parser = argparse.ArgumentParser(description="核对数据清单和已知重复关系，独立于准备入口。")
     parser.add_argument("--raw-dir", type=Path, default=PROJECT_ROOT / "data/raw/flower_photos")
-    parser.add_argument("--processed-dir", type=Path, default=PROJECT_ROOT / "data/processed")
-    parser.add_argument("--report-dir", type=Path, default=PROJECT_ROOT / "reports/local/data")
+    parser.add_argument("--processed-dir", type=Path, default=PROJECT_ROOT / "data/processed-v0.2.1")
+    parser.add_argument("--report-dir", type=Path, default=PROJECT_ROOT / "reports/local/data-v0.2.1")
     parser.add_argument("--review-pairs", type=Path, default=PROJECT_ROOT / "configs/duplicate_review.csv")
     parser.add_argument("--review-exclusions", type=Path, default=PROJECT_ROOT / "configs/excluded_review.csv")
     verify(parser.parse_args())

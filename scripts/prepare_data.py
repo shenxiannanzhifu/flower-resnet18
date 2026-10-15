@@ -1,7 +1,8 @@
-r"""v0.2 扫描花卉图片、去除确定重复、整组划分并输出真实统计和图表。
+r"""v0.2.1 扫描花卉图片、去除确定重复、整组划分并输出真实统计和图表。
 
 运行：.\.venv\Scripts\python.exe scripts\prepare_data.py
-验收快照：添加 --report-dir reports/v0.2；日常运行默认写 reports/local/data。
+日常运行默认写 data/processed-v0.2.1 和 reports/local/data-v0.2.1。
+旧 data/processed 与 reports/v0.2 保留；不同复核配置不得覆盖旧划分或报告。
 只生成清单和报告，不复制/修改原图，不实现数据加载器或模型训练。
 """
 
@@ -41,6 +42,15 @@ def write_json(path, value):
 def write_csv(path, frame):
     """输入路径和 Pandas 表，固定行结束符，保证相同数据得到相同清单哈希。"""
     frame.to_csv(path, index=False, encoding="utf-8", lineterminator="\n")
+
+
+def check_output_configs(directories, config):
+    """检查数据及报告目录的旧配置，防止换输出目录时意外覆盖另一份历史报告。"""
+    for directory in directories:
+        old_config = directory / "split_config.json"
+        if old_config.exists() and json.loads(old_config.read_text(encoding="utf-8")) != config:
+            raise ValueError(f"已有划分/报告对应不同输入或参数：{directory}；"
+                             "请同时使用新的 --output-dir 和 --report-dir，不能覆盖历史证据。")
 
 
 def plot_statistics(frame, counts, report_dir):
@@ -124,7 +134,7 @@ def build_report(frame, edges, moments, targets, config, raw_root, report_dir, a
     aspect = dimensions[:, 0] / dimensions[:, 1]
     groups = valid.groupby("duplicate_group")
     summary = {
-        "version": "v0.2", "generated_at": datetime.now().astimezone().isoformat(),
+        "version": "v0.2.1", "generated_at": datetime.now().astimezone().isoformat(),
         "parameters": config, "raw_images": len(frame), "valid_images": len(valid),
         "invalid_images": int((frame.status != "valid").sum()), "included_images": len(active),
         "excluded_reasons": frame[~frame.included].exclusion_reason.value_counts().to_dict(),
@@ -202,9 +212,7 @@ def prepare(args):
               "reviewed_exclusions_sha256": sha256_file(args.review_exclusions),
               "dataset_fingerprint": fingerprint, "official_archive_sha256": EXPECTED_SHA256,
               "raw_path_base": "data/raw/flower_photos", "class_to_idx": dict(zip(CLASSES, range(len(CLASSES))))}
-    old_config = output_dir / "split_config.json"
-    if old_config.exists() and json.loads(old_config.read_text(encoding="utf-8")) != config:
-        raise ValueError("已有划分对应不同输入/参数；请使用新的 --output-dir 和 --report-dir，不能覆盖现有测试集。")
+    check_output_configs([output_dir, report_dir], config)
     output_dir.mkdir(parents=True, exist_ok=True)
     report_dir.mkdir(parents=True, exist_ok=True)
     write_csv(output_dir / "manifest.csv", frame)
@@ -223,8 +231,8 @@ def main():
     """解析输入目录、可复现种子和输出目录；返回清楚的成功或失败标记。"""
     parser = argparse.ArgumentParser(description="数据审计、重复分组、划分与可视化；不训练模型。")
     parser.add_argument("--raw-dir", type=Path, default=PROJECT_ROOT / "data/raw/flower_photos")
-    parser.add_argument("--output-dir", type=Path, default=PROJECT_ROOT / "data/processed")
-    parser.add_argument("--report-dir", type=Path, default=PROJECT_ROOT / "reports/local/data")
+    parser.add_argument("--output-dir", type=Path, default=PROJECT_ROOT / "data/processed-v0.2.1")
+    parser.add_argument("--report-dir", type=Path, default=PROJECT_ROOT / "reports/local/data-v0.2.1")
     parser.add_argument("--review-pairs", type=Path, default=PROJECT_ROOT / "configs/duplicate_review.csv")
     parser.add_argument("--review-exclusions", type=Path, default=PROJECT_ROOT / "configs/excluded_review.csv")
     parser.add_argument("--seed", type=int, default=42, help="只控制分组分配和训练样本展示；验收后不要随意修改。")

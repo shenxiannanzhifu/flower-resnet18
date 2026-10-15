@@ -1,4 +1,4 @@
-r"""v0.2 防回归检查：真实故障边界与防泄漏行为，而不是复述实现。
+r"""v0.2–v0.2.1 防回归检查：真实故障边界与防泄漏行为，而不是复述实现。
 
 运行：.\.venv\Scripts\python.exe -m unittest discover -s tests -v
 所有人工样本均位于 reports/local/tests，不读取或修改正式图片。
@@ -22,6 +22,8 @@ sys.stderr.reconfigure(encoding="utf-8")
 from data_utils import CLASSES, inspect_image, read_attributions, group_duplicates, split_groups, apply_review_exclusions
 from download_data import validate_member
 from verify_data import verify_invariants
+from audit_data import variants, find_candidates
+from prepare_data import check_output_configs
 
 
 class DataPipelineTests(unittest.TestCase):
@@ -160,6 +162,58 @@ class DataPipelineTests(unittest.TestCase):
         frame["phash"] = "0"
         with self.assertRaisesRegex(ValueError, "pHash"):
             verify_invariants(frame, 8)
+
+    def test_transform_search_detects_rotation_without_self_pairs(self):
+        """原图 pHash 会漏旋转副本；变换检索必须找回，同时排除自身匹配。"""
+        from data_utils import perceptual_hash
+        pixels = np.random.default_rng(42).integers(0, 256, (80, 100, 3), dtype=np.uint8)
+        original = Image.fromarray(pixels)
+        rotated = original.rotate(90, expand=True)
+        hashes = np.array([[perceptual_hash(image) for _, image in variants(source)]
+                           for source in [original, rotated]], dtype=np.uint64)
+        self.assertGreater(int(hashes[0, 0] ^ hashes[1, 0]).bit_count(), 8)
+        found = find_candidates(hashes, threshold=0)
+        self.assertEqual(set(found), {(0, 1)})
+        self.assertEqual(found[(0, 1)][0], 0)
+
+    def test_transform_search_empty_input_is_clear_error(self):
+        """空清单不能生成看似通过的复核报告。"""
+        with self.assertRaisesRegex(ValueError, "非空"):
+            find_candidates(np.empty((0, 15), dtype=np.uint64))
+
+    def test_actual_missed_scene_is_added_to_review_groups(self):
+        """使用已提交 v0.2 元数据重现 C0039 漏分组，确认当前复核配置将其连通。
+
+        不依赖未入库的原图；图片内容的实际复核和全量哈希核对另存本版验收证据。
+        """
+        from verify_data import read_manifest
+        paths = ["sunflowers/4933230395_7930697335_m.jpg",
+                 "sunflowers/4933230547_394f618009_m.jpg"]
+        baseline = read_manifest(ROOT / "reports/v0.2/manifest.csv")
+        pair = baseline[baseline.relative_path.isin(paths)]
+        self.assertEqual(set(pair.split), {"train", "val"})
+        before, _ = group_duplicates(pair)
+        self.assertEqual(before.duplicate_group.nunique(), 2)
+        reviews = pd.read_csv(ROOT / "configs/duplicate_review.csv", keep_default_na=False)
+        reviews = reviews[reviews.left.isin(paths) & reviews.right.isin(paths)]
+        self.assertEqual(len(reviews), 1)
+        after, _ = group_duplicates(pair, reviewed_pairs=reviews)
+        self.assertEqual(after.duplicate_group.nunique(), 1)
+        self.assertEqual(after.included.sum(), 2)
+
+    def test_changed_review_cannot_overwrite_historical_report(self):
+        """即使数据目录是新的，也不能把不同配置的报告写进旧版本证据目录。"""
+        import json
+        old_report = self.directory / "old-report"
+        old_report.mkdir()
+        path = old_report / "split_config.json"
+        path.write_text(json.dumps({"reviewed_pairs_sha256": "old"}), encoding="utf-8")
+        original_bytes = path.read_bytes()
+        with self.assertRaisesRegex(ValueError, "不能覆盖历史证据"):
+            check_output_configs([self.directory / "new-data", old_report],
+                                 {"reviewed_pairs_sha256": "new"})
+        self.assertEqual(path.read_bytes(), original_bytes)
+        check_output_configs([old_report], {"reviewed_pairs_sha256": "old"})
 
 
 if __name__ == "__main__":

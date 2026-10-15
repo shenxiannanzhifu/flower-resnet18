@@ -1,2 +1,3 @@
 left,right,reason
 sunflowers/14889392928_9742aed45b_m.jpg,sunflowers/15069459615_7e0fd61914_n.jpg,2026-10-14 视觉复核发现相同向日葵和建筑背景的裁剪或相邻拍摄版本；pHash 距离 18 未被自动阈值捕获；保守合组避免泄漏
+sunflowers/4933230395_7930697335_m.jpg,sunflowers/4933230547_394f618009_m.jpg,2026-10-15 AI 辅助视觉复核 C0039：相同花田及人物衣着与姿态的相邻拍摄；原 v0.2 跨 train/val；中心裁剪 80% 后 pHash 距离 8；保留两图并整组划分
