@@ -8,6 +8,7 @@ import math
 from pathlib import Path
 import uuid
 
+from PIL import Image, ImageOps
 import torch
 
 from src.data import build_transform
@@ -65,3 +66,36 @@ def load_checkpoint(path: Path, device: torch.device):
     model.load_state_dict(payload["model_state"], strict=True)
     model.to(device).eval()
     return model, metadata
+
+
+def check_reference_prediction(model: ResNet18, metadata: dict, project_root: Path) -> dict:
+    """用保存时选定的验证图片检查恢复结果，返回标记为试运行的类别和分数。
+
+    预处理与类别顺序完全取自 checkpoint，而不是当前配置文件；不访问测试图像。
+    参考 logits 在保存前由内存中的最佳模型生成，因此可检测错误权重/预处理加载。
+    """
+    reference = metadata["reference"]
+    raw = (Path(project_root) / metadata["preprocessing"]["raw_dir"]).resolve()
+    path = (raw / reference["relative_path"]).resolve()
+    if not path.is_relative_to(raw):
+        raise ValueError("参考图片路径越过原图目录。")
+    normalization = metadata["normalization"]
+    transform = build_transform(metadata["preprocessing"], normalization["mean"], normalization["std"], False)
+    with Image.open(path) as image:
+        tensor = transform(ImageOps.exif_transpose(image).convert("RGB")).unsqueeze(0)
+    device = next(model.parameters()).device
+    model.eval()
+    with torch.inference_mode():
+        logits = model(tensor.to(device)).cpu()[0]
+        probabilities = logits.softmax(dim=0)
+    expected = torch.tensor(reference["logits"], dtype=logits.dtype)
+    # GPU 保存后在 CPU 重载可能有小量浮点差异，采用明确容差，不要求跨设备逐位相等。
+    torch.testing.assert_close(logits, expected, rtol=1e-4, atol=1e-4)
+    names = {index: name for name, index in metadata["class_to_idx"].items()}
+    prediction = int(logits.argmax())
+    return {"purpose": "smoke", "relative_path": reference["relative_path"],
+            "true_class": names[reference["label"]], "predicted_class": names[prediction],
+            "logits": logits.tolist(), "probabilities": {names[i]: float(p) for i, p in enumerate(probabilities)},
+            "reload_matches_saved_logits": True, "rtol": 1e-4, "atol": 1e-4,
+            "maximum_absolute_difference": float((logits - expected).abs().max()),
+            "note": "试运行的单张验证样本，用于检查加载和预测流程，不代表新图泛化能力"}

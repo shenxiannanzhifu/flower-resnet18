@@ -1,0 +1,14 @@
+{
+  "purpose": "smoke",
+  "data_config": "configs/model_data.json",
+  "epochs": 3,
+  "batch_size": 16,
+  "learning_rate": 0.01,
+  "momentum": 0.9,
+  "weight_decay": 0.0005,
+  "scheduler_step_size": 2,
+  "scheduler_gamma": 0.1,
+  "seed": 42,
+  "train_per_class": 40,
+  "val_per_class": 20
+}

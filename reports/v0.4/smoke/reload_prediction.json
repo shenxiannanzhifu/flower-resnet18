@@ -1,0 +1,25 @@
+{
+  "purpose": "smoke",
+  "relative_path": "daisy/10140303196_b88d3d6cec.jpg",
+  "true_class": "daisy",
+  "predicted_class": "sunflowers",
+  "logits": [
+    0.3638216555118561,
+    1.0247843265533447,
+    -2.653963804244995,
+    1.6257376670837402,
+    -0.40317681431770325
+  ],
+  "probabilities": {
+    "daisy": 0.14322230219841003,
+    "dandelion": 0.2773723006248474,
+    "roses": 0.007004919461905956,
+    "sunflowers": 0.5058873295783997,
+    "tulips": 0.06651314347982407
+  },
+  "reload_matches_saved_logits": true,
+  "rtol": 0.0001,
+  "atol": 0.0001,
+  "maximum_absolute_difference": 0.0,
+  "note": "试运行的单张验证样本，用于检查加载和预测流程，不代表新图泛化能力"
+}
