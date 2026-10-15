@@ -215,6 +215,22 @@ class DataPipelineTests(unittest.TestCase):
         self.assertEqual(path.read_bytes(), original_bytes)
         check_output_configs([old_report], {"reviewed_pairs_sha256": "old"})
 
+    def test_actual_new_label_noise_is_excluded_without_relabeling(self):
+        """已复核的非郁金香样本必须隔离；不能通过换一个类别继续混入训练。"""
+        from verify_data import read_manifest
+        frame = read_manifest(ROOT / "reports/v0.2/manifest.csv")
+        path = "tulips/17078716890_68e0723389_n.jpg"
+        original = frame[frame.relative_path == path]
+        reviews = pd.read_csv(ROOT / "configs/excluded_review.csv", keep_default_na=False)
+        review = reviews[reviews.relative_path == path]
+        self.assertEqual(len(review), 1)
+        self.assertTrue(original.iloc[0].included)
+        cleaned = apply_review_exclusions(original, review)
+        self.assertFalse(cleaned.iloc[0].included)
+        self.assertEqual(cleaned.iloc[0].class_name, "tulips")
+        self.assertEqual(cleaned.iloc[0].label, original.iloc[0].label)
+        self.assertEqual(cleaned.iloc[0].exclusion_reason, "visual_label_noise")
+
 
 if __name__ == "__main__":
     unittest.main()
