@@ -1,0 +1,25 @@
+{
+  "status": "FROZEN_BEFORE_TEST",
+  "selected_at": "2026-10-15T23:51:09.776081+08:00",
+  "checkpoint": "artifacts\\v0.5-formal\\best.pt",
+  "checkpoint_sha256": "c836ddcb3053e88b8d7c92b51decdcea49f6f9adfc62a8aa6d4ffa7260de812b",
+  "training_report": "reports\\v0.5\\formal",
+  "training_summary_sha256": "16bf7e1eef43b8489e3e271a21d522bbe64e93f57cd2fc7176c3fcfec519064d",
+  "best_epoch": 21,
+  "validation_loss": 0.500066671256794,
+  "validation_accuracy": 0.822141560798548,
+  "selection_rule": "minimum validation cross entropy; test metrics unavailable at selection",
+  "training_config": {
+    "purpose": "formal",
+    "data_config": "configs/model_data.json",
+    "epochs": 30,
+    "batch_size": 32,
+    "learning_rate": 0.01,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "scheduler_step_size": 10,
+    "scheduler_gamma": 0.2,
+    "seed": 42
+  },
+  "decision": "按预先固定的方案选择最小验证损失模型；不因测试结果改模型或训练配置"
+}

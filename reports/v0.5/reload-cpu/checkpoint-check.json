@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-10-15T23:49:45.476872+08:00",
+  "device": "cpu",
+  "best_epoch": 21,
+  "checkpoint_sha256": "c836ddcb3053e88b8d7c92b51decdcea49f6f9adfc62a8aa6d4ffa7260de812b",
+  "class_to_idx": {
+    "daisy": 0,
+    "dandelion": 1,
+    "roses": 2,
+    "sunflowers": 3,
+    "tulips": 4
+  },
+  "purpose": "formal",
+  "relative_path": "daisy/10140303196_b88d3d6cec.jpg",
+  "true_class": "daisy",
+  "predicted_class": "daisy",
+  "logits": [
+    5.470333576202393,
+    2.084961175918579,
+    -4.329643726348877,
+    -0.14224426448345184,
+    -2.790559768676758
+  ],
+  "probabilities": {
+    "daisy": 0.963548481464386,
+    "dandelion": 0.032630596309900284,
+    "roses": 5.343151860870421e-05,
+    "sunflowers": 0.003518535755574703,
+    "tulips": 0.00024900806602090597
+  },
+  "reload_matches_saved_logits": true,
+  "rtol": 0.0001,
+  "atol": 0.0001,
+  "maximum_absolute_difference": 2.6226043701171875e-06,
+  "note": "单张验证样本，用于检查加载和预测流程，不代表新图泛化能力"
+}

@@ -1,0 +1,3 @@
+FORMAL reference: daisy/10140303196_b88d3d6cec.jpg; prediction: daisy
+Reload max difference: 0
+CHECKPOINT CHECK PASSED — 仅验证模型的加载与参考图片预测。

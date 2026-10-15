@@ -1,0 +1,32 @@
+FORMAL epoch 1/30: lr=0.01, train_loss=1.4480, train_acc=0.426, val_loss=1.2226, val_acc=0.550
+FORMAL epoch 2/30: lr=0.01, train_loss=1.0943, train_acc=0.583, val_loss=1.0668, val_acc=0.592
+FORMAL epoch 3/30: lr=0.01, train_loss=0.9738, train_acc=0.635, val_loss=1.7634, val_acc=0.506
+FORMAL epoch 4/30: lr=0.01, train_loss=1.0297, train_acc=0.619, val_loss=1.1446, val_acc=0.570
+FORMAL epoch 5/30: lr=0.01, train_loss=0.9284, train_acc=0.654, val_loss=0.9402, val_acc=0.655
+FORMAL epoch 6/30: lr=0.01, train_loss=0.8755, train_acc=0.679, val_loss=1.1655, val_acc=0.604
+FORMAL epoch 7/30: lr=0.01, train_loss=0.8494, train_acc=0.680, val_loss=0.7852, val_acc=0.710
+FORMAL epoch 8/30: lr=0.01, train_loss=0.7562, train_acc=0.714, val_loss=0.7345, val_acc=0.731
+FORMAL epoch 9/30: lr=0.01, train_loss=0.7043, train_acc=0.739, val_loss=0.8981, val_acc=0.673
+FORMAL epoch 10/30: lr=0.01, train_loss=0.6918, train_acc=0.742, val_loss=0.9318, val_acc=0.691
+FORMAL epoch 11/30: lr=0.002, train_loss=0.5683, train_acc=0.795, val_loss=0.5819, val_acc=0.789
+FORMAL epoch 12/30: lr=0.002, train_loss=0.4784, train_acc=0.822, val_loss=0.5603, val_acc=0.809
+FORMAL epoch 13/30: lr=0.002, train_loss=0.4631, train_acc=0.826, val_loss=0.5320, val_acc=0.811
+FORMAL epoch 14/30: lr=0.002, train_loss=0.4563, train_acc=0.826, val_loss=0.5369, val_acc=0.809
+FORMAL epoch 15/30: lr=0.002, train_loss=0.4637, train_acc=0.834, val_loss=0.5484, val_acc=0.811
+FORMAL epoch 16/30: lr=0.002, train_loss=0.4551, train_acc=0.833, val_loss=0.5300, val_acc=0.820
+FORMAL epoch 17/30: lr=0.002, train_loss=0.4210, train_acc=0.845, val_loss=0.5398, val_acc=0.808
+FORMAL epoch 18/30: lr=0.002, train_loss=0.4122, train_acc=0.848, val_loss=0.5944, val_acc=0.797
+FORMAL epoch 19/30: lr=0.002, train_loss=0.3901, train_acc=0.859, val_loss=0.5709, val_acc=0.813
+FORMAL epoch 20/30: lr=0.002, train_loss=0.3643, train_acc=0.869, val_loss=0.5573, val_acc=0.809
+FORMAL epoch 21/30: lr=0.0004, train_loss=0.3222, train_acc=0.884, val_loss=0.5001, val_acc=0.822
+FORMAL epoch 22/30: lr=0.0004, train_loss=0.3153, train_acc=0.892, val_loss=0.5260, val_acc=0.822
+FORMAL epoch 23/30: lr=0.0004, train_loss=0.3099, train_acc=0.887, val_loss=0.5152, val_acc=0.820
+FORMAL epoch 24/30: lr=0.0004, train_loss=0.2845, train_acc=0.893, val_loss=0.5212, val_acc=0.826
+FORMAL epoch 25/30: lr=0.0004, train_loss=0.2871, train_acc=0.901, val_loss=0.5244, val_acc=0.826
+FORMAL epoch 26/30: lr=0.0004, train_loss=0.2731, train_acc=0.901, val_loss=0.5242, val_acc=0.819
+FORMAL epoch 27/30: lr=0.0004, train_loss=0.2792, train_acc=0.896, val_loss=0.5225, val_acc=0.826
+FORMAL epoch 28/30: lr=0.0004, train_loss=0.2639, train_acc=0.901, val_loss=0.5272, val_acc=0.826
+FORMAL epoch 29/30: lr=0.0004, train_loss=0.2668, train_acc=0.901, val_loss=0.5462, val_acc=0.808
+FORMAL epoch 30/30: lr=0.0004, train_loss=0.2761, train_acc=0.902, val_loss=0.5195, val_acc=0.820
+Best epoch: 21; checkpoint: C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\artifacts\v0.5-formal\best.pt
+FORMAL TRAINING PASSED — 全量训练/验证已完成，测试评估需独立执行。
