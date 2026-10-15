@@ -2,7 +2,7 @@
 
 这是“后端 AI 方向第一阶段”考核项目。使用 Python、NumPy、Pandas、Matplotlib 和 PyTorch，从数据分析逐步推进到手写 ResNet-18、训练、评估和新图片预测。
 
-当前完成 **v0.3：手写 ResNet-18 与模型检查**。沿用同一项目和 Git 历史，已手写残差块、四组 ResNet 和图像数据加载；CPU、CUDA 均通过真实图片批次前向检查。使用 v0.2.1 修复后的 3,664 张可用图片及训练 RGB 统计，原图与旧阶段证据保留。**模型仍是随机权重，尚未训练，没有分类成绩。**每个阶段验收后提交并打标签，等待确认再进入下一版本。
+当前完成 **v0.4：打通训练流程**。沿用同一项目、手写 ResNet-18 和 v0.2.1 数据，在训练/验证子集中固定抽取 200/100 张图片，真实运行 3 轮，完成损失计算、参数更新、验证选模、保存及独立进程重载预测。**全部是小规模试运行，尚无正式训练或测试集成绩。**每个阶段验收后提交并打标签，等待确认再进入下一版本。
 
 ## 现在如何运行
 
@@ -10,13 +10,31 @@
 
 ```powershell
 Set-Location -LiteralPath 'C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18'
-& '.\.venv\Scripts\python.exe' scripts\check_model.py --device cuda
-& '.\.venv\Scripts\python.exe' scripts\check_model.py --device cpu
+& '.\.venv\Scripts\python.exe' scripts\check_checkpoint.py --device cpu
+& '.\.venv\Scripts\python.exe' scripts\check_checkpoint.py --device cuda
 ```
 
-成功标志：`MODEL CHECK PASSED`。两种设备均应显示 train/val 的 `images=[8,3,224,224]`、`logits=[8,5]`（输出可能带空格），参数量 `11,179,077`。报告默认写入 `reports/local/model-cuda` 或 `reports/local/model-cpu`；本次真实验收证据位于 [v0.3 验收报告](reports/v0.3/acceptance.md)。GPU 不可用时可以只运行 CPU 命令；内存紧张时增加 `--batch-size 2`。
+成功标志：`CHECKPOINT CHECK PASSED`。本机默认读取已生成的 `artifacts/v0.4-smoke/best.pt`，用保存的预处理和映射预测参考验证图片，核对保存前后输出一致。默认报告写到 `reports/local/checkpoint-cpu`、`reports/local/checkpoint-cuda`。本次参考雏菊被误判为向日葵，错误结果如实保留；流程检查通过不代表分类效果合格。真实证据见 [v0.4 验收报告](reports/v0.4/acceptance.md)。
 
-详解见 [模型与数据说明](docs/model.md)。本版固定 DataLoader `num_workers=0`：当前受限 Windows 环境的多进程队列返回 WinError 5，已保留失败记录并用单进程重新验证。此问题与之前 Git HTTPS 进程崩溃是两件事。检查没有反向传播或保存模型，也不把随机 logits 当作预测成果。
+训练细节、参数含义和模型获取方式见 [训练说明](docs/training.md)，网络原理见 [模型与数据说明](docs/model.md)。多进程不是阶段硬性要求，当前保留 `num_workers=0`：本机单进程已完成实际训练，没有必要为试运行修改系统权限。Windows 多进程管道失败与之前 Git HTTPS 崩溃是两件事，均不宣称根因已修复。
+
+如需重新训练，使用新的空目录（已有目录会被拒绝覆盖）：
+
+```powershell
+& '.\.venv\Scripts\python.exe' scripts\train.py --device cuda --run-dir artifacts\v0.4-smoke-rerun --report-dir reports\local\train-smoke-rerun
+& '.\.venv\Scripts\python.exe' scripts\check_checkpoint.py --device cpu --checkpoint artifacts\v0.4-smoke-rerun\best.pt
+```
+
+成功标志为 `SMOKE TRAINING PASSED`、`CHECKPOINT CHECK PASSED`；再次重跑要换未使用的目录名。模型约 44.8 MB，保留本机、不入 Git。新克隆仓库须先配置环境并完成下方数据准备，再执行 `scripts\train.py --device cuda` 生成模型；当前没有模型下载地址，不把本地文件说成已上传。
+
+查看本次真实试运行日志：
+
+```powershell
+Import-Csv -LiteralPath '.\reports\v0.4\smoke\metrics.csv' | Format-Table epoch,learning_rate,train_loss,val_loss,val_accuracy
+Get-Content -LiteralPath '.\reports\v0.4\smoke\summary.json' -Encoding utf8
+```
+
+按最小验证损失保存第 3 轮；该轮验证准确率 44% **只是 100 张验证子集的试运行结果**。第二轮验证损失上升到约 10.95，日志完整保留，原因尚未用对照实验确认。
 
 完整复现数据流程（首次下载约 218 MiB；已有压缩包则直接复用并校验）：
 
@@ -27,7 +45,7 @@ Set-Location -LiteralPath 'C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git
 & '.\.venv\Scripts\python.exe' -m unittest discover -s tests -v
 ```
 
-对应成功标志为 `DATA DOWNLOAD VERIFIED`、`DATA PREPARATION PASSED`、`DATA VERIFICATION PASSED` 和 `Ran 28 tests ... OK`。程序失败会返回非零退出码并给出原因。数据验证结果应为 3,664 张、train=2564、val=551、test=549；默认逐张复核原图哈希并检查已知重复没有跨集。离线检查已有包可使用 `download_data.py --offline`。数据准备使用 CPU，不需要启动 GPU 训练。
+对应成功标志为 `DATA DOWNLOAD VERIFIED`、`DATA PREPARATION PASSED`、`DATA VERIFICATION PASSED` 和 `Ran 32 tests ... OK`。程序失败会返回非零退出码并给出原因。数据验证结果应为 3,664 张、train=2564、val=551、test=549；默认逐张复核原图哈希并检查已知重复没有跨集。离线检查已有包可使用 `download_data.py --offline`。数据准备使用 CPU，不需要启动 GPU 训练。
 
 查看图表和开发历史：
 
@@ -52,6 +70,8 @@ git tag --list
 
 v0.1 的环境检查仍可运行：`.\.venv\Scripts\python.exe scripts\check_env.py --device cuda`，成功标志 `ENV CHECK PASSED`；旧报告继续保存在 `reports/v0.1/`。
 
+v0.3 的随机权重结构检查仍可运行：`.\.venv\Scripts\python.exe scripts\check_model.py --device cuda`，成功标志 `MODEL CHECK PASSED`；它不加载训练模型，不应与当前 checkpoint 检查混淆。
+
 ## 本版实际数据结果
 
 | 类别 | 原始 | 保留 | 训练 | 验证 | 测试 |
@@ -65,7 +85,7 @@ v0.1 的环境检查仍可运行：`.\.venv\Scripts\python.exe scripts\check_env
 
 全部图片解码成功。排除的 6 张分别是跨类相同图片 2 张、同类重复副本 2 张、视觉复核发现的明显标签噪声 2 张；原始文件和标签均保留。近似图片只做整组划分，不仅凭感知哈希删除。已知重复关系没有跨子集，不代表所有潜在近重复或错标都已找全。
 
-v0.2.1 重建使 1,678 张图片的 split 字段改变（含新增排除的 1 张），明细在 `reports/v0.2.1/split_changes.csv`。这是分组/保留集合变化后重新运行整组划分的结果；当前从未训练模型或根据测试成绩选择划分。v0.2 的旧划分不可与新划分混用，旧版 3,665 张统计不是当前结果。v0.3 未重新划分数据。
+v0.2.1 重建使 1,678 张图片的 split 字段改变（含新增排除的 1 张），明细在 `reports/v0.2.1/split_changes.csv`。这是分组/保留集合变化后重新运行整组划分的结果；当时尚未训练模型，也未根据测试成绩选择划分。v0.2 的旧划分不可与新划分混用，旧版 3,665 张统计不是当前结果。v0.3/v0.4 未重新划分数据；v0.4 仅在原 train/val 内部抽样试运行。
 
 ![类别分布与实际划分](reports/v0.2.1/class_distribution.png)
 
@@ -113,21 +133,27 @@ flower-resnet18/
 ├── scripts/verify_data.py      # 独立读取清单并检查实际原图与泄漏
 ├── scripts/audit_data.py       # 扩展变换候选、全量联系表；不自动删图
 ├── scripts/check_model.py      # v0.3 CPU/CUDA 实际批次与逐层形状检查
-├── configs/                   # 视觉复核、排除理由及 model_data.json
-├── tests/                     # 28 项数据、残差数学和预处理检查
+├── scripts/train.py            # v0.4 小规模训练、验证选模与保存入口
+├── scripts/check_checkpoint.py # 独立进程恢复模型、预处理和映射并核对预测
+├── configs/                   # 数据配置、视觉复核及 train_smoke.json
+├── tests/                     # 32 项数据、模型、训练及保存加载行为检查
 ├── src/model.py                # 手写 BasicBlock 和 ResNet18
 ├── src/data.py                 # Dataset、预处理、随机种子和 DataLoader
+├── src/engine.py               # 训练/验证一轮、损失和参数更新
+├── src/checkpoint.py           # 原子保存、严格重载及参考样本预测核对
 ├── data/                       # downloads/raw/processed-v0.2.1；旧 processed 保留
-├── artifacts/                  # 后续模型文件；大文件不入库
+├── artifacts/                  # 本机 v0.4-smoke 模型与元数据；大文件不入库
 ├── reports/v0.1/               # 保留环境阶段证据
 ├── reports/v0.2/               # 真实统计、图表、清单快照和验证日志
 ├── reports/v0.2.1/             # 修复后的统计、候选结论、逐图署名和真实日志
 ├── reports/v0.3/               # CPU/CUDA 前向、28 项检查及实际问题记录
+├── reports/v0.4/               # 试运行配置、逐轮日志、保存/重载及32项检查
 ├── reports/local/              # 日常检查产物，不入库
 ├── docs/requirements.md        # PDF 要求对照、版本规划和验收状态
 ├── docs/environment.md         # 硬件、环境选择和问题处理记录
 ├── docs/data.md                # 数据流程、字段、复现与边界说明
 ├── docs/model.md               # 残差连接、形状、预处理和迁移学习原理
+├── docs/training.md            # 训练/验证/保存原理、运行方式及试运行边界
 ├── docs/data-license.txt       # 原始许可证及全部摄影者署名
 └── .venv/                      # 独立环境，不入库
 ```
@@ -136,7 +162,7 @@ flower-resnet18/
 
 题目为五类花卉图片分类，数据来源为 TensorFlow 示例花卉集，详见 `data/README.md`。官方包已校验，图片许可为 CC BY 2.0，完整署名见 `docs/data-license.txt`；报告图片另有 `image_attributions.csv` 将图中编号映射到作者、原始来源、许可及缩放说明。源码、统计报告和许可说明入库，原图与压缩包不入库。
 
-版本保持为：v0.1 环境 → v0.2 数据 → v0.2.1 数据修复 → **v0.3 手写模型** → v0.4 训练试运行 → v0.5 正式训练评估 → v0.6 新图预测 → v1.0 验收材料。补丁版用于先处理实际发现的数据问题，其余规划不扩大。PDF 要求的迁移学习原理已在模型文档说明（未训练迁移学习模型）；真实运行视频仍待最终阶段准备。详细目标见 `docs/requirements.md`。
+版本保持为：v0.1 环境 → v0.2 数据 → v0.2.1 数据修复 → v0.3 手写模型 → **v0.4 训练试运行** → v0.5 正式训练评估 → v0.6 新图预测 → v1.0 验收材料。补丁版用于先处理实际发现的数据问题，其余规划不扩大。PDF 要求的迁移学习原理已在模型文档说明（未训练迁移学习模型）；真实运行视频仍待最终阶段准备。详细目标见 `docs/requirements.md`。
 
 ## Git 与远程仓库
 
@@ -156,8 +182,8 @@ PDF 要求持续提交，首次同步已经完成；之后在各阶段验收后�
 
 ## 本阶段建议理解的三个知识点
 
-1. **残差相加与投影**：输出为 `ReLU(F(x)+shortcut(x))`，尺寸或通道变化时用 1×1 投影匹配；查看 `src/model.py` 及零残差数值检查。
-2. **图像、批量和 logits**：图片经 RGB、裁剪、归一化后组为 `[N,3,224,224]`，模型输出 `[N,5]`；当前随机权重分数不代表分类能力。
-3. **预处理与检查模式**：统计只来自训练集；训练用随机增强、验证用固定处理。`eval()` 管理 BN 行为，`inference_mode()` 关闭求导，本版尚未训练。
+1. **损失、梯度与更新**：交叉熵衡量 logits 与标签的差异；清梯度、反向传播、SGD 更新分别解决什么问题，见 `src/engine.py`。
+2. **训练与验证的职责**：训练更新参数和 BN，验证使用 eval/inference_mode 且不更新状态；只用验证损失选模型，测试集留给最终评估。
+3. **保存权重还不够**：恢复预测必须同时保存类别顺序和预处理；推理 checkpoint 与可精确恢复优化器的续训 checkpoint 有区别，见 `src/checkpoint.py`。
 
 个人感悟将在最终说明中由你根据真实学习经历填写；不会代写虚构经历。视频目前未录制，演示脚本在 v1.0 整理。当前版本结束后等待“继续下一个版本”。
