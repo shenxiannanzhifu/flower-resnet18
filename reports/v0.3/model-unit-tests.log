@@ -1,0 +1,14 @@
+test_channel_only_and_stride_only_changes (test_model.ModelTests.test_channel_only_and_stride_only_changes)
+通道变化与空间变化各自都需要投影，不能只检查其中一个条件。 ... ok
+test_full_model_batch_shape_and_no_batchnorm_updates (test_model.ModelTests.test_full_model_batch_shape_and_no_batchnorm_updates)
+检查标准五类架构的参数量、真实输入尺寸及只读前向不会更新 BN 状态。 ... ok
+test_invalid_input_has_clear_error (test_model.ModelTests.test_invalid_input_has_clear_error) ... ok
+test_projection_is_added_for_odd_spatial_size (test_model.ModelTests.test_projection_is_added_for_odd_spatial_size)
+残差置零，手动设定投影映射；比较实际数值，不仅检查输出形状。 ... ok
+test_zero_residual_preserves_positive_identity (test_model.ModelTests.test_zero_residual_preserves_positive_identity)
+将 F(x) 置零后必须得到 ReLU(x)，能检出漏加跳跃支路的错误。 ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.354s
+
+OK
