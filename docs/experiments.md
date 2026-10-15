@@ -40,7 +40,13 @@
 
 本次实验的选模记录在测试评估前独立提交，从 Git 历史中能检查先后顺序。评估入口核对模型/训练报告未在选模后改变，并核对类别映射、预处理、归一化、数据清单哈希以及三个子集完整数量。测试阶段使用 eval/inference_mode，只前向、不更新参数或 BN。
 
+收尾检查发现旧版本按原始文本字节校验报告，Windows CRLF 经 Git 转为 LF 后会误报。已修复：新选择记录明确标注 `canonical-json-v1`，解析 JSON 后按固定键序和编码求摘要；历史记录仅兼容 LF/CRLF 转换，数值变化仍被拒绝。模型二进制始终严格校验原字节。原 `model_selection.json` 与测试结果没有重写；测试报告中源码哈希对应测试时的 `98b4018` 源码，后续兼容修复另作真实提交，详见 [换行修复验证](../reports/v0.5/newline-compatibility.json)。
+
 ## 指标与输出含义
+
+本次实际结果：选中第 21 轮，验证准确率 82.2142%；独立测试 446/549 正确，accuracy=81.2386%，macro-F1=0.808692，weighted-F1=0.811325。完整表格、曲线和错误分析见 [正式结果报告](../reports/v0.5/analysis.md)。这是一项单次正式实验，不代表多次运行平均或外部图片表现。
+
+正式模型位于 `artifacts/v0.5-formal/best.pt`，44,797,643 字节；本次 SHA-256 为 `c836ddcb3053e88b8d7c92b51decdcea49f6f9adfc62a8aa6d4ffa7260de812b`。已有模型可运行 `.venv/Scripts/python.exe scripts/check_checkpoint.py --checkpoint artifacts/v0.5-formal/best.pt --device cpu` 检查，成功标志 `CHECKPOINT CHECK PASSED`。
 
 `predictions.csv` 保存每一张测试图像的原始路径、真实标签、预测标签和五类概率。`confusion_matrix.csv` 的行是真实类别，列是预测类别；对角线是正确预测，非对角线显示混淆方向。PNG 图由相同矩阵绘制。
 

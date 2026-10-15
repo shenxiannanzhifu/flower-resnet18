@@ -30,7 +30,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from src.checkpoint import load_checkpoint
 from src.data import FlowerDataset, make_loader, read_json
-from src.evaluation import classification_metrics, verified_training_summary
+from src.evaluation import classification_metrics, training_summary_matches, verified_training_summary
 from data_utils import read_attributions
 
 
@@ -112,7 +112,7 @@ def main() -> None:
     summary = verified_training_summary(checkpoint, training_report)
     if (summary["checkpoint_sha256"] != selection["checkpoint_sha256"]
             or summary["best_epoch"] != selection["best_epoch"]
-            or hashlib.sha256((training_report / "summary.json").read_bytes()).hexdigest() != selection["training_summary_sha256"]):
+            or not training_summary_matches((training_report / "summary.json").read_bytes(), selection)):
         raise ValueError("模型或训练报告在固定选择后发生变化。")
     torch.set_num_threads(4)
     torch.backends.cuda.matmul.allow_tf32 = False

@@ -10,7 +10,8 @@ import uuid
 import numpy as np
 import pandas as pd
 
-from src.evaluation import classification_metrics, verified_training_summary
+from src.evaluation import (canonical_json_sha256, classification_metrics,
+                            training_summary_matches, verified_training_summary)
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,6 +19,25 @@ ROOT = Path(__file__).resolve().parents[1]
 
 class EvaluationTests(unittest.TestCase):
     """检查矩阵轴、宏平均、零分母，以及模型/最优轮次的独立核验。"""
+
+    def test_legacy_selection_survives_git_newlines_but_rejects_content_changes(self):
+        lf = b'{\n  "best_epoch": 21\n}\n'
+        crlf = lf.replace(b"\n", b"\r\n")
+        for saved, checked in ((crlf, lf), (lf, crlf)):
+            record = {"training_summary_sha256": hashlib.sha256(saved).hexdigest()}
+            self.assertTrue(training_summary_matches(checked, record))
+            self.assertFalse(training_summary_matches(checked.replace(b"21", b"22"), record))
+            self.assertFalse(training_summary_matches(b'{"best_epoch": 21}', record))
+
+    def test_canonical_selection_ignores_formatting_but_rejects_content_changes(self):
+        original = b'{\r\n  "best_epoch": 21, "status": "PASS"\r\n}\r\n'
+        record = {"training_summary_hash_format": "canonical-json-v1",
+                  "training_summary_sha256": canonical_json_sha256(original)}
+        self.assertTrue(training_summary_matches(b'{"status":"PASS","best_epoch":21}', record))
+        self.assertFalse(training_summary_matches(b'{"status":"PASS","best_epoch":22}', record))
+        record["training_summary_hash_format"] = "unsupported"
+        with self.assertRaisesRegex(ValueError, "未知"):
+            training_summary_matches(original, record)
 
     def test_known_confusion_and_macro_scores(self):
         result = classification_metrics([0, 0, 1, 1, 2], [0, 1, 1, 2, 1], ["a", "b", "c"])

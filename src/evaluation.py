@@ -11,6 +11,36 @@ import numpy as np
 import pandas as pd
 
 
+def canonical_json_sha256(content: bytes) -> str:
+    """对 JSON 内容计算稳定摘要；输入 UTF-8 字节，输出 SHA-256 十六进制字符串。
+
+    JSON 的换行、缩进和键顺序不是实验内容。先解析再按固定规则编码，
+    避免 Windows CRLF 被 Git 转成 LF 后，将同一份报告误判为被修改。
+    模型权重仍按原始二进制字节校验，不使用此函数。
+    """
+    value = json.loads(content.decode("utf-8"))
+    canonical = json.dumps(value, ensure_ascii=False, sort_keys=True,
+                           separators=(",", ":"), allow_nan=False).encode("utf-8")
+    return hashlib.sha256(canonical).hexdigest()
+
+
+def training_summary_matches(content: bytes, selection: dict) -> bool:
+    """按选择记录声明的格式核对训练报告，兼容早期未声明格式的记录。
+
+    历史记录不能在测试后重写：旧格式仅容许 Git 的 LF/CRLF 转换，
+    不容许改数值、缩进或其他内容；新记录明确采用 canonical-json-v1。
+    """
+    format_name = selection.get("training_summary_hash_format", "raw-bytes-v1")
+    expected = selection["training_summary_sha256"]
+    if format_name == "canonical-json-v1":
+        return canonical_json_sha256(content) == expected
+    if format_name == "raw-bytes-v1":
+        lf = content.replace(b"\r\n", b"\n")
+        candidates = (content, lf, lf.replace(b"\n", b"\r\n"))
+        return any(hashlib.sha256(value).hexdigest() == expected for value in candidates)
+    raise ValueError(f"未知训练报告哈希格式：{format_name}")
+
+
 def classification_metrics(labels, predictions, class_names: list[str]) -> dict:
     """输入同长度整数类别序列，返回混淆矩阵、准确率和逐类/宏平均/加权指标。
 

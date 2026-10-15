@@ -1,0 +1,112 @@
+{
+  "status": "PASS",
+  "purpose": "formal",
+  "split": "test",
+  "evaluated_at": "2026-10-15T23:51:36.940728+08:00",
+  "device": "cuda",
+  "checkpoint_sha256": "c836ddcb3053e88b8d7c92b51decdcea49f6f9adfc62a8aa6d4ffa7260de812b",
+  "selected_epoch": 21,
+  "selection_sha256": "8aec412d8022f3672c04cbc359690d9c8d2c65f89feeb26a1aa99641438589c3",
+  "manifest_sha256": "eeb451a41a9f0a71aadaaa0a1606ee055e4f6c8cbcfd06bc8401d097b424db86",
+  "loss": 0.5100996209841174,
+  "class_to_idx": {
+    "daisy": 0,
+    "dandelion": 1,
+    "roses": 2,
+    "sunflowers": 3,
+    "tulips": 4
+  },
+  "batch_size": 32,
+  "num_workers": 0,
+  "batchnorm_unchanged": true,
+  "samples": 549,
+  "correct": 446,
+  "accuracy": 0.8123861566484517,
+  "macro_precision": 0.8115042576549621,
+  "macro_recall": 0.80784850039881,
+  "macro_f1": 0.8086922477850939,
+  "weighted_f1": 0.8113247183844797,
+  "confusion_matrix": [
+    [
+      75,
+      10,
+      5,
+      3,
+      2
+    ],
+    [
+      5,
+      120,
+      4,
+      4,
+      2
+    ],
+    [
+      5,
+      6,
+      69,
+      3,
+      13
+    ],
+    [
+      2,
+      7,
+      1,
+      93,
+      1
+    ],
+    [
+      6,
+      7,
+      14,
+      3,
+      89
+    ]
+  ],
+  "matrix_axes": "rows=true, columns=predicted",
+  "zero_division": 0,
+  "per_class": [
+    {
+      "class_name": "daisy",
+      "support": 95,
+      "precision": 0.8064516129032258,
+      "recall": 0.7894736842105263,
+      "f1": 0.7978723404255319
+    },
+    {
+      "class_name": "dandelion",
+      "support": 135,
+      "precision": 0.8,
+      "recall": 0.8888888888888888,
+      "f1": 0.8421052631578948
+    },
+    {
+      "class_name": "roses",
+      "support": 96,
+      "precision": 0.7419354838709677,
+      "recall": 0.71875,
+      "f1": 0.7301587301587302
+    },
+    {
+      "class_name": "sunflowers",
+      "support": 104,
+      "precision": 0.8773584905660378,
+      "recall": 0.8942307692307693,
+      "f1": 0.8857142857142858
+    },
+    {
+      "class_name": "tulips",
+      "support": 119,
+      "precision": 0.8317757009345794,
+      "recall": 0.7478991596638656,
+      "f1": 0.7876106194690267
+    }
+  ],
+  "limitations": "单次种子、单数据集测试结果；选模和训练配置固定后评估，不代表外部新图泛化",
+  "source_sha256": {
+    "scripts/evaluate.py": "fdcccfc9d0defb87b5a5b11c55d06931a622853cf5e8392fa31bd2a1cdb1b602",
+    "src/evaluation.py": "dc83ff6051c134230043835618d9ce5e3460cf9f7523d386ada8359be2ff6eb0",
+    "src/model.py": "a01ca9f6e48e6f32ebb6e533d1a8870797f6c195c37e42bee2a860861096cb1f",
+    "src/data.py": "e726d9d24607b1410328630942f0b5d60b1e17637fbdc436a4cd0f6c56778110"
+  }
+}

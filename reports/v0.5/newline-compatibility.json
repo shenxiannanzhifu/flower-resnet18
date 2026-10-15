@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "verified_at": "2026-10-16T00:14:07.851656+08:00",
+  "historical_selection_commit": "98b4018",
+  "old_raw_hash_accepts_local_crlf": true,
+  "old_raw_hash_accepts_git_lf": false,
+  "repaired_check_accepts_local_crlf": true,
+  "repaired_check_accepts_git_lf": true,
+  "changed_best_epoch_rejected": true,
+  "original_selection_and_training_unchanged": true,
+  "test_source_verified_against_commit": "98b4018",
+  "new_record_hash_format": "canonical-json-v1",
+  "model_sha256": "c836ddcb3053e88b8d7c92b51decdcea49f6f9adfc62a8aa6d4ffa7260de812b",
+  "note": "只读核验真实报告与 Git blob；未重训或重评，未覆盖测试前选择记录"
+}

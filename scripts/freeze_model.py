@@ -6,7 +6,6 @@
 
 import argparse
 from datetime import datetime
-import hashlib
 import json
 from pathlib import Path
 import sys
@@ -14,7 +13,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from src.evaluation import verified_training_summary
+from src.evaluation import canonical_json_sha256, verified_training_summary
 
 
 def main():
@@ -30,7 +29,8 @@ def main():
               "checkpoint": str(checkpoint.resolve().relative_to(ROOT)),
               "checkpoint_sha256": summary["checkpoint_sha256"],
               "training_report": str(directory.resolve().relative_to(ROOT)),
-              "training_summary_sha256": hashlib.sha256((directory / "summary.json").read_bytes()).hexdigest(),
+              "training_summary_hash_format": "canonical-json-v1",
+              "training_summary_sha256": canonical_json_sha256((directory / "summary.json").read_bytes()),
               "best_epoch": summary["best_epoch"], "validation_loss": summary["best_validation_loss"],
               "validation_accuracy": summary["best_validation_accuracy"],
               "selection_rule": "minimum validation cross entropy; test metrics unavailable at selection",
