@@ -1,0 +1,11 @@
+{
+  "checked_at": "2026-10-15T21:57:25.468600+08:00",
+  "num_workers": 0,
+  "torch_cpu_threads": 4,
+  "batch_size": 16,
+  "warmup_images": 16,
+  "measured_images": 128,
+  "loading_seconds": 0.3468023000168614,
+  "images_per_second": 369.08636417283475,
+  "scope": "本机缓存条件下的短加载诊断，未运行模型，不能视为训练速度或跨机器基准"
+}

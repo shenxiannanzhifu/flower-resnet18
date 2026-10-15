@@ -1,0 +1,10 @@
+test_checkpoint_roundtrip_and_invalid_mapping (test_training.TrainingTests.test_checkpoint_roundtrip_and_invalid_mapping)
+实际序列化完整手写模型；恢复的 logits 必须一致，错误映射不能覆盖文件。 ... ok
+test_empty_or_nonfinite_input_cannot_report_success (test_training.TrainingTests.test_empty_or_nonfinite_input_cannot_report_success) ... ok
+test_loss_is_weighted_by_samples_and_eval_is_read_only (test_training.TrainingTests.test_loss_is_weighted_by_samples_and_eval_is_read_only) ... ok
+test_training_updates_parameters_and_bn_but_validation_does_not (test_training.TrainingTests.test_training_updates_parameters_and_bn_but_validation_does_not) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.321s
+
+OK
