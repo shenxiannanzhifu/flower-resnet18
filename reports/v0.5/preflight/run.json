@@ -1,0 +1,46 @@
+{
+  "status": "PASS",
+  "purpose": "smoke",
+  "version": "v0.5",
+  "started_at": "2026-10-15T23:31:50.093625+08:00",
+  "config": {
+    "purpose": "smoke",
+    "data_config": "configs/model_data.json",
+    "epochs": 1,
+    "batch_size": 32,
+    "learning_rate": 0.01,
+    "momentum": 0.9,
+    "weight_decay": 0.0005,
+    "scheduler_step_size": 2,
+    "scheduler_gamma": 0.1,
+    "seed": 42,
+    "train_per_class": 8,
+    "val_per_class": 4
+  },
+  "device": "cuda",
+  "torch": "2.8.0+cu128",
+  "device_name": "NVIDIA GeForce RTX 5060 Laptop GPU",
+  "num_workers": 0,
+  "cpu_threads": 4,
+  "precision": "FP32, TF32 disabled",
+  "train_samples": 40,
+  "val_samples": 20,
+  "test_images_used": 0,
+  "manifest_sha256": "eeb451a41a9f0a71aadaaa0a1606ee055e4f6c8cbcfd06bc8401d097b424db86",
+  "class_to_idx": {
+    "daisy": 0,
+    "dandelion": 1,
+    "roses": 2,
+    "sunflowers": 3,
+    "tulips": 4
+  },
+  "source_sha256": {
+    "src/model.py": "a01ca9f6e48e6f32ebb6e533d1a8870797f6c195c37e42bee2a860861096cb1f",
+    "src/data.py": "e726d9d24607b1410328630942f0b5d60b1e17637fbdc436a4cd0f6c56778110",
+    "src/engine.py": "7c60953f8ca922b1b4c217b8930f43f8c4e59308200fd1b3c538afd1e6c45d5f",
+    "src/checkpoint.py": "916000c8935ee09092e699728479455e41db93ef7bff6e82f8ab00d0882a72a9",
+    "scripts/train.py": "f649fba15eac3798985b524f5069858f6eab5bfdec77b9e235abf0adaf62eed6"
+  },
+  "git_commit_at_run": "72f0f6ec41b71771bef232494a7adeb758d65d95",
+  "working_tree_dirty_at_run": true
+}

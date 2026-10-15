@@ -12,6 +12,7 @@ from src.checkpoint import load_checkpoint, save_checkpoint
 from src.data import read_json
 from src.engine import run_epoch
 from src.model import ResNet18
+from scripts.train import validate_config
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -67,6 +68,15 @@ class TrainingTests(unittest.TestCase):
             run_epoch(model, [(torch.full((2, 2), float("nan")), torch.tensor([0, 1]), [])],
                       nn.CrossEntropyLoss(), torch.device("cpu"))
 
+    def test_formal_config_cannot_include_smoke_sampling(self):
+        """正式实验不能只改名称而沿用小规模抽样，也不能接受非有限学习率。"""
+        config = read_json(ROOT / "configs/train_formal.json")
+        validate_config(config)
+        with self.assertRaisesRegex(ValueError, "完整 train/val"):
+            validate_config({**config, "train_per_class": 40})
+        with self.assertRaisesRegex(ValueError, "有限"):
+            validate_config({**config, "learning_rate": float("nan")})
+
     def test_checkpoint_roundtrip_and_invalid_mapping(self):
         """实际序列化完整手写模型；恢复的 logits 必须一致，错误映射不能覆盖文件。"""
         base = (ROOT / "reports/local/tests").resolve()
@@ -90,6 +100,10 @@ class TrainingTests(unittest.TestCase):
                 torch.testing.assert_close(restored(image), expected, rtol=0, atol=0)
             self.assertEqual(loaded_metadata, metadata)
             self.assertFalse(restored.training)
+            metadata["purpose"] = "formal"
+            save_checkpoint(path, model, metadata)
+            _, formal_metadata = load_checkpoint(path, torch.device("cpu"))
+            self.assertEqual(formal_metadata["purpose"], "formal")
             before_size = path.stat().st_size
             metadata["class_to_idx"] = {"a": 1}
             with self.assertRaisesRegex(ValueError, "类别索引"):

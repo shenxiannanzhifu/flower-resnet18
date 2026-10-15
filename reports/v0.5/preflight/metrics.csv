@@ -1,0 +1,2 @@
+purpose,epoch,learning_rate,train_loss,train_accuracy,train_samples,train_batches,train_loading_seconds,train_compute_seconds,train_elapsed_seconds,val_loss,val_accuracy,val_samples,val_batches,val_loading_seconds,val_compute_seconds,val_elapsed_seconds
+smoke,1,0.01,1.6213983058929444,0.2,40,2,0.1324041000334546,0.4865976999280974,0.619100600015372,1.6039905548095703,0.2,20,1,0.06803919997764751,0.013388700026553124,0.0815364999580197

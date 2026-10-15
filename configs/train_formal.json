@@ -1,0 +1,12 @@
+{
+  "purpose": "formal",
+  "data_config": "configs/model_data.json",
+  "epochs": 30,
+  "batch_size": 32,
+  "learning_rate": 0.01,
+  "momentum": 0.9,
+  "weight_decay": 0.0005,
+  "scheduler_step_size": 10,
+  "scheduler_gamma": 0.2,
+  "seed": 42
+}

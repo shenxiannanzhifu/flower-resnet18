@@ -1,0 +1,25 @@
+{
+  "purpose": "smoke",
+  "relative_path": "daisy/16121105382_b96251e506_m.jpg",
+  "true_class": "daisy",
+  "predicted_class": "daisy",
+  "logits": [
+    0.14814798533916473,
+    -0.09087435156106949,
+    0.02874893508851528,
+    -0.16272906959056854,
+    0.04399382695555687
+  ],
+  "probabilities": {
+    "daisy": 0.23208634555339813,
+    "dandelion": 0.18274416029453278,
+    "roses": 0.20596586167812347,
+    "sunflowers": 0.17007379233837128,
+    "tulips": 0.20912984013557434
+  },
+  "reload_matches_saved_logits": true,
+  "rtol": 0.0001,
+  "atol": 0.0001,
+  "maximum_absolute_difference": 0.0,
+  "note": "单张验证样本，用于检查加载和预测流程，不代表新图泛化能力"
+}

@@ -1,7 +1,7 @@
-"""在独立进程加载试运行模型，预测保存时的验证样本并核对 logits。
+"""在独立进程加载模型，预测保存时的验证样本并核对 logits。
 
 运行：.venv/Scripts/python.exe scripts/check_checkpoint.py --device cpu
-默认读取 artifacts/v0.4-smoke/best.pt。这是 v0.4 内部流程检查；新图命令与展示在 v0.6 完善。
+默认读取 artifacts/v0.4-smoke/best.pt；可用 --checkpoint 指定正式模型。新图命令在 v0.6 完善。
 """
 
 import argparse
@@ -44,9 +44,9 @@ def main() -> None:
               "class_to_idx": metadata["class_to_idx"], **prediction}
     report_dir.mkdir(parents=True, exist_ok=True)
     report_path.write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"SMOKE reference: {prediction['relative_path']}; prediction: {prediction['predicted_class']}")
+    print(f"{metadata['purpose'].upper()} reference: {prediction['relative_path']}; prediction: {prediction['predicted_class']}")
     print(f"Reload max difference: {prediction['maximum_absolute_difference']:.8g}")
-    print("CHECKPOINT CHECK PASSED — 仅验证试运行模型的加载与预测。")
+    print("CHECKPOINT CHECK PASSED — 仅验证模型的加载与参考图片预测。")
 
 
 if __name__ == "__main__":

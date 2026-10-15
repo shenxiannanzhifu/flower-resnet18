@@ -1,8 +1,9 @@
-"""v0.4 小规模训练试运行：训练、验证、保存最佳模型、重载并预测参考图片。
+"""v0.4/v0.5 训练入口：训练、验证、保存最佳模型、重载并预测参考图片。
 
 项目根目录运行：.venv/Scripts/python.exe scripts/train.py --device cuda
-默认训练 200 张/验证 100 张、3 轮；结果均标记 smoke，不用于正式成绩。
-本版不读取测试集图片，不支持断点续训。报告和模型目录非空时拒绝覆盖。
+默认仍是 200/100 张、3 轮 smoke。正式实验必须显式指定 --config configs/train_formal.json，
+并选择新的 --run-dir / --report-dir。formal 使用完整 train/val，始终不读测试图像。
+不支持断点续训；报告和模型目录非空时拒绝覆盖。
 """
 
 import argparse
@@ -35,10 +36,15 @@ def write_json(path: Path, value: dict) -> None:
 
 
 def validate_config(config: dict) -> None:
-    """限制本入口为有限样本试运行，拒绝无效学习率、轮数和调度参数。"""
-    if config["purpose"] != "smoke":
-        raise ValueError("v0.4 入口只能运行 smoke，不得标成正式实验。")
-    for name in ("epochs", "batch_size", "train_per_class", "val_per_class", "scheduler_step_size"):
+    """区分正式/试运行，拒绝将带子集抽样的配置标为完整正式实验。"""
+    if config["purpose"] not in ("smoke", "formal"):
+        raise ValueError("purpose 必须为 smoke 或 formal。")
+    if config["purpose"] == "formal" and any(name in config for name in ("train_per_class", "val_per_class")):
+        raise ValueError("formal 必须使用完整 train/val，不能设置 per_class 抽样。")
+    names = ["epochs", "batch_size", "scheduler_step_size"]
+    if config["purpose"] == "smoke":
+        names += ["train_per_class", "val_per_class"]
+    for name in names:
         if type(config[name]) is not int or config[name] < 1:
             raise ValueError(f"{name} 必须为正整数。")
     if type(config["seed"]) is not int or not 0 <= config["seed"] < 2 ** 32:
@@ -78,7 +84,8 @@ def get_source_state() -> dict:
 
 
 def run_training(args, config: dict, run_dir: Path, report_dir: Path) -> None:
-    """执行小规模训练并独立重载最佳模型，保存完整可复核的试运行产物。"""
+    """按明确用途训练并重载最佳模型；无论何种用途，训练过程都只读取 train/val。"""
+    purpose = config["purpose"]
     if args.device == "cuda" and not torch.cuda.is_available():
         raise RuntimeError("CUDA 不可用，请检查驱动/torch 或指定 --device cpu。")
     device = torch.device(args.device)
@@ -92,7 +99,8 @@ def run_training(args, config: dict, run_dir: Path, report_dir: Path) -> None:
     if device.type == "cuda":
         torch.cuda.reset_peak_memory_stats()
     datasets = {split: FlowerDataset(ROOT, split, Path(config["data_config"])) for split in ("train", "val")}
-    indices = {split: select_smoke_indices(dataset, config[f"{split}_per_class"], config["seed"])
+    indices = {split: (select_smoke_indices(dataset, config[f"{split}_per_class"], config["seed"])
+                       if purpose == "smoke" else list(range(len(dataset))))
                for split, dataset in datasets.items()}
     loaders = {
         split: DataLoader(Subset(dataset, indices[split]), batch_size=config["batch_size"],
@@ -105,7 +113,7 @@ def run_training(args, config: dict, run_dir: Path, report_dir: Path) -> None:
         report_dir / "selected_samples.csv", index=False)
     training_data = datasets["train"]
     source = get_source_state()
-    common = {"purpose": "smoke", "version": "v0.4", "started_at": datetime.now().astimezone().isoformat(),
+    common = {"purpose": purpose, "version": "v0.5", "started_at": datetime.now().astimezone().isoformat(),
               "config": config, "device": str(device), "torch": str(torch.__version__),
               "device_name": torch.cuda.get_device_name(0) if device.type == "cuda" else "CPU",
               "num_workers": 0, "cpu_threads": 4, "precision": "FP32, TF32 disabled",
@@ -135,7 +143,7 @@ def run_training(args, config: dict, run_dir: Path, report_dir: Path) -> None:
             val_metrics = run_epoch(model, loaders["val"], criterion, device)
             for name, value in model.named_buffers():
                 torch.testing.assert_close(value, buffers[name], rtol=0, atol=0)
-            row = {"purpose": "smoke", "epoch": epoch, "learning_rate": learning_rate,
+            row = {"purpose": purpose, "epoch": epoch, "learning_rate": learning_rate,
                    **{f"train_{key}": value for key, value in train_metrics.items()},
                    **{f"val_{key}": value for key, value in val_metrics.items()}}
             if writer is None:
@@ -148,7 +156,7 @@ def run_training(args, config: dict, run_dir: Path, report_dir: Path) -> None:
                 best_loss, best_epoch = val_metrics["loss"], epoch
                 with torch.inference_mode():
                     reference_logits = model(reference_tensor.unsqueeze(0).to(device))[0].cpu().tolist()
-                metadata = {"purpose": "smoke", "version": "v0.4", "epoch": epoch,
+                metadata = {"purpose": purpose, "version": "v0.5", "epoch": epoch,
                             "validation_loss": best_loss, "selection_metric": "validation_loss_min",
                             "class_to_idx": training_data.class_to_idx,
                             "preprocessing": training_data.settings,
@@ -158,7 +166,7 @@ def run_training(args, config: dict, run_dir: Path, report_dir: Path) -> None:
                                           "logits": reference_logits}, **source}
                 save_checkpoint(checkpoint_path, model, metadata)
                 write_json(run_dir / "best_metadata.json", metadata)
-            print(f"SMOKE epoch {epoch}/{config['epochs']}: lr={learning_rate:.5g}, "
+            print(f"{purpose.upper()} epoch {epoch}/{config['epochs']}: lr={learning_rate:.5g}, "
                   f"train_loss={train_metrics['loss']:.4f}, train_acc={train_metrics['accuracy']:.3f}, "
                   f"val_loss={val_metrics['loss']:.4f}, val_acc={val_metrics['accuracy']:.3f}", flush=True)
             scheduler.step()  # 每轮结束再调学习率；日志记录的是本轮实际使用值。
@@ -179,11 +187,13 @@ def run_training(args, config: dict, run_dir: Path, report_dir: Path) -> None:
                "checkpoint": str(checkpoint_path.relative_to(ROOT)), "checkpoint_bytes": checkpoint_path.stat().st_size,
                "checkpoint_sha256": hashlib.sha256(checkpoint_path.read_bytes()).hexdigest(),
                "cuda_peak_allocated_mib": torch.cuda.max_memory_allocated() / 1024 ** 2 if device.type == "cuda" else None,
-               "limitations": "仅有限样本试运行；非正式成绩；未评估测试集；不支持恢复优化器续训"}
+               "limitations": ("有限样本试运行；非正式成绩；" if purpose == "smoke" else "单次固定种子正式实验；")
+                               + "训练阶段未评估测试集；不支持恢复优化器续训"}
     write_json(report_dir / "summary.json", summary)
     write_json(report_dir / "run.json", {"status": "PASS", **common})
     print(f"Best epoch: {best_epoch}; checkpoint: {checkpoint_path}", flush=True)
-    print("SMOKE TRAINING PASSED — 仅试运行，不是正式实验成绩。", flush=True)
+    print(f"{purpose.upper()} TRAINING PASSED — " +
+          ("仅试运行，不是正式实验成绩。" if purpose == "smoke" else "全量训练/验证已完成，测试评估需独立执行。"), flush=True)
 
 
 def main() -> None:
@@ -227,5 +237,5 @@ if __name__ == "__main__":
     try:
         main()
     except (ValueError, KeyError, OSError, RuntimeError, AssertionError) as error:
-        print(f"SMOKE TRAINING FAILED: {error}", file=sys.stderr)
+        print(f"TRAINING FAILED: {error}", file=sys.stderr)
         sys.exit(1)

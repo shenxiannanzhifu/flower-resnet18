@@ -22,8 +22,8 @@ def validate_metadata(metadata: dict) -> None:
     if (not values or any(type(value) is not int for value in values)
             or sorted(values) != list(range(len(values)))):
         raise ValueError("checkpoint 类别索引必须是从 0 开始的连续整数。")
-    if metadata["purpose"] != "smoke":
-        raise ValueError("v0.4 仅支持明确标记为 smoke 的试运行 checkpoint。")
+    if metadata["purpose"] not in ("smoke", "formal"):
+        raise ValueError("checkpoint 必须明确标记为 smoke 或 formal。")
     if not isinstance(metadata["epoch"], int) or metadata["epoch"] < 1:
         raise ValueError("checkpoint 轮数无效。")
     if not math.isfinite(metadata["validation_loss"]):
@@ -69,7 +69,7 @@ def load_checkpoint(path: Path, device: torch.device):
 
 
 def check_reference_prediction(model: ResNet18, metadata: dict, project_root: Path) -> dict:
-    """用保存时选定的验证图片检查恢复结果，返回标记为试运行的类别和分数。
+    """用保存时选定的验证图片检查恢复结果，返回保留实验用途标记的类别和分数。
 
     预处理与类别顺序完全取自 checkpoint，而不是当前配置文件；不访问测试图像。
     参考 logits 在保存前由内存中的最佳模型生成，因此可检测错误权重/预处理加载。
@@ -93,9 +93,9 @@ def check_reference_prediction(model: ResNet18, metadata: dict, project_root: Pa
     torch.testing.assert_close(logits, expected, rtol=1e-4, atol=1e-4)
     names = {index: name for name, index in metadata["class_to_idx"].items()}
     prediction = int(logits.argmax())
-    return {"purpose": "smoke", "relative_path": reference["relative_path"],
+    return {"purpose": metadata["purpose"], "relative_path": reference["relative_path"],
             "true_class": names[reference["label"]], "predicted_class": names[prediction],
             "logits": logits.tolist(), "probabilities": {names[i]: float(p) for i, p in enumerate(probabilities)},
             "reload_matches_saved_logits": True, "rtol": 1e-4, "atol": 1e-4,
             "maximum_absolute_difference": float((logits - expected).abs().max()),
-            "note": "试运行的单张验证样本，用于检查加载和预测流程，不代表新图泛化能力"}
+            "note": "单张验证样本，用于检查加载和预测流程，不代表新图泛化能力"}
