@@ -2,18 +2,21 @@
 
 这是“后端 AI 方向第一阶段”考核项目。使用 Python、NumPy、Pandas、Matplotlib 和 PyTorch，从数据分析逐步推进到手写 ResNet-18、训练、评估和新图片预测。
 
-当前完成 **v0.2.1：数据质量修复**。沿用 v0.1/v0.2 的同一项目及 Git 历史，补充分组以修复一对相邻拍摄照片跨训练/验证集的问题，并隔离一张新发现的明显标签噪声。3,670 张原图保留不动，最终使用 3,664 张。尚未编写 ResNet 或训练模型。每个阶段通过验收后提交并打标签，等待确认后再进入下一版本。
+当前完成 **v0.3：手写 ResNet-18 与模型检查**。沿用同一项目和 Git 历史，已手写残差块、四组 ResNet 和图像数据加载；CPU、CUDA 均通过真实图片批次前向检查。使用 v0.2.1 修复后的 3,664 张可用图片及训练 RGB 统计，原图与旧阶段证据保留。**模型仍是随机权重，尚未训练，没有分类成绩。**每个阶段验收后提交并打标签，等待确认再进入下一版本。
 
 ## 现在如何运行
 
-本机数据与独立环境已准备好。在 Windows PowerShell 中运行以下命令即可复核，不必激活环境或修改执行策略：
+本机数据与独立环境已准备好。在 Windows PowerShell 中运行以下命令检查本版，不必激活环境或修改执行策略：
 
 ```powershell
 Set-Location -LiteralPath 'C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18'
-& '.\.venv\Scripts\python.exe' scripts\verify_data.py
+& '.\.venv\Scripts\python.exe' scripts\check_model.py --device cuda
+& '.\.venv\Scripts\python.exe' scripts\check_model.py --device cpu
 ```
 
-成功标志：`DATA VERIFICATION PASSED`，JSON 中 `included_images` 为 3664，划分为 train=2564、val=551、test=549。验证默认使用 `data/processed-v0.2.1`，逐张核对原图 SHA-256，并独立检查已识别的重复关系没有跨子集。
+成功标志：`MODEL CHECK PASSED`。两种设备均应显示 train/val 的 `images=[8,3,224,224]`、`logits=[8,5]`（输出可能带空格），参数量 `11,179,077`。报告默认写入 `reports/local/model-cuda` 或 `reports/local/model-cpu`；本次真实验收证据位于 [v0.3 验收报告](reports/v0.3/acceptance.md)。GPU 不可用时可以只运行 CPU 命令；内存紧张时增加 `--batch-size 2`。
+
+详解见 [模型与数据说明](docs/model.md)。本版固定 DataLoader `num_workers=0`：当前受限 Windows 环境的多进程队列返回 WinError 5，已保留失败记录并用单进程重新验证。此问题与之前 Git HTTPS 进程崩溃是两件事。检查没有反向传播或保存模型，也不把随机 logits 当作预测成果。
 
 完整复现数据流程（首次下载约 218 MiB；已有压缩包则直接复用并校验）：
 
@@ -24,7 +27,7 @@ Set-Location -LiteralPath 'C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git
 & '.\.venv\Scripts\python.exe' -m unittest discover -s tests -v
 ```
 
-对应成功标志为 `DATA DOWNLOAD VERIFIED`、`DATA PREPARATION PASSED`、`DATA VERIFICATION PASSED` 和 `Ran 16 tests ... OK`。程序失败会返回非零退出码并给出原因。离线检查已有数据包可使用 `download_data.py --offline`。数据准备使用 CPU，不需要启动 GPU 训练。
+对应成功标志为 `DATA DOWNLOAD VERIFIED`、`DATA PREPARATION PASSED`、`DATA VERIFICATION PASSED` 和 `Ran 28 tests ... OK`。程序失败会返回非零退出码并给出原因。数据验证结果应为 3,664 张、train=2564、val=551、test=549；默认逐张复核原图哈希并检查已知重复没有跨集。离线检查已有包可使用 `download_data.py --offline`。数据准备使用 CPU，不需要启动 GPU 训练。
 
 查看图表和开发历史：
 
@@ -37,7 +40,7 @@ git status --short
 git tag --list
 ```
 
-当前固定证据在 [v0.2.1 验收报告](reports/v0.2.1/analysis.md)，日常重跑图表写入 `reports/local/data-v0.2.1`，可用清单写入 `data/processed-v0.2.1`。旧 `data/processed` 和 `reports/v0.2` 保留；后续模型必须使用修复后的清单和训练集 RGB 统计。不要随意更换种子、图片或复核配置，脚本会拒绝覆盖不同配置的旧划分或报告。复现方式见 [数据说明](docs/data.md)。
+数据阶段固定证据在 [v0.2.1 验收报告](reports/v0.2.1/analysis.md)，日常重跑图表写入 `reports/local/data-v0.2.1`，可用清单写入 `data/processed-v0.2.1`。旧 `data/processed` 和 `reports/v0.2` 保留；当前模型加载器已绑定修复后的清单和训练集 RGB 统计。不要随意更换种子、图片或复核配置，脚本会拒绝覆盖不同配置的旧划分或报告。复现方式见 [数据说明](docs/data.md)。
 
 可选重新生成扩展候选（不会自动改标签或删除图片）：
 
@@ -62,7 +65,7 @@ v0.1 的环境检查仍可运行：`.\.venv\Scripts\python.exe scripts\check_env
 
 全部图片解码成功。排除的 6 张分别是跨类相同图片 2 张、同类重复副本 2 张、视觉复核发现的明显标签噪声 2 张；原始文件和标签均保留。近似图片只做整组划分，不仅凭感知哈希删除。已知重复关系没有跨子集，不代表所有潜在近重复或错标都已找全。
 
-本次重建使 1,678 张图片的 split 字段改变（含新增排除的 1 张），明细在 `reports/v0.2.1/split_changes.csv`。这是分组/保留集合变化后重新运行整组划分的结果；当前从未训练模型或根据测试成绩选择划分。v0.2 的旧划分不可与新划分混用，旧版 3,665 张统计不是当前结果。
+v0.2.1 重建使 1,678 张图片的 split 字段改变（含新增排除的 1 张），明细在 `reports/v0.2.1/split_changes.csv`。这是分组/保留集合变化后重新运行整组划分的结果；当前从未训练模型或根据测试成绩选择划分。v0.2 的旧划分不可与新划分混用，旧版 3,665 张统计不是当前结果。v0.3 未重新划分数据。
 
 ![类别分布与实际划分](reports/v0.2.1/class_distribution.png)
 
@@ -71,7 +74,7 @@ v0.1 的环境检查仍可运行：`.\.venv\Scripts\python.exe scripts\check_env
 - Python 3.12，独立环境目录 `.venv`，不继承系统包。
 - PyTorch 2.8.0+cu128、torchvision 0.23.0+cu128；RTX 50 系列选 CUDA 12.8 构建。
 - NumPy 2.2.6、Pandas 2.2.3、Matplotlib 3.10.3、Pillow 11.2.1。
-- `torchvision` 后续仅用于图片变换等基础功能；手写残差块和 ResNet，不调用现成完整模型或下载预训练权重。
+- `torchvision` 仅用于图片变换等基础功能；残差块和 ResNet 已手写，不调用现成完整模型或下载预训练权重。
 - 只安装 GPU 驱动和这些 Python 包即可使用本项目；这里没有编译 CUDA 扩展，不需要另装完整 CUDA Toolkit。
 
 本机已配置的环境可直接运行。系统默认 `python` 是 3.14，**不要用它替代命令中的 `.venv` 解释器**。本次借助已有的 Python 3.12.14 运行时建立 venv，记录见 `docs/environment.md`。
@@ -109,18 +112,22 @@ flower-resnet18/
 ├── scripts/data_utils.py       # 图片检查、许可解析、重复分组与划分
 ├── scripts/verify_data.py      # 独立读取清单并检查实际原图与泄漏
 ├── scripts/audit_data.py       # 扩展变换候选、全量联系表；不自动删图
-├── configs/                   # 可追溯的视觉复核关系与排除理由
-├── tests/                     # 16 个数据质量与防泄漏回归测试
-├── src/                        # v0.3 起逐步编写模型和训练代码
+├── scripts/check_model.py      # v0.3 CPU/CUDA 实际批次与逐层形状检查
+├── configs/                   # 视觉复核、排除理由及 model_data.json
+├── tests/                     # 28 项数据、残差数学和预处理检查
+├── src/model.py                # 手写 BasicBlock 和 ResNet18
+├── src/data.py                 # Dataset、预处理、随机种子和 DataLoader
 ├── data/                       # downloads/raw/processed-v0.2.1；旧 processed 保留
 ├── artifacts/                  # 后续模型文件；大文件不入库
 ├── reports/v0.1/               # 保留环境阶段证据
 ├── reports/v0.2/               # 真实统计、图表、清单快照和验证日志
 ├── reports/v0.2.1/             # 修复后的统计、候选结论、逐图署名和真实日志
+├── reports/v0.3/               # CPU/CUDA 前向、28 项检查及实际问题记录
 ├── reports/local/              # 日常检查产物，不入库
 ├── docs/requirements.md        # PDF 要求对照、版本规划和验收状态
 ├── docs/environment.md         # 硬件、环境选择和问题处理记录
 ├── docs/data.md                # 数据流程、字段、复现与边界说明
+├── docs/model.md               # 残差连接、形状、预处理和迁移学习原理
 ├── docs/data-license.txt       # 原始许可证及全部摄影者署名
 └── .venv/                      # 独立环境，不入库
 ```
@@ -129,7 +136,7 @@ flower-resnet18/
 
 题目为五类花卉图片分类，数据来源为 TensorFlow 示例花卉集，详见 `data/README.md`。官方包已校验，图片许可为 CC BY 2.0，完整署名见 `docs/data-license.txt`；报告图片另有 `image_attributions.csv` 将图中编号映射到作者、原始来源、许可及缩放说明。源码、统计报告和许可说明入库，原图与压缩包不入库。
 
-版本保持为：v0.1 环境 → v0.2 数据 → **v0.2.1 数据修复** → v0.3 手写模型 → v0.4 训练试运行 → v0.5 正式训练评估 → v0.6 新图预测 → v1.0 验收材料。补丁版用于先处理实际发现的数据问题，其余规划不扩大。PDF 还要求了解迁移学习思想（不替代手写模型）和真实运行视频。详细目标见 `docs/requirements.md`。
+版本保持为：v0.1 环境 → v0.2 数据 → v0.2.1 数据修复 → **v0.3 手写模型** → v0.4 训练试运行 → v0.5 正式训练评估 → v0.6 新图预测 → v1.0 验收材料。补丁版用于先处理实际发现的数据问题，其余规划不扩大。PDF 要求的迁移学习原理已在模型文档说明（未训练迁移学习模型）；真实运行视频仍待最终阶段准备。详细目标见 `docs/requirements.md`。
 
 ## Git 与远程仓库
 
@@ -147,8 +154,8 @@ PDF 要求持续提交，首次同步已经完成；之后在各阶段验收后�
 
 ## 本阶段建议理解的三个知识点
 
-1. **先分组再划分**：把同图副本随机放入训练和测试集会让评估过于乐观。重复关系必须作为整体分配；感知哈希只能提供候选，视觉核查可补充漏检。
-2. **数据清单与可复现性**：CSV 记录原图路径、类别、哈希、排除理由和子集；固定随机种子还不够，图片内容、排序、复核配置也必须固定。
-3. **统计量也要防泄漏**：Pandas 负责表格和分组统计；NumPy 实际计算图像尺寸分位数、感知哈希与训练集 RGB 均值/标准差。训练统计只来自训练集，Matplotlib 图表来自真实数据而非示例数字。
+1. **残差相加与投影**：输出为 `ReLU(F(x)+shortcut(x))`，尺寸或通道变化时用 1×1 投影匹配；查看 `src/model.py` 及零残差数值检查。
+2. **图像、批量和 logits**：图片经 RGB、裁剪、归一化后组为 `[N,3,224,224]`，模型输出 `[N,5]`；当前随机权重分数不代表分类能力。
+3. **预处理与检查模式**：统计只来自训练集；训练用随机增强、验证用固定处理。`eval()` 管理 BN 行为，`inference_mode()` 关闭求导，本版尚未训练。
 
 个人感悟将在最终说明中由你根据真实学习经历填写；不会代写虚构经历。视频目前未录制，演示脚本在 v1.0 整理。当前版本结束后等待“继续下一个版本”。
