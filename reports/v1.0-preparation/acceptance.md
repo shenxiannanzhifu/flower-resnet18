@@ -25,7 +25,7 @@ PDF 要求对照在 docs/requirements.md。解释迁移学习原理但不替代�
 
 在原项目 artifacts/delivery-preparation/20261016-preparation 中生成 source-提交短哈希.zip、model/best.pt、manifest.json、checksums.sha256、README-DELIVERY.md；具体源提交与哈希以实际生成的 manifest 为准。ZIP 从真实提交生成，包含本报告与文档；模型单独复制并按原 SHA-256 核验。生成后检查归档与提交逐文件一致，技术文件与上述运行核验快照相同。
 
-该目录受 Git 忽略，不上传 GitHub；只推送代码、依赖、文档、报告及 v0.6.1 标签。GitHub 推送后读取 main/标签核对，具体证据另作同步记录。本人感悟和视频补齐后需更新文档、重新生成最终包，不能将当前准备包当作已完成的 v1.0。
+该目录受 Git 忽略，不上传 GitHub；只推送代码、依赖、文档、报告及 v0.6.1 标签。09:25 实际上传并读取 main=0f0722c、标签解引用=500df3b，旧标签一致；证据见 github-sync.json。本同步说明另作新提交再次上传，标签不移动。本人感悟和视频补齐后需更新文档、重新生成最终包，不能将当前准备包当作已完成的 v1.0。
 
 ## 未完成的最终要求
 

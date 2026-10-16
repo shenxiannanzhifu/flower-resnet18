@@ -227,6 +227,8 @@ v0.5 在同仓库 `feat/formal-evaluation` 分支按真实顺序开发：`7034fa
 
 ## 本阶段建议理解的三个知识点
 
+**v0.6.1 与 v1.0 交付准备已同步 GitHub**：2026-10-16 09:25（北京时间）读回 main=0f0722c，v0.6.1 解引用=500df3b，旧标签保持。证据见 [本轮同步记录](reports/v1.0-preparation/github-sync.json)。本同步说明另作后续提交，不移动验收标签。最终 v1.0 仍等待本人材料，不提前打标签。
+
 1. **权重与预处理要配套**：类别编号、RGB 归一化、缩放和裁剪都从 checkpoint 恢复，不能换一份当前配置猜测。
 2. **推理状态的两个开关**：`eval()` 固定 BatchNorm，`inference_mode()` 关闭梯度；两者都要用，见 `src/inference.py`。
 3. **预测分数与准确率不同**：softmax 高分也可能错；这个模型只支持五类，其他花种或非花卉也会被分入其中一类，见 `docs/inference.md`。
