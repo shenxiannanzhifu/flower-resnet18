@@ -46,7 +46,8 @@ def save_figure(rgb, crop, report: dict, output: Path) -> None:
     axes[0].imshow(rgb)
     axes[0].set_title("Original image")
     axes[1].imshow(crop)
-    axes[1].set_title("Model input (center crop)")
+    full = report["actual_preprocessing"]["view"] == "full"
+    axes[1].set_title("Model input (full image)" if full else "Model input (center crop)")
     for axis in axes[:2]:
         axis.axis("off")
     items = report["top_k"]
@@ -77,6 +78,8 @@ def main() -> None:
                         help="正式模型路径；默认使用项目内 v0.5 正式模型")
     parser.add_argument("--device", choices=("cpu", "cuda"), default="cpu", help="CPU 最易运行；已有 CUDA 环境可选 cuda")
     parser.add_argument("--top-k", type=int, default=3, help="显示前几个类别，五类模型可设 1–5")
+    parser.add_argument("--view", choices=("full", "center"), default="center",
+                        help="full 保留整图；center 使用 v0.5/v0.6 的中心裁剪")
     parser.add_argument("--output-dir", type=Path, default=None, help="可选空目录；省略则每次自动生成新目录")
     args = parser.parse_args()
     if args.device == "cuda" and not torch.cuda.is_available():
@@ -90,7 +93,7 @@ def main() -> None:
     torch.backends.cuda.matmul.allow_tf32 = False
     torch.backends.cudnn.allow_tf32 = False
     model, metadata = load_predictor(checkpoint, torch.device(args.device))
-    result, crop = predict_image(model, metadata, rgb, args.top_k)
+    result, crop = predict_image(model, metadata, rgb, args.top_k, args.view)
     image_hash = hashlib.sha256(image_path.read_bytes()).hexdigest()
     report = {"status": "PASS", "purpose": "single_image_prediction",
               "predicted_at": datetime.now().astimezone().isoformat(), "device": args.device,
@@ -98,7 +101,7 @@ def main() -> None:
               "checkpoint_sha256": hashlib.sha256(checkpoint.read_bytes()).hexdigest(),
               "model_purpose": metadata["purpose"], "selected_epoch": metadata["epoch"], **result,
               "image_credit": image_credit(image_hash),
-              "display_modifications": "EXIF orientation, RGB conversion; center panel uses saved resize/center crop; figure resizes display",
+              "display_modifications": "EXIF orientation, RGB conversion; center panel shows actual_preprocessing; figure resizes display",
               "source_sha256": {name: hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
                                 for name in ("scripts/predict.py", "src/inference.py", "src/model.py", "src/data.py", "src/checkpoint.py")}}
     directory.mkdir(parents=True, exist_ok=True)
@@ -107,6 +110,7 @@ def main() -> None:
     with (directory / "prediction.json").open("x", encoding="utf-8", newline="\n") as file:
         json.dump(report, file, ensure_ascii=False, indent=2)
         file.write("\n")
+    print("输入方式：" + ("整张图片等比例缩放，不裁剪" if args.view == "full" else "旧版中心裁剪"))
     print(f"预测：{result['display_name']}（{result['predicted_class']}），模型分数 {result['score']:.2%}")
     for rank, item in enumerate(result["top_k"], 1):
         print(f"  {rank}. {item['display_name']} ({item['class_name']}): {item['score']:.2%}")

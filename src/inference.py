@@ -57,21 +57,47 @@ def read_image(path: Path) -> Image.Image:
         raise ValueError(f"图片像素过大：{path}；请先缩小图片后再预测。") from error
 
 
-def predict_image(model, metadata: dict, rgb: Image.Image, top_k: int = 3):
-    """输入 eval 模型、保存的元数据和 RGB 图，返回 (结果字典, 实际中心裁剪图)。
+def prepare_input(rgb: Image.Image, metadata: dict, view: str = "center"):
+    """返回 (NCHW 张量, 实际输入图, 实际处理说明)，不改变 checkpoint 的原配置。
 
-    PIL → (3,224,224) → (1,3,224,224) → (1,5) logits。
+    center 完全沿用旧验证处理；full 等比例缩放整张图，靠模型内的自适应池化
+    接收非正方形尺寸。最长边上限防止全景图片使显存占用无界增长。
+    """
+    normalization = metadata["normalization"]
+    transform = build_transform(metadata["preprocessing"], normalization["mean"], normalization["std"], False)
+    short_edge = metadata["preprocessing"]["eval_resize"]
+    if view == "center":
+        actual = transforms.Compose(transform.transforms[:2])(rgb)
+        description = {"view": "center", "crop_applied": True, "preserves_all_image_bounds": False,
+                       "resize_short_edge": short_edge, "max_long_edge": None}
+    elif view == "full":
+        width, height = rgb.size
+        scale = min(short_edge / min(width, height), 768 / max(width, height))
+        size = (round(width * scale), round(height * scale))
+        if min(size) < 32:
+            raise ValueError("图片长宽比过大，整图缩放后短边不足 32 像素；请提供更合适的构图。")
+        actual = rgb.resize(size, Image.Resampling.BILINEAR)
+        description = {"view": "full", "crop_applied": False, "preserves_all_image_bounds": True,
+                       "resize_short_edge": short_edge, "max_long_edge": 768}
+    else:
+        raise ValueError("view 只能是 full 或 center。")
+    # 两种几何方式共用 checkpoint 的 ToTensor/Normalize，绝不按新图重算 RGB 统计。
+    batch = transforms.Compose(transform.transforms[-2:])(actual).unsqueeze(0)
+    return batch, actual, description
+
+
+def predict_image(model, metadata: dict, rgb: Image.Image, top_k: int = 3, view: str = "center"):
+    """输入 eval 模型、元数据和 RGB 图，返回 (结果字典, 实际输入图)。
+
+    center 为 (1,3,224,224)，full 为 (1,3,H,W)；两者输出均为 (1,5) logits。
+    函数默认保留 center 兼容旧调用；命令行可以显式指定经过比较的模式。
     softmax 将 logits 转为五类分数；它不是经校准的正确率，也不能识别“其他类别”。
     """
     validate_metadata(metadata)
     count = len(metadata["class_to_idx"])
     if type(top_k) is not int or not 1 <= top_k <= count:
         raise ValueError(f"--top-k 须为 1 到 {count} 之间的整数。")
-    normalization = metadata["normalization"]
-    transform = build_transform(metadata["preprocessing"], normalization["mean"], normalization["std"], False)
-    # 使用同一个变换定义的前两步展示输入区域；不能为了让演示更好看而换裁剪方法。
-    crop = transforms.Compose(transform.transforms[:2])(rgb)
-    batch = transform(rgb).unsqueeze(0)
+    batch, actual, description = prepare_input(rgb, metadata, view)
     device = next(model.parameters()).device
     model.eval()
     # eval 固定 BatchNorm；inference_mode 关闭梯度。两者作用不同，推理时都需要。
@@ -90,7 +116,8 @@ def predict_image(model, metadata: dict, rgb: Image.Image, top_k: int = 3):
             "score": top[0]["score"], "top_k": top,
             "probabilities": {names[index]: float(scores[index]) for index in range(count)},
             "logits": logits[0].tolist(), "input_shape": list(batch.shape),
-            "original_rgb_size": list(rgb.size), "crop_size": list(crop.size),
+            "original_rgb_size": list(rgb.size), "crop_size": list(actual.size),
+            "model_input_size": list(actual.size), "actual_preprocessing": description,
             "class_to_idx": metadata["class_to_idx"], "preprocessing": metadata["preprocessing"],
-            "normalization": normalization,
-            "note": "五类封闭分类的未校准 softmax 分数；非花卉或其他花种也会被分到其中一类，不代表真实正确率。"}, crop
+            "normalization": metadata["normalization"],
+            "note": "五类封闭分类的未校准 softmax 分数；非花卉或其他花种也会被分到其中一类，不代表真实正确率。"}, actual

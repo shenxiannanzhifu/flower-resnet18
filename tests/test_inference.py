@@ -11,7 +11,7 @@ import torch
 from torch import nn
 
 from src.data import read_json
-from src.inference import load_predictor, predict_image, read_image
+from src.inference import load_predictor, predict_image, prepare_input, read_image
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -117,6 +117,39 @@ class InferenceTests(unittest.TestCase):
         path.write_bytes(b"not a checkpoint")
         with self.assertRaisesRegex(ValueError, "模型无法加载"):
             load_predictor(path, torch.device("cpu"))
+
+    def test_full_view_preserves_edges_in_wide_and_tall_images(self):
+        for width, height in ((900, 300), (300, 900)):
+            pixels = np.zeros((height, width, 3), dtype=np.uint8)
+            pixels[:, :30] = (255, 0, 0)
+            pixels[:, -30:] = (0, 255, 0)
+            pixels[:30, :] = (0, 0, 255)
+            pixels[-30:, :] = (255, 255, 0)
+            _, actual, settings = prepare_input(Image.fromarray(pixels), self.metadata, "full")
+            w, h = actual.size
+            self.assertEqual(actual.getpixel((0, h // 2)), (255, 0, 0))
+            self.assertEqual(actual.getpixel((w - 1, h // 2)), (0, 255, 0))
+            self.assertEqual(actual.getpixel((w // 2, 0)), (0, 0, 255))
+            self.assertEqual(actual.getpixel((w // 2, h - 1)), (255, 255, 0))
+            self.assertTrue(settings["preserves_all_image_bounds"])
+            self.assertFalse(settings["crop_applied"])
+
+    def test_full_view_limits_size_and_preserves_normalization(self):
+        model = FixedLogits([[0, 2, -2, 1, 0.5]])
+        result, actual = predict_image(model, self.metadata, Image.new("RGB", (4000, 500), (128, 128, 128)),
+                                       view="full")
+        self.assertEqual(actual.size, (768, 96))
+        self.assertEqual(result["input_shape"], [1, 3, 96, 768])
+        expected = (torch.tensor([128 / 255] * 3) - torch.tensor([0.1, 0.2, 0.3])) / torch.tensor([0.2, 0.4, 0.5])
+        torch.testing.assert_close(model.seen_input[0, :, 0, 0], expected)
+        self.assertEqual(result["preprocessing"], self.metadata["preprocessing"])
+        self.assertEqual(result["actual_preprocessing"]["view"], "full")
+
+    def test_full_view_rejects_extreme_shape_and_unknown_mode(self):
+        with self.assertRaisesRegex(ValueError, "长宽比"):
+            prepare_input(Image.new("RGB", (1000, 10)), self.metadata, "full")
+        with self.assertRaisesRegex(ValueError, "view"):
+            prepare_input(Image.new("RGB", (300, 300)), self.metadata, "invalid")
 
 
 if __name__ == "__main__":

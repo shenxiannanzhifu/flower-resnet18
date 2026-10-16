@@ -1,0 +1,14 @@
+test_exif_orientation_is_applied_before_crop (test_inference.InferenceTests.test_exif_orientation_is_applied_before_crop) ... ok
+test_full_view_limits_size_and_preserves_normalization (test_inference.InferenceTests.test_full_view_limits_size_and_preserves_normalization) ... ok
+test_full_view_preserves_edges_in_wide_and_tall_images (test_inference.InferenceTests.test_full_view_preserves_edges_in_wide_and_tall_images) ... ok
+test_full_view_rejects_extreme_shape_and_unknown_mode (test_inference.InferenceTests.test_full_view_rejects_extreme_shape_and_unknown_mode) ... ok
+test_grayscale_rgba_and_unicode_paths (test_inference.InferenceTests.test_grayscale_rgba_and_unicode_paths) ... ok
+test_invalid_top_k_and_invalid_logits_are_rejected (test_inference.InferenceTests.test_invalid_top_k_and_invalid_logits_are_rejected) ... ok
+test_missing_and_corrupted_checkpoint_have_clear_errors (test_inference.InferenceTests.test_missing_and_corrupted_checkpoint_have_clear_errors) ... ok
+test_missing_corrupt_and_animated_images_have_clear_errors (test_inference.InferenceTests.test_missing_corrupt_and_animated_images_have_clear_errors) ... ok
+test_saved_statistics_index_order_and_inference_state (test_inference.InferenceTests.test_saved_statistics_index_order_and_inference_state) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.170s
+
+OK
