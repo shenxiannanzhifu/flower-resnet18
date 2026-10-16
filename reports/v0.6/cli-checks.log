@@ -1,0 +1,63 @@
+[missing_image] exit=1
+预测失败：图片不存在或不是文件：C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\reports\local\v0.6-cli-checks\missing.jpg；请检查 --image 路径，含空格时加引号。
+
+
+[corrupt_image] exit=1
+预测失败：图片损坏或格式不受支持：C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\reports\local\v0.6-cli-checks\broken.jpg；请用看图软件检查，或另存为 JPEG/PNG。
+
+
+[directory_as_image] exit=1
+预测失败：图片不存在或不是文件：C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\reports\local\v0.6-cli-checks；请检查 --image 路径，含空格时加引号。
+
+
+[missing_checkpoint] exit=1
+预测失败：模型文件不存在或不是文件：C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\reports\local\v0.6-cli-checks\missing.pt；请按 README 生成正式模型，或使用 --checkpoint 指定。
+
+
+[corrupt_checkpoint] exit=1
+预测失败：模型无法加载：C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\reports\local\v0.6-cli-checks\broken.pt；需要本项目训练生成的完整 checkpoint（UnpicklingError）。
+
+
+[smoke_checkpoint] exit=1
+预测失败：这是 smoke 试运行模型；新图入口请使用正式模型 artifacts/v0.5-formal/best.pt。
+
+
+[invalid_top_k] exit=1
+预测失败：--top-k 须为 1 到 5 之间的整数。
+
+
+[existing_output] exit=1
+预测失败：输出目录已存在且非空：C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\reports\v0.6\example-cpu；换一个目录，或省略 --output-dir 自动生成新目录。
+
+
+[unicode_path_default_output_outside_project_cwd] exit=0
+预测：向日葵（sunflowers），模型分数 96.94%
+  1. 向日葵 (sunflowers): 96.94%
+  2. 蒲公英 (dandelion): 2.68%
+  3. 雏菊 (daisy): 0.20%
+提示：分数不是实际正确率；模型只能在五类花卉中选择。
+结果文件：C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\reports\local\predictions\20261016-082336-033819\prediction.json
+展示图片：C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\reports\local\predictions\20261016-082336-033819\prediction.png
+PREDICTION PASSED
+
+
+[checkpoint_reference_same_preprocessing] exit=0
+预测：雏菊（daisy），模型分数 96.35%
+  1. 雏菊 (daisy): 96.35%
+  2. 蒲公英 (dandelion): 3.26%
+  3. 向日葵 (sunflowers): 0.35%
+提示：分数不是实际正确率；模型只能在五类花卉中选择。
+结果文件：C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\reports\local\v0.6-cli-checks\reference\prediction.json
+展示图片：C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\reports\local\v0.6-cli-checks\reference\prediction.png
+PREDICTION PASSED
+
+
+[prediction_with_dataset_and_config_access_denied] exit=0
+预测：向日葵（sunflowers），模型分数 96.94%
+  1. 向日葵 (sunflowers): 96.94%
+  2. 蒲公英 (dandelion): 2.68%
+  3. 雏菊 (daisy): 0.20%
+提示：分数不是实际正确率；模型只能在五类花卉中选择。
+结果文件：C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\reports\local\v0.6-cli-checks\no-dataset\prediction.json
+展示图片：C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\reports\local\v0.6-cli-checks\no-dataset\prediction.png
+PREDICTION PASSED

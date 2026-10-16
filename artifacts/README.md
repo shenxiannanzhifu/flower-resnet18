@@ -16,6 +16,8 @@
 
 成功标志分别为 `CHECKPOINT CHECK PASSED`、`FORMAL TRAINING PASSED`。产物目录须为空；复现步骤、选模/测试命令和限制见 [正式实验说明](../docs/experiments.md)。重新训练不是获取完全相同的二进制文件，不保证跨机器指标完全一致。
 
+v0.6 沿用该正式模型，没有重训或修改权重。新图入口为 `.venv/Scripts/python.exe scripts/predict.py --image examples/sunflower.jpg`；其他位置的正式模型用 `--checkpoint` 指定。类别和预处理从 checkpoint 读取，单张预测不需要原训练数据。详细运行步骤见 [新图预测说明](../docs/inference.md)。
+
 ## 保留的 v0.4 试运行模型
 
 本机 v0.4 已生成 `v0.4-smoke/best.pt`，以及 `best_metadata.json`、`config.json`、`class_to_idx.json`。这是 200 张训练/100 张验证、3 轮试运行选出的模型，不是正式训练成果。

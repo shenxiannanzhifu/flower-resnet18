@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-10-16T08:28:54.689595+08:00",
+  "baseline": "46cfe2e",
+  "unit_tests": 44,
+  "cli_cases": 11,
+  "source_and_checkpoint_hashes_match": true,
+  "old_evidence_unchanged": true,
+  "model_data_training_and_dependencies_unchanged": true,
+  "manifest_sha256_unchanged": true,
+  "raw_data_environment_and_models_not_tracked": true,
+  "example_metadata_removed": true,
+  "attribution_and_document_links_checked": true,
+  "no_secret_patterns_matched": true,
+  "changed_files_before_this_report": 26,
+  "changed_bytes_before_this_report": 1312117,
+  "strict_compile_exit_code": 0
+}

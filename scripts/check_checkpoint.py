@@ -1,7 +1,7 @@
 """在独立进程加载模型，预测保存时的验证样本并核对 logits。
 
 运行：.venv/Scripts/python.exe scripts/check_checkpoint.py --device cpu
-默认读取 artifacts/v0.4-smoke/best.pt；可用 --checkpoint 指定正式模型。新图命令在 v0.6 完善。
+默认读取 artifacts/v0.4-smoke/best.pt；可用 --checkpoint 指定正式模型。任意新图请使用 scripts/predict.py。
 """
 
 import argparse

@@ -1,0 +1,85 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-10-16T08:24:14.517213+08:00",
+  "cli_cases": [
+    {
+      "name": "missing_image",
+      "exit_code": 1,
+      "expected_phrase": "图片不存在",
+      "status": "PASS"
+    },
+    {
+      "name": "corrupt_image",
+      "exit_code": 1,
+      "expected_phrase": "图片损坏",
+      "status": "PASS"
+    },
+    {
+      "name": "directory_as_image",
+      "exit_code": 1,
+      "expected_phrase": "不是文件",
+      "status": "PASS"
+    },
+    {
+      "name": "missing_checkpoint",
+      "exit_code": 1,
+      "expected_phrase": "模型文件不存在",
+      "status": "PASS"
+    },
+    {
+      "name": "corrupt_checkpoint",
+      "exit_code": 1,
+      "expected_phrase": "模型无法加载",
+      "status": "PASS"
+    },
+    {
+      "name": "smoke_checkpoint",
+      "exit_code": 1,
+      "expected_phrase": "smoke",
+      "status": "PASS"
+    },
+    {
+      "name": "invalid_top_k",
+      "exit_code": 1,
+      "expected_phrase": "--top-k",
+      "status": "PASS"
+    },
+    {
+      "name": "existing_output",
+      "exit_code": 1,
+      "expected_phrase": "非空",
+      "status": "PASS"
+    },
+    {
+      "name": "unicode_path_default_output_outside_project_cwd",
+      "exit_code": 0,
+      "expected_phrase": "PREDICTION PASSED",
+      "status": "PASS"
+    },
+    {
+      "name": "checkpoint_reference_same_preprocessing",
+      "exit_code": 0,
+      "expected_phrase": "PREDICTION PASSED",
+      "status": "PASS"
+    },
+    {
+      "name": "prediction_with_dataset_and_config_access_denied",
+      "exit_code": 0,
+      "expected_phrase": "PREDICTION PASSED",
+      "status": "PASS"
+    }
+  ],
+  "unit_tests": 44,
+  "cpu_cuda_same_class": true,
+  "cpu_cuda_max_logit_difference": 4.0531158447265625e-06,
+  "reference_max_logit_difference": 2.6226043701171875e-06,
+  "output_files_preserved": true,
+  "checkpoint_unchanged": true,
+  "checkpoint_sha256": "c836ddcb3053e88b8d7c92b51decdcea49f6f9adfc62a8aa6d4ffa7260de812b",
+  "unicode_and_default_output_verified": true,
+  "dataset_access_guard_passed": true,
+  "example_selected_before_inference": true,
+  "example_predicted_class": "sunflowers",
+  "example_score": 0.9693570137023926,
+  "note": "运行边界与流程检查；单张外部示例不作为新的准确率成绩，未重训或修改 v0.5 评估。"
+}

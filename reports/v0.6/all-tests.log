@@ -1,0 +1,68 @@
+test_actual_missed_scene_is_added_to_review_groups (test_data_pipeline.DataPipelineTests.test_actual_missed_scene_is_added_to_review_groups)
+使用已提交 v0.2 元数据重现 C0039 漏分组，确认当前复核配置将其连通。 ... ok
+test_actual_new_label_noise_is_excluded_without_relabeling (test_data_pipeline.DataPipelineTests.test_actual_new_label_noise_is_excluded_without_relabeling)
+已复核的非郁金香样本必须隔离；不能通过换一个类别继续混入训练。 ... ok
+test_changed_review_cannot_overwrite_historical_report (test_data_pipeline.DataPipelineTests.test_changed_review_cannot_overwrite_historical_report)
+即使数据目录是新的，也不能把不同配置的报告写进旧版本证据目录。 ... ok
+test_corrupted_image_is_excluded (test_data_pipeline.DataPipelineTests.test_corrupted_image_is_excluded)
+损坏 JPEG 不能靠扩展名冒充可训练图像。 ... ok
+test_exact_conflicts_and_duplicates (test_data_pipeline.DataPipelineTests.test_exact_conflicts_and_duplicates)
+跨类别完全相同图片全部隔离；同类副本只留一个，近似候选不直接删除。 ... ok
+test_license_both_orders (test_data_pipeline.DataPipelineTests.test_license_both_orders)
+实际许可证有九条倒序条目；两种写法都必须保留作者和来源。 ... ok
+test_review_exclusion_preserves_label_and_rejects_unknown_path (test_data_pipeline.DataPipelineTests.test_review_exclusion_preserves_label_and_rejects_unknown_path)
+明显噪声被隔离但不改标签；复核表拼错路径必须报错，不能默默跳过。 ... ok
+test_reviewed_pair_joins_hash_miss_without_deleting (test_data_pipeline.DataPipelineTests.test_reviewed_pair_joins_hash_miss_without_deleting)
+视觉确认关系要能补足哈希漏检，同时不能把不同像素样本误删。 ... ok
+test_rgb_statistics_known_pixels (test_data_pipeline.DataPipelineTests.test_rgb_statistics_known_pixels)
+使用已知 RGB 像素检查缩放与平方和，避免错误的训练归一化统计。 ... ok
+test_split_is_grouped_stratified_and_reproducible (test_data_pipeline.DataPipelineTests.test_split_is_grouped_stratified_and_reproducible) ... ok
+test_tar_rejects_escape_and_links (test_data_pipeline.DataPipelineTests.test_tar_rejects_escape_and_links)
+压缩包不能写到数据目录之外，也不能借符号链接逃逸。 ... ok
+test_too_few_independent_groups_fails (test_data_pipeline.DataPipelineTests.test_too_few_independent_groups_fails) ... ok
+test_transform_search_detects_rotation_without_self_pairs (test_data_pipeline.DataPipelineTests.test_transform_search_detects_rotation_without_self_pairs)
+原图 pHash 会漏旋转副本；变换检索必须找回，同时排除自身匹配。 ... ok
+test_transform_search_empty_input_is_clear_error (test_data_pipeline.DataPipelineTests.test_transform_search_empty_input_is_clear_error)
+空清单不能生成看似通过的复核报告。 ... ok
+test_verifier_does_not_trust_group_ids_alone (test_data_pipeline.DataPipelineTests.test_verifier_does_not_trust_group_ids_alone)
+即使已有组 ID 不跨集，独立哈希复查也要发现漏分组的近似图片。 ... ok
+test_verifier_rejects_cross_split_group (test_data_pipeline.DataPipelineTests.test_verifier_rejects_cross_split_group) ... ok
+test_canonical_selection_ignores_formatting_but_rejects_content_changes (test_evaluation.EvaluationTests.test_canonical_selection_ignores_formatting_but_rejects_content_changes) ... ok
+test_known_confusion_and_macro_scores (test_evaluation.EvaluationTests.test_known_confusion_and_macro_scores) ... ok
+test_legacy_selection_survives_git_newlines_but_rejects_content_changes (test_evaluation.EvaluationTests.test_legacy_selection_survives_git_newlines_but_rejects_content_changes) ... ok
+test_selection_rejects_changed_checkpoint_and_wrong_best_epoch (test_evaluation.EvaluationTests.test_selection_rejects_changed_checkpoint_and_wrong_best_epoch) ... ok
+test_zero_denominator_and_invalid_labels (test_evaluation.EvaluationTests.test_zero_denominator_and_invalid_labels) ... ok
+test_exif_orientation_is_applied_before_crop (test_inference.InferenceTests.test_exif_orientation_is_applied_before_crop) ... ok
+test_grayscale_rgba_and_unicode_paths (test_inference.InferenceTests.test_grayscale_rgba_and_unicode_paths) ... ok
+test_invalid_top_k_and_invalid_logits_are_rejected (test_inference.InferenceTests.test_invalid_top_k_and_invalid_logits_are_rejected) ... ok
+test_missing_and_corrupted_checkpoint_have_clear_errors (test_inference.InferenceTests.test_missing_and_corrupted_checkpoint_have_clear_errors) ... ok
+test_missing_corrupt_and_animated_images_have_clear_errors (test_inference.InferenceTests.test_missing_corrupt_and_animated_images_have_clear_errors) ... ok
+test_saved_statistics_index_order_and_inference_state (test_inference.InferenceTests.test_saved_statistics_index_order_and_inference_state) ... ok
+test_channel_only_and_stride_only_changes (test_model.ModelTests.test_channel_only_and_stride_only_changes)
+通道变化与空间变化各自都需要投影，不能只检查其中一个条件。 ... ok
+test_full_model_batch_shape_and_no_batchnorm_updates (test_model.ModelTests.test_full_model_batch_shape_and_no_batchnorm_updates)
+检查标准五类架构的参数量、真实输入尺寸及只读前向不会更新 BN 状态。 ... ok
+test_invalid_input_has_clear_error (test_model.ModelTests.test_invalid_input_has_clear_error) ... ok
+test_projection_is_added_for_odd_spatial_size (test_model.ModelTests.test_projection_is_added_for_odd_spatial_size)
+残差置零，手动设定投影映射；比较实际数值，不仅检查输出形状。 ... ok
+test_zero_residual_preserves_positive_identity (test_model.ModelTests.test_zero_residual_preserves_positive_identity)
+将 F(x) 置零后必须得到 ReLU(x)，能检出漏加跳跃支路的错误。 ... ok
+test_eval_is_deterministic_and_uses_training_rgb (test_model_data.ModelDataTests.test_eval_is_deterministic_and_uses_training_rgb) ... ok
+test_loader_keeps_final_batch_and_integer_labels (test_model_data.ModelDataTests.test_loader_keeps_final_batch_and_integer_labels) ... ok
+test_missing_and_corrupt_images_explain_path (test_model_data.ModelDataTests.test_missing_and_corrupt_images_explain_path) ... ok
+test_rejects_excluded_sample_and_unsafe_path (test_model_data.ModelDataTests.test_rejects_excluded_sample_and_unsafe_path) ... ok
+test_rejects_mismatched_mapping_and_split (test_model_data.ModelDataTests.test_rejects_mismatched_mapping_and_split) ... ok
+test_rejects_old_statistics (test_model_data.ModelDataTests.test_rejects_old_statistics) ... ok
+test_train_seed_reproduces_crop_and_shuffle (test_model_data.ModelDataTests.test_train_seed_reproduces_crop_and_shuffle) ... ok
+test_checkpoint_roundtrip_and_invalid_mapping (test_training.TrainingTests.test_checkpoint_roundtrip_and_invalid_mapping)
+实际序列化完整手写模型；恢复的 logits 必须一致，错误映射不能覆盖文件。 ... ok
+test_empty_or_nonfinite_input_cannot_report_success (test_training.TrainingTests.test_empty_or_nonfinite_input_cannot_report_success) ... ok
+test_formal_config_cannot_include_smoke_sampling (test_training.TrainingTests.test_formal_config_cannot_include_smoke_sampling)
+正式实验不能只改名称而沿用小规模抽样，也不能接受非有限学习率。 ... ok
+test_loss_is_weighted_by_samples_and_eval_is_read_only (test_training.TrainingTests.test_loss_is_weighted_by_samples_and_eval_is_read_only) ... ok
+test_training_updates_parameters_and_bn_but_validation_does_not (test_training.TrainingTests.test_training_updates_parameters_and_bn_but_validation_does_not) ... ok
+
+----------------------------------------------------------------------
+Ran 44 tests in 3.831s
+
+OK

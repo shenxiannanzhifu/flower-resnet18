@@ -2,19 +2,36 @@
 
 这是“后端 AI 方向第一阶段”考核项目。使用 Python、NumPy、Pandas、Matplotlib 和 PyTorch，从数据分析逐步推进到手写 ResNet-18、训练、评估和新图片预测。
 
-当前完成 **v0.5：正式训练与评估**。沿用同一项目、手写 ResNet-18 和 v0.2.1 数据，从随机权重训练 30 轮，每轮完整使用 2,564 张训练和 551 张验证图片。按最小验证损失选择第 21 轮，并在测试前提交选择记录；测试 549 张中正确 446 张，**准确率 81.24%，macro-F1 0.8087**。这是一组配置、一个种子的真实实验，不代表外部新图表现。每个阶段验收后提交并打标签，等待确认再进入下一版本。
+当前完成 **v0.6：单张新图片预测与展示**。用已训练好的手写 ResNet-18 读取图片，显示中文 Top-K，并生成原图、实际裁剪和分数图；预处理与类别顺序随模型恢复，缺失或损坏文件有清楚提示。每个阶段验收后提交并打标签，等待确认再进入下一版本。
+
+v0.5 的真实正式结果保持不变：随机初始化训练 30 轮，每轮完整使用 2,564 张训练和 551 张验证图片，按最小验证损失选择第 21 轮；测试 **446/549 正确，准确率 81.24%，macro-F1 0.8087**。这是一组配置、一个种子的实验，不代表外部新图表现；v0.6 未重训或根据新图调参。
 
 ## 现在如何运行
 
-本机数据与独立环境已准备好。在 Windows PowerShell 中运行以下命令检查本版，不必激活环境或修改执行策略：
+本机正式模型与独立环境已准备好。在 Windows PowerShell 运行以下命令，不必激活环境或修改执行策略：
 
 ```powershell
 Set-Location -LiteralPath 'C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18'
-& '.\.venv\Scripts\python.exe' scripts\check_checkpoint.py --checkpoint artifacts\v0.5-formal\best.pt --device cpu
-& '.\.venv\Scripts\python.exe' scripts\check_checkpoint.py --checkpoint artifacts\v0.5-formal\best.pt --device cuda
+& '.\.venv\Scripts\python.exe' scripts\predict.py --image examples\sunflower.jpg
 ```
 
-成功标志：`CHECKPOINT CHECK PASSED`。上方命令显式读取正式模型，用保存的预处理和映射预测参考验证图片，核对保存前后输出一致。默认报告写到 `reports/local/checkpoint-cpu`、`reports/local/checkpoint-cuda`。省略 `--checkpoint` 仍会检查旧 v0.4 试运行模型。真实证据见 [v0.5 验收报告](reports/v0.5/acceptance.md)。
+成功标志：`PREDICTION PASSED`。本机示例预测为“向日葵”，模型分数约 96.94%，终端显示中文排名和结果路径。默认 CPU、Top-3，每次自动生成新的 `reports/local/predictions/时间戳/`，可重复运行；分数不等于准确率。
+
+查看最近一次结果：
+
+```powershell
+$predictionFolder = Get-ChildItem -LiteralPath '.\reports\local\predictions' -Directory | Sort-Object Name -Descending | Select-Object -First 1
+Get-Content -LiteralPath (Join-Path $predictionFolder.FullName 'prediction.json') -Encoding utf8
+Start-Process -FilePath (Join-Path $predictionFolder.FullName 'prediction.png')
+```
+
+自己的图片只需把 `--image` 后的路径换成真实文件路径，路径中有空格时加引号。可选 `--device cuda --top-k 5`，或用 `--checkpoint` 指定另一次正式训练的模型。单图预测不依赖原训练数据或互联网。
+
+![外部新图预测演示](reports/v0.6/example-cpu/prediction.png)
+
+示例作者 Till Westermayer，作品 Sunflower 2024-10，图像及本演示图采用 **CC BY-SA 2.0**；来源、许可链接和改动见 [示例说明](examples/README.md)。图片在推理前固定，未加入原数据集；单张演示不增加一项准确率成绩。
+
+完整参数、常见错误、新克隆环境到模型再到预测的步骤见 [新图预测说明](docs/inference.md)，实际验证见 [v0.6 验收报告](reports/v0.6/acceptance.md)。旧参考图片重载检查仍可运行：`.venv/Scripts/python.exe scripts/check_checkpoint.py --checkpoint artifacts/v0.5-formal/best.pt --device cpu`，成功标志 `CHECKPOINT CHECK PASSED`。
 
 正式配置、指标含义和模型获取方式见 [正式实验说明](docs/experiments.md)，训练基础见 [v0.4 训练说明](docs/training.md)，网络原理见 [模型与数据说明](docs/model.md)。当前保留 `num_workers=0`，单进程约 14 分钟完成本次正式训练。加载占加载与计算合计耗时约 74.4%，有优化空间，但不妨碍本版验收。Windows 多进程管道失败与 Git HTTPS 崩溃是两件事，均不宣称根因已修复。
 
@@ -52,7 +69,7 @@ Start-Process -FilePath '.\reports\v0.5\test\error_examples.png'
 & '.\.venv\Scripts\python.exe' -m unittest discover -s tests -v
 ```
 
-对应成功标志为 `DATA DOWNLOAD VERIFIED`、`DATA PREPARATION PASSED`、`DATA VERIFICATION PASSED` 和 `Ran 38 tests ... OK`。程序失败会返回非零退出码并给出原因。数据验证结果应为 3,664 张、train=2564、val=551、test=549；默认逐张复核原图哈希并检查已知重复没有跨集。离线检查已有包可使用 `download_data.py --offline`。数据准备使用 CPU，不需要启动 GPU 训练。
+对应成功标志为 `DATA DOWNLOAD VERIFIED`、`DATA PREPARATION PASSED`、`DATA VERIFICATION PASSED` 和 `Ran 44 tests ... OK`。程序失败会返回非零退出码并给出原因。数据验证结果应为 3,664 张、train=2564、val=551、test=549；默认逐张复核原图哈希并检查已知重复没有跨集。离线检查已有包可使用 `download_data.py --offline`。数据准备使用 CPU，不需要启动 GPU 训练。
 
 查看图表和开发历史：
 
@@ -142,16 +159,19 @@ flower-resnet18/
 ├── scripts/check_model.py      # v0.3 CPU/CUDA 实际批次与逐层形状检查
 ├── scripts/train.py            # smoke/formal 训练、验证选模与保存入口
 ├── scripts/check_checkpoint.py # 独立进程恢复模型、预处理和映射并核对预测
+├── scripts/predict.py          # v0.6 单张新图命令、中文 Top-K、JSON 与展示图
 ├── scripts/freeze_model.py     # 测试前固定模型与验证选模依据
 ├── scripts/evaluate.py         # 完整测试、逐图预测、混淆矩阵与错误示例
 ├── scripts/plot_training.py    # 真实日志生成训练曲线
 ├── configs/                   # 数据配置、视觉复核、smoke/formal 训练配置
-├── tests/                     # 38 项数据、模型、训练、指标及兼容性检查
+├── tests/                     # 44 项数据、模型、训练、指标及新图行为检查
 ├── src/model.py                # 手写 BasicBlock 和 ResNet18
 ├── src/data.py                 # Dataset、预处理、随机种子和 DataLoader
 ├── src/engine.py               # 训练/验证一轮、损失和参数更新
 ├── src/checkpoint.py           # 原子保存、严格重载及参考样本预测核对
 ├── src/evaluation.py           # NumPy 分类指标、选模与报告核验
+├── src/inference.py            # 图片解码、正式模型加载、使用保存的参数推理
+├── examples/                   # 外部演示缩图及 CC BY-SA 2.0 署名/来源
 ├── data/                       # downloads/raw/processed-v0.2.1；旧 processed 保留
 ├── artifacts/                  # 本机 v0.4-smoke/v0.5-formal 模型；大文件不入库
 ├── reports/v0.1/               # 保留环境阶段证据
@@ -160,6 +180,7 @@ flower-resnet18/
 ├── reports/v0.3/               # CPU/CUDA 前向、28 项检查及实际问题记录
 ├── reports/v0.4/               # 试运行配置、逐轮日志、保存/重载及32项检查
 ├── reports/v0.5/               # 正式方案、训练/测试、曲线、错误分析与验收
+├── reports/v0.6/               # CPU/CUDA 新图结果、命令行边界与验收证据
 ├── reports/local/              # 日常检查产物，不入库
 ├── docs/requirements.md        # PDF 要求对照、版本规划和验收状态
 ├── docs/environment.md         # 硬件、环境选择和问题处理记录
@@ -167,6 +188,7 @@ flower-resnet18/
 ├── docs/model.md               # 残差连接、形状、预处理和迁移学习原理
 ├── docs/training.md            # 训练/验证/保存原理、运行方式及试运行边界
 ├── docs/experiments.md         # 正式训练、选模、评估指标和复现步骤
+├── docs/inference.md           # 新图预测、结果查看、模型获取与错误提示
 ├── docs/data-license.txt       # 原始许可证及全部摄影者署名
 └── .venv/                      # 独立环境，不入库
 ```
@@ -175,7 +197,7 @@ flower-resnet18/
 
 题目为五类花卉图片分类，数据来源为 TensorFlow 示例花卉集，详见 `data/README.md`。官方包已校验，图片许可为 CC BY 2.0，完整署名见 `docs/data-license.txt`；报告图片另有 `image_attributions.csv` 将图中编号映射到作者、原始来源、许可及缩放说明。源码、统计报告和许可说明入库，原图与压缩包不入库。
 
-版本保持为：v0.1 环境 → v0.2 数据 → v0.2.1 数据修复 → v0.3 手写模型 → v0.4 训练试运行 → **v0.5 正式训练评估** → v0.6 新图预测 → v1.0 验收材料。补丁版用于先处理实际发现的数据问题，其余规划不扩大。PDF 要求的迁移学习原理已在模型文档说明（未训练迁移学习模型）；真实运行视频仍待最终阶段准备。详细目标见 `docs/requirements.md`。
+版本保持为：v0.1 环境 → v0.2 数据 → v0.2.1 数据修复 → v0.3 手写模型 → v0.4 训练试运行 → v0.5 正式训练评估 → **v0.6 新图预测** → v1.0 验收材料。补丁版用于先处理实际发现的数据问题，其余规划不扩大。PDF 要求的迁移学习原理已在模型文档说明（未训练迁移学习模型）；真实运行视频仍待最终阶段准备。详细目标见 `docs/requirements.md`。
 
 ## Git 与远程仓库
 
@@ -201,8 +223,8 @@ v0.5 在同仓库 `feat/formal-evaluation` 分支按真实顺序开发：`7034fa
 
 ## 本阶段建议理解的三个知识点
 
-1. **验证选模与测试评估**：训练更新参数，验证损失决定保存哪轮，先固定选择再测试；不能用测试成绩挑配置或改标签。
-2. **混淆矩阵与 macro-F1**：矩阵行是真实类、列是预测类；macro-F1 对各类等权，能补充总体准确率，见 `src/evaluation.py`。
-3. **错误分析与泛化边界**：中心裁剪可能丢失主体，softmax 高分也可能错；单种子、单数据集成绩不等于任意新图效果，见 `reports/v0.5/analysis.md`。
+1. **权重与预处理要配套**：类别编号、RGB 归一化、缩放和裁剪都从 checkpoint 恢复，不能换一份当前配置猜测。
+2. **推理状态的两个开关**：`eval()` 固定 BatchNorm，`inference_mode()` 关闭梯度；两者都要用，见 `src/inference.py`。
+3. **预测分数与准确率不同**：softmax 高分也可能错；这个模型只支持五类，其他花种或非花卉也会被分入其中一类，见 `docs/inference.md`。
 
 个人感悟将在最终说明中由你根据真实学习经历填写；不会代写虚构经历。视频目前未录制，演示脚本在 v1.0 整理。当前版本结束后等待“继续下一个版本”。
