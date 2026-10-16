@@ -1,0 +1,26 @@
+{
+  "selected_before_inference": true,
+  "retrieved_at": "2026-10-16T08:14:04.673158+08:00",
+  "title": "File:Sunflower 2024-10.jpg",
+  "author": "Till Westermayer",
+  "source_page": "https://commons.wikimedia.org/wiki/File:Sunflower_2024-10.jpg",
+  "original_url": "https://upload.wikimedia.org/wikipedia/commons/d/d0/Sunflower_2024-10.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "original_credit": "<a rel=\"nofollow\" class=\"external free\" href=\"https://www.flickr.com/photos/tillwe/54104549978/\">https://www.flickr.com/photos/tillwe/54104549978/</a>",
+  "photographed_at_as_reported": "Taken on 20 October 2024, 09:32:48",
+  "license": "CC BY-SA 2.0",
+  "license_url": "https://creativecommons.org/licenses/by-sa/2.0/",
+  "local_example": "examples/sunflower.jpg",
+  "original_size": [
+    2062,
+    2750
+  ],
+  "example_size": [
+    480,
+    640
+  ],
+  "original_sha256": "fa41e129d08a2e79a312dfef2f1f1e8637353b470107b0db868017a5a7b07244",
+  "example_sha256": "75fd1d57f41535e3f09da7b7f62fe70f5f7d7bcef3d39d7710009f1b5bf7b806",
+  "modifications": "EXIF orientation, RGB conversion, LANCZOS resize within 640x640, JPEG quality 90, metadata omitted",
+  "exact_hash_matches_in_3670_originals": 0,
+  "purpose": "One external demonstration image, not an additional accuracy benchmark; no training or tuning"
+}
