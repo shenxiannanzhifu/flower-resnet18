@@ -1,98 +1,79 @@
-# v1.0 交付准备与人工清单
+# v1.0 最终交付与提交步骤
 
-**当前是交付准备，不是最终完成版。** 核心代码和正式实验已验证；个人感悟已根据真实协作记录补写，待本人审阅确认；实际视频和理解确认仍待完成，因此不创建最终 v1.0 标签。未知类别识别不属于 PDF 硬性要求，作为如实记录的模型局限保留。
+项目技术成果、本人审阅的感悟及定稿运行视频已经齐备。最终包在本地制作；仓库持续保存源码、依赖、文档和真实开发历史。最后向考核接收人提交由本人执行，AI 不自动发送成果。
 
-## 当前可交付内容
+## 最终包在哪里
 
-| 内容 | 位置 | 状态 |
-| --- | --- | --- |
-| 源代码、依赖和命令 | README、src、scripts、configs、requirements*.txt | 已实现；检查证据按版本保留 |
-| 数据来源和分析 | docs/data.md、reports/v0.2.1、docs/data-license.txt | 有真实统计、图表、划分依据和署名 |
-| 正式实验 | reports/v0.5 | 真实训练/测试、曲线、混淆矩阵、错误分析 |
-| 新图与有限优化 | reports/v0.6、reports/v0.6.1 | 真实预测、整图比较和未知类别反例 |
-| 项目说明与感悟位置 | [project-report.md](project-report.md) | 技术说明与基于真实记录的感悟已写；感悟待本人审阅确认 |
-| 代码理解说明 | [code-guide.md](code-guide.md) | 讲解与练习已备好；本人理解待确认 |
-| 运行视频 | [video-script.md](video-script.md) | 仅有录制脚本；实际视频待录 |
-| GitHub 仓库与真实历史 | https://github.com/shenxiannanzhifu/flower-resnet18 | 阶段提交与标签可查看；最新同步按远端核验记录 |
-| 本机正式模型 | artifacts/v0.5-formal/best.pt | 已训练；未上传 GitHub，无公开下载地址 |
-
-本机工程目录：
+原项目路径：
 
 ```text
 C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18
 ```
 
-## 本地交付包的组织
+最终 ZIP：项目下 `artifacts/delivery-v1.0/flower-resnet18-v1.0-delivery.zip`。
 
-本轮在 artifacts/delivery-preparation 下建立按时间命名的准备目录，文件夹名不是新的开发项目。源代码仍只在原仓库维护。该目录被 Git 忽略，不随 GitHub 推送。
+它是交付快照，开发仍只在原项目仓库进行。原 `artifacts/delivery-preparation/20261016-preparation` 是旧准备包，继续保留，但不要将它当作最终交付。最终包的来源提交、文件清单和 SHA-256 在随包 manifest.json / checksums.sha256；ZIP 本身摘要在旁边同名 .sha256 文件。
 
-- source-提交短哈希.zip：由 git archive 从真实提交生成，包含源代码、依赖、说明、许可、示例和已入库报告；不含 .git、环境、训练原图、模型或视频。
-- model/best.pt：单独复制本次正式模型，用于接收者直接预测；不是重新训练的模型。
-- manifest.json：生成时间、源提交、包与模型的大小/哈希、验证范围及未完成项目。
-- checksums.sha256：源 ZIP 和模型的校验值。
-- README-DELIVERY.md：准备状态、仓库链接、权重使用步骤及尚缺材料。
-
-最终包的位置与实际核验见 [交付准备验收](../reports/v1.0-preparation/acceptance.md)。准备包尚未发送给任何人。现有 20261016-preparation 包基于 cc637b2，早于本次感悟补写；最新文字以仓库为准。本人确认感悟并新增视频后，再生成新包，不把旧包冒充最终提交；模型不必重新训练。
-
-本次正式模型大小 44,797,643 字节，SHA-256：
+## 解压后有什么
 
 ```text
-c836ddcb3053e88b8d7c92b51decdcea49f6f9adfc62a8aa6d4ffa7260de812b
+flower-resnet18-v1.0/
+├── README-DELIVERY.md          # 接收者先阅读
+├── repository-url.txt         # 原 GitHub 仓库与真实历史
+├── PROJECT-REPORT.html        # 双击可读的完整说明、感悟与图表
+├── manifest.json              # 源提交、文件大小/哈希与核验范围
+├── checksums.sha256            # 包内文件校验清单
+├── delivery-verification.json # 归档、模型/视频及解包运行核验
+├── flower-resnet18/            # 从真实 Git 提交导出的源码、文档与报告
+├── model/best.pt               # 原正式模型，约 44.8 MB
+└── video/demo.mp4              # 本人定稿原视频，约 281.9 MB
 ```
 
-## 接收者运行方法
+源码目录含 README、requirements*.txt、src/scripts/configs/tests、数据分析与实验报告、示例及许可。项目说明原文为 flower-resnet18/docs/project-report.md，HTML 由该原文生成，便于接收者直接阅读；相对图片和链接指向包内对应文件。
 
-解压源 ZIP 后，在其 flower-resnet18 目录按 README 建立 Python 3.12 独立环境。保留同级的 model 文件夹时，可直接指定权重：
+不会把 .git、.venv、原训练图片或下载缓存放入最终包；Git 历史请在原仓库查看。模型和视频属于本地交付材料，均不上传 GitHub，也没有创建公开模型下载链接。
+
+## 接收者如何运行
+
+先把整个 ZIP 解压，在 flower-resnet18 子目录按 README 建立 Python 3.12 环境，再运行：
 
 ```powershell
 & '.\.venv\Scripts\python.exe' scripts\predict.py --checkpoint ..\model\best.pt --image examples\sunflower.jpg --device cpu
 ```
 
-成功标志 PREDICTION PASSED。输入原图、实际模型视图和 Top-K 图保存到 reports/local/predictions 的新目录。仅预测不需要下载原训练集。
+成功标志 PREDICTION PASSED；结果 JSON/PNG 保存到 reports/local/predictions 的新目录。整图模式可加 --view full，但不保证更准确。只预测时不需要原训练数据。
 
-也可将校验过的模型复制到解压项目的 artifacts/v0.5-formal/best.pt，再使用 README 默认命令。若只从 GitHub 克隆，没有单独收到模型，按 [新图说明](inference.md#新克隆仓库如何准备模型) 准备数据并训练；不假设存在模型下载链接。
+也可将单独模型复制到子项目 artifacts/v0.5-formal/best.pt，使用 README 的默认命令。若只克隆 GitHub、未收到交付包，按 [模型获取说明](inference.md#新克隆仓库如何准备模型) 准备数据并重新训练。旧 check_checkpoint.py 需要训练数据中的参考图，不能替代此处无数据的新图入口。
 
-本机权重哈希可用 PowerShell Get-FileHash -Algorithm SHA256 检查。旧 check_checkpoint.py 还需原始数据里的参考图；无数据交付场景请用上面的新图预测入口验证，不将两者混淆。
+实际打包验证会在不含 .venv/原始数据的快照中，借用本机已有环境，以包内相对路径加载 model/best.pt 完成预测。这不等于另一台机器重新安装环境成功；跨机器安装尚未实测。
 
-本轮会实际从干净解包副本使用已有环境与单独模型运行预测；这证明打包文件完整及运行路径独立，不等于在另一台机器重装环境成功。
+正式模型 SHA-256：
 
-## 源码包的可复现生成方法
-
-以下是需要更新包时的可选命令，从原项目根目录运行。先把应交付的改动检查并正常提交；git archive 只打包已提交内容，不包括未提交感悟。
-
-```powershell
-git status --short
-$deliveryStamp = Get-Date -Format 'yyyyMMdd-HHmmss'
-$deliveryDir = Join-Path 'artifacts\delivery-preparation' $deliveryStamp
-New-Item -ItemType Directory -Path $deliveryDir -ErrorAction Stop | Out-Null
-$deliveryRevision = git rev-parse --short HEAD
-$sourceZip = Join-Path $deliveryDir "source-$deliveryRevision.zip"
-git archive --format=zip --prefix=flower-resnet18/ "--output=$sourceZip" HEAD
-if ($LASTEXITCODE -ne 0) { throw 'Git 源码归档失败' }
-New-Item -ItemType Directory -Path (Join-Path $deliveryDir 'model') -ErrorAction Stop | Out-Null
-Copy-Item -LiteralPath 'artifacts\v0.5-formal\best.pt' -Destination (Join-Path $deliveryDir 'model\best.pt') -ErrorAction Stop
-Get-FileHash -LiteralPath $sourceZip -Algorithm SHA256
-Get-FileHash -LiteralPath (Join-Path $deliveryDir 'model\best.pt') -Algorithm SHA256
+```text
+c836ddcb3053e88b8d7c92b51decdcea49f6f9adfc62a8aa6d4ffa7260de812b
 ```
 
-命令生成源码与模型及终端哈希；本轮还额外保存 manifest、解包验证和交付说明。后续生成新包时也要记录对应提交、校验值、是否包含真实视频和本人感悟，不能沿用旧清单冒充新检查。
+定稿视频 SHA-256：
 
-## 必须由本人完成
+```text
+c01bd8eba8b2fc41d77d31cb8aed73336f6e036a0411c573fbac149fc69ad353
+```
 
-1. 阅读 [代码指南](code-guide.md)，实际运行预测并确认能够解释核心步骤；记录真实疑问。
-2. 审阅 [项目说明](project-report.md) 已补写的个人感悟，确认符合实际参与经历，补充实际操作/练习与日期；不把 AI 完成的操作写成独立完成。
-3. 按 [视频脚本](video-script.md) 录制实际运行视频并回看，填写真实路径、日期和文件名。
-4. 材料齐全后再次核验、正常提交文字更新并重新打包；通过最终验收才创建 v1.0 标签。可由 AI 协助检查、提交和打包，不要求本人手工操作 Git。
-5. 本人最后决定通过考核要求的渠道交给指定接收人。PDF 中的交付文字不授权 AI 自动发送。
+## 本人接下来怎样提交
 
-必须由本人提供的输入只有真实经历、理解确认和录屏。可选操作：换一张自己有权使用的花卉图片现场演示；在其它机器验证新环境；继续研究未知拒识。它们不取代 PDF 必交项目，也不是当前额外强制任务。
+1. 打开最终 ZIP 旁的同名 .sha256 文件；需要检查传输完整性时，运行 `Get-FileHash -Algorithm SHA256 'ZIP 的完整路径'` 并核对。
+2. 解压包，打开 PROJECT-REPORT.html、video/demo.mp4，确认拿到的是最终说明和已选定的视频。
+3. 按考核指定渠道发送最终 ZIP，并附上仓库链接：https://github.com/shenxiannanzhifu/flower-resnet18 。包内已有说明、结果、模型、视频及仓库链接。
+4. 若渠道限制文件大小，使用该渠道支持的大文件传输方式；不必为此重新训练或把视频强行加入 Git。接收人和发送范围由本人确认。
 
-## 最终发布前清单
+可用提交说明：
 
-- [ ] 已审阅并确认补写的个人感悟，补充真实操作/练习与日期。
-- [ ] 实际视频存在、可播放，展示现场运行与主要结果。
-- [ ] 本人已完成必要代码理解与排错练习。
-- [ ] 本人新增内容已检查并形成真实提交，仓库 main 已核验同步。
-- [ ] 重新生成交付包，确认包内文件和 manifest 对应最终提交，保留图像许可。
-- [ ] 核心要求与人工材料齐全后才创建 v1.0，不提前宣称通过最终考核。
-- [ ] 本人确认接收人及渠道并完成最终交付。
+> 后端 AI 方向第一阶段考核项目：基于手写 ResNet-18 的五类花卉分类。附件包含源代码、依赖说明、数据分析与正式实验结果、项目说明与个人感悟、正式模型及运行视频。仓库：https://github.com/shenxiannanzhifu/flower-resnet18 ，版本 v1.0。复现和预测步骤见包内 README-DELIVERY.md。
+
+## 验收范围与已知局限
+
+本人已审阅修改感悟并要求提交；确认完成阅读和运行；提供视频并指定定稿。自动检查和视频展示不等于教师评分，也不替代本人继续学习。
+
+正式测试保持 446/549、81.2386%、macro-F1 0.808692。默认中心裁剪可能遗漏边缘；整图可选输入保留范围但验证稍降；未知类别识别未可靠解决；Windows 多进程权限和原生 Git HTTPS 崩溃根因未永久修复。上述局限不阻碍已核对的 PDF 核心项目要求，不伪装成已解决。
+
+视频完整音视频解码及关键帧视觉检查已通过，未逐字听审旁白。图像来源与 CC BY/CC BY-SA 署名随包保留。最终验收证据在 [reports/v1.0](../reports/v1.0/acceptance.md)，打包和远端核验以随包记录为准。**尚未向考核接收人发送；这是最后一项必须由本人完成的操作。**

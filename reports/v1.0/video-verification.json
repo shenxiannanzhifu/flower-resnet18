@@ -1,0 +1,77 @@
+{
+  "checked_at": "2026-10-16T22:25:13.795700+08:00",
+  "file_name": "20261016-1401-59.5283456.mp4",
+  "bytes": 281908792,
+  "sha256": "c01bd8eba8b2fc41d77d31cb8aed73336f6e036a0411c573fbac149fc69ad353",
+  "full_video_audio_decode_exit_code": 0,
+  "decode_error_log_empty": true,
+  "sample_count": 29,
+  "sample_interval_seconds": 20,
+  "scope": "视频完整性与关键展示验收；本人阅读/运行由用户明确确认，非自动考试成绩。",
+  "status": "PASS",
+  "duration_seconds": 586.3666333,
+  "width": 1278,
+  "height": 1514,
+  "fps": 30,
+  "video_codec": "H.264 Main",
+  "audio_codec": "AAC LC",
+  "audio_sample_rate": 48000,
+  "audio_channels": 2,
+  "audio_mean_volume_db": -36.0,
+  "audio_max_volume_db": -11.8,
+  "content_review": "29 张周期抽帧及 5 张原尺寸关键帧已实际目视审阅；没有逐字转录或声称完整听审旁白。",
+  "video_user_approved_final": true,
+  "final_approval_date": "2026-10-16",
+  "visual_observations": [
+    {
+      "at": "00:10",
+      "observed": "main 提交与 v0.1–v0.6.1 标签列表"
+    },
+    {
+      "at": "01:30",
+      "observed": "六项 PASS 与 ENV CHECK PASSED"
+    },
+    {
+      "at": "02:10",
+      "observed": "五类 raw/included/train/val/test/excluded 统计表"
+    },
+    {
+      "at": "03:35",
+      "observed": "BasicBlock 两层卷积、投影条件和 residual + identity，原尺寸文字可辨认"
+    },
+    {
+      "at": "04:30",
+      "observed": "30 轮训练日志"
+    },
+    {
+      "at": "05:30",
+      "observed": "训练与验证损失/准确率曲线"
+    },
+    {
+      "at": "05:50",
+      "observed": "test samples=549、correct=446、accuracy=0.812386、macro_f1=0.808692、epoch=21"
+    },
+    {
+      "at": "06:30",
+      "observed": "完整测试混淆矩阵"
+    },
+    {
+      "at": "07:10",
+      "observed": "现场 predict.py 命令、向日葵 96.94%、PREDICTION PASSED"
+    },
+    {
+      "at": "07:30",
+      "observed": "原图/实际中心裁剪/Top-3 展示图，保留署名与分数说明"
+    },
+    {
+      "at": "08:30",
+      "observed": "整图输入展示，向日葵 82.4%，保留署名"
+    },
+    {
+      "at": "09:35",
+      "observed": "full 命令成功；不存在图片清楚提示，退出码 1"
+    }
+  ],
+  "recording_context": "录屏发生于最终打包前，因此画面中仍显示 v0.6.1 标签和当时交付准备状态，非历史错误。",
+  "public_repository_contents": "只保存技术摘要和文字观察，不提交原视频或录屏截图。"
+}
