@@ -1,0 +1,47 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-10-16T09:19:35.463527+08:00",
+  "source_commit": "a30e0e4417b5a2d61dcdd7d28ed611ebf1492875",
+  "archive_sha256": "a14f2404f56f9c6b91950033e95a5056a5375ff99554fa4ca7751b975b14a5a0",
+  "archive_bytes": 13705617,
+  "tracked_files": 235,
+  "archive_matches_all_git_blobs": true,
+  "largest_tracked_file": "reports/v0.5/test/error_examples.png",
+  "largest_tracked_bytes": 2633301,
+  "file_size_limit_bytes": 20971520,
+  "blocked_paths": [],
+  "oversize_files": [],
+  "common_token_pattern_matches": [],
+  "security_scope": "已跟踪文件的常见令牌/私钥格式和敏感路径检查；不是任意秘密不存在的数学证明。",
+  "local_markdown_links_checked": 87,
+  "missing_local_links": [],
+  "packaged_predictions": [
+    {
+      "mode": "center",
+      "exit_code": 0,
+      "max_logit_difference": 0.0,
+      "predicted_class": "sunflowers"
+    },
+    {
+      "mode": "full",
+      "exit_code": 0,
+      "max_logit_difference": 0.0,
+      "predicted_class": "sunflowers"
+    }
+  ],
+  "missing_image_exit_code": 1,
+  "cli_help_passed": [
+    "predict.py",
+    "check_env.py",
+    "train.py",
+    "check_checkpoint.py",
+    "compare_input_views.py"
+  ],
+  "environment_scope": "解包副本无 .git/.venv/原数据/本地模型；借用现有 venv 和外部正式 checkpoint，并非另一台机器重装。",
+  "final_release_ready": false,
+  "human_items_pending": [
+    "真实个人感悟",
+    "实际视频录制",
+    "本人代码理解确认"
+  ]
+}

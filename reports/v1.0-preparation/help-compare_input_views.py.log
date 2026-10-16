@@ -1,0 +1,11 @@
+usage: compare_input_views.py [-h] [--device {cpu,cuda}]
+                              [--output-dir OUTPUT_DIR]
+
+仅在验证集比较中心裁剪与整图输入，并诊断未知类别分数；不读取测试集。 运行：.venv/Scripts/python.exe
+scripts/compare_input_views.py --device cuda 固定方案见
+reports/v0.6.1/protocol.md；默认输出到新的 reports/local/input-view-comparison。
+
+options:
+  -h, --help            show this help message and exit
+  --device {cpu,cuda}
+  --output-dir OUTPUT_DIR

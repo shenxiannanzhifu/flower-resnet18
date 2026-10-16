@@ -1,0 +1,18 @@
+usage: predict.py [-h] --image IMAGE [--checkpoint CHECKPOINT]
+                  [--device {cpu,cuda}] [--top-k TOP_K] [--view {full,center}]
+                  [--output-dir OUTPUT_DIR]
+
+用正式模型预测单张图片，输出中文结果、JSON 和原图/实际裁剪/分数展示图。 运行：.venv/Scripts/python.exe
+scripts/predict.py --image examples/sunflower.jpg 默认使用本机 v0.5
+正式模型、CPU、Top-3；输出到 reports/local/predictions 下的新目录。
+
+options:
+  -h, --help            show this help message and exit
+  --image IMAGE         图片路径；相对路径按当前命令所在目录解析
+  --checkpoint CHECKPOINT
+                        正式模型路径；默认使用项目内 v0.5 正式模型
+  --device {cpu,cuda}   CPU 最易运行；已有 CUDA 环境可选 cuda
+  --top-k TOP_K         显示前几个类别，五类模型可设 1–5
+  --view {full,center}  full 保留整图；center 使用 v0.5/v0.6 的中心裁剪
+  --output-dir OUTPUT_DIR
+                        可选空目录；省略则每次自动生成新目录

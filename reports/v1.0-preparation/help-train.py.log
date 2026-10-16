@@ -1,0 +1,24 @@
+usage: train.py [-h] [--config CONFIG] [--device {cpu,cuda}]
+                [--run-dir RUN_DIR] [--report-dir REPORT_DIR]
+                [--epochs EPOCHS] [--batch-size BATCH_SIZE] [--seed SEED]
+                [--train-per-class TRAIN_PER_CLASS]
+                [--val-per-class VAL_PER_CLASS]
+                [--learning-rate LEARNING_RATE]
+
+v0.4/v0.5 训练入口：训练、验证、保存最佳模型、重载并预测参考图片。 项目根目录运行：.venv/Scripts/python.exe
+scripts/train.py --device cuda 默认仍是 200/100 张、3 轮 smoke。正式实验必须显式指定 --config
+configs/train_formal.json， 并选择新的 --run-dir / --report-dir。formal 使用完整
+train/val，始终不读测试图像。 不支持断点续训；报告和模型目录非空时拒绝覆盖。
+
+options:
+  -h, --help            show this help message and exit
+  --config CONFIG
+  --device {cpu,cuda}
+  --run-dir RUN_DIR
+  --report-dir REPORT_DIR
+  --epochs EPOCHS
+  --batch-size BATCH_SIZE
+  --seed SEED
+  --train-per-class TRAIN_PER_CLASS
+  --val-per-class VAL_PER_CLASS
+  --learning-rate LEARNING_RATE

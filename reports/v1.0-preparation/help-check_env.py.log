@@ -1,0 +1,10 @@
+usage: check_env.py [-h] [--device {auto,cpu,cuda}] [--output-dir OUTPUT_DIR]
+
+验证 v0.1 环境；不是模型训练或正式评估。
+
+options:
+  -h, --help            show this help message and exit
+  --device {auto,cpu,cuda}
+                        auto 优先 CUDA；cuda 要求 GPU 可用；cpu 仅检查 CPU。
+  --output-dir OUTPUT_DIR
+                        输出 JSON 和检查图；默认目录不会进入 Git。
