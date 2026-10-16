@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-10-16T09:01:51.631024+08:00",
+  "full_cpu_cuda_max_logit_difference": 1.0728836059570312e-06,
+  "default_vs_v06_max_logit_difference": 0.0,
+  "checkpoint_sha256": "c836ddcb3053e88b8d7c92b51decdcea49f6f9adfc62a8aa6d4ffa7260de812b",
+  "manifest_sha256": "eeb451a41a9f0a71aadaaa0a1606ee055e4f6c8cbcfd06bc8401d097b424db86",
+  "historical_paths_unchanged_from": "a071b44",
+  "historical_paths_checked": [
+    "reports/v0.1",
+    "reports/v0.2",
+    "reports/v0.2.1",
+    "reports/v0.3",
+    "reports/v0.4",
+    "reports/v0.5",
+    "reports/v0.6",
+    "configs",
+    "src/model.py",
+    "src/data.py",
+    "src/checkpoint.py"
+  ],
+  "full_demo_class": "sunflowers",
+  "full_demo_score": 0.8240184187889099,
+  "center_demo_score": 0.9693570137023926
+}

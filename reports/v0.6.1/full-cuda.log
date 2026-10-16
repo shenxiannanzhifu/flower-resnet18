@@ -1,0 +1,9 @@
+输入方式：整张图片等比例缩放，不裁剪
+预测：向日葵（sunflowers），模型分数 82.40%
+  1. 向日葵 (sunflowers): 82.40%
+  2. 蒲公英 (dandelion): 16.13%
+  3. 雏菊 (daisy): 0.84%
+提示：分数不是实际正确率；模型只能在五类花卉中选择。
+结果文件：C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\reports\v0.6.1\full-cuda\prediction.json
+展示图片：C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-resnet18\reports\v0.6.1\full-cuda\prediction.png
+PREDICTION PASSED

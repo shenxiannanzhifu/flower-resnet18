@@ -1,0 +1,126 @@
+{
+  "status": "PASS",
+  "purpose": "single_image_prediction",
+  "predicted_at": "2026-10-16T08:49:26.939941+08:00",
+  "device": "cpu",
+  "image_name": "sunflower.jpg",
+  "image_sha256": "75fd1d57f41535e3f09da7b7f62fe70f5f7d7bcef3d39d7710009f1b5bf7b806",
+  "checkpoint_sha256": "c836ddcb3053e88b8d7c92b51decdcea49f6f9adfc62a8aa6d4ffa7260de812b",
+  "model_purpose": "formal",
+  "selected_epoch": 21,
+  "predicted_class": "sunflowers",
+  "display_name": "向日葵",
+  "score": 0.8240184187889099,
+  "top_k": [
+    {
+      "class_index": 3,
+      "class_name": "sunflowers",
+      "display_name": "向日葵",
+      "score": 0.8240184187889099
+    },
+    {
+      "class_index": 1,
+      "class_name": "dandelion",
+      "display_name": "蒲公英",
+      "score": 0.16134704649448395
+    },
+    {
+      "class_index": 0,
+      "class_name": "daisy",
+      "display_name": "雏菊",
+      "score": 0.008378569036722183
+    }
+  ],
+  "probabilities": {
+    "daisy": 0.008378569036722183,
+    "dandelion": 0.16134704649448395,
+    "roses": 0.004965158179402351,
+    "sunflowers": 0.8240184187889099,
+    "tulips": 0.0012908033095300198
+  },
+  "logits": [
+    -1.015930414199829,
+    1.9419500827789307,
+    -1.5391623973846436,
+    3.572585344314575,
+    -2.886342763900757
+  ],
+  "input_shape": [
+    1,
+    3,
+    341,
+    256
+  ],
+  "original_rgb_size": [
+    480,
+    640
+  ],
+  "crop_size": [
+    256,
+    341
+  ],
+  "model_input_size": [
+    256,
+    341
+  ],
+  "actual_preprocessing": {
+    "view": "full",
+    "crop_applied": false,
+    "preserves_all_image_bounds": true,
+    "resize_short_edge": 256,
+    "max_long_edge": 768
+  },
+  "class_to_idx": {
+    "daisy": 0,
+    "dandelion": 1,
+    "roses": 2,
+    "sunflowers": 3,
+    "tulips": 4
+  },
+  "preprocessing": {
+    "raw_dir": "data/raw/flower_photos",
+    "processed_dir": "data/processed-v0.2.1",
+    "statistics_file": "reports/v0.2.1/summary.json",
+    "image_size": 224,
+    "eval_resize": 256,
+    "train_crop_scale": [
+      0.7,
+      1.0
+    ],
+    "train_crop_ratio": [
+      0.75,
+      1.3333333333333333
+    ],
+    "horizontal_flip_probability": 0.5
+  },
+  "normalization": {
+    "mean": [
+      0.46911663812425636,
+      0.4268518017926893,
+      0.30624300013356764
+    ],
+    "std": [
+      0.30228516449065507,
+      0.27245040348420235,
+      0.29791277998623494
+    ],
+    "scale": "0..1",
+    "pixel_count": 268090022,
+    "method": "训练子集原始 RGB 像素加权；未缩放/裁剪/增强"
+  },
+  "note": "五类封闭分类的未校准 softmax 分数；非花卉或其他花种也会被分到其中一类，不代表真实正确率。",
+  "image_credit": {
+    "author": "Till Westermayer",
+    "source_page": "https://commons.wikimedia.org/wiki/File:Sunflower_2024-10.jpg",
+    "license": "CC BY-SA 2.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/2.0/"
+  },
+  "display_modifications": "EXIF orientation, RGB conversion; center panel shows actual_preprocessing; figure resizes display",
+  "source_sha256": {
+    "scripts/predict.py": "dcdaa84f52ea732ca35d4b84d4867688f3608d0f0e7db54400a53bdff60310a8",
+    "src/inference.py": "7779fe6bfbafc45472afc9d84cb64337d0fc2184bebfe16532a5a4ee9200f85f",
+    "src/model.py": "a01ca9f6e48e6f32ebb6e533d1a8870797f6c195c37e42bee2a860861096cb1f",
+    "src/data.py": "e726d9d24607b1410328630942f0b5d60b1e17637fbdc436a4cd0f6c56778110",
+    "src/checkpoint.py": "916000c8935ee09092e699728479455e41db93ef7bff6e82f8ab00d0882a72a9"
+  }
+}

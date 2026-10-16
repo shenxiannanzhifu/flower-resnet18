@@ -2,7 +2,7 @@
 
 这是“后端 AI 方向第一阶段”考核项目。使用 Python、NumPy、Pandas、Matplotlib 和 PyTorch，从数据分析逐步推进到手写 ResNet-18、训练、评估和新图片预测。
 
-当前完成 **v0.6：单张新图片预测与展示**。用已训练好的手写 ResNet-18 读取图片，显示中文 Top-K，并生成原图、实际裁剪和分数图；预处理与类别顺序随模型恢复，缺失或损坏文件有清楚提示。每个阶段验收后提交并打标签，等待确认再进入下一版本。
+当前通过 **v0.6.1：可选整图输入与局限诊断**。新增 `--view full` 保留图片边缘；同一验证集上准确率从中心裁剪的 82.21% 变为 80.94%，因此默认仍为 center。未知类别识别未可靠解决，简单阈值的实测反例已记录。根据用户“无法解决则继续下一版”的要求，随后整理 v1.0 交付准备，最终完成状态以验收清单为准。
 
 v0.5 的真实正式结果保持不变：随机初始化训练 30 轮，每轮完整使用 2,564 张训练和 551 张验证图片，按最小验证损失选择第 21 轮；测试 **446/549 正确，准确率 81.24%，macro-F1 0.8087**。这是一组配置、一个种子的实验，不代表外部新图表现；v0.6 未重训或根据新图调参。
 
@@ -25,7 +25,7 @@ Get-Content -LiteralPath (Join-Path $predictionFolder.FullName 'prediction.json'
 Start-Process -FilePath (Join-Path $predictionFolder.FullName 'prediction.png')
 ```
 
-自己的图片只需把 `--image` 后的路径换成真实文件路径，路径中有空格时加引号。可选 `--device cuda --top-k 5`，或用 `--checkpoint` 指定另一次正式训练的模型。单图预测不依赖原训练数据或互联网。
+自己的图片只需把 `--image` 后的路径换成真实文件路径，路径中有空格时加引号。可选 `--device cuda --top-k 5`，或用 `--checkpoint` 指定另一次正式训练的模型。单图预测不依赖原训练数据或互联网。需要保留整图时添加 `--view full`，成功标志相同；该模式不保证精度更高，见 [v0.6.1 实测与验收](reports/v0.6.1/acceptance.md)。
 
 ![外部新图预测演示](reports/v0.6/example-cpu/prediction.png)
 
@@ -69,7 +69,7 @@ Start-Process -FilePath '.\reports\v0.5\test\error_examples.png'
 & '.\.venv\Scripts\python.exe' -m unittest discover -s tests -v
 ```
 
-对应成功标志为 `DATA DOWNLOAD VERIFIED`、`DATA PREPARATION PASSED`、`DATA VERIFICATION PASSED` 和 `Ran 44 tests ... OK`。程序失败会返回非零退出码并给出原因。数据验证结果应为 3,664 张、train=2564、val=551、test=549；默认逐张复核原图哈希并检查已知重复没有跨集。离线检查已有包可使用 `download_data.py --offline`。数据准备使用 CPU，不需要启动 GPU 训练。
+对应成功标志为 `DATA DOWNLOAD VERIFIED`、`DATA PREPARATION PASSED`、`DATA VERIFICATION PASSED` 和 `Ran 47 tests ... OK`。程序失败会返回非零退出码并给出原因。数据验证结果应为 3,664 张、train=2564、val=551、test=549；默认逐张复核原图哈希并检查已知重复没有跨集。离线检查已有包可使用 `download_data.py --offline`。数据准备使用 CPU，不需要启动 GPU 训练。
 
 查看图表和开发历史：
 
@@ -164,7 +164,7 @@ flower-resnet18/
 ├── scripts/evaluate.py         # 完整测试、逐图预测、混淆矩阵与错误示例
 ├── scripts/plot_training.py    # 真实日志生成训练曲线
 ├── configs/                   # 数据配置、视觉复核、smoke/formal 训练配置
-├── tests/                     # 44 项数据、模型、训练、指标及新图行为检查
+├── tests/                     # 47 项数据、模型、训练、指标及新图行为检查
 ├── src/model.py                # 手写 BasicBlock 和 ResNet18
 ├── src/data.py                 # Dataset、预处理、随机种子和 DataLoader
 ├── src/engine.py               # 训练/验证一轮、损失和参数更新

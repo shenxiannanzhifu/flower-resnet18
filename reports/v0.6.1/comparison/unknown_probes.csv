@@ -1,0 +1,17 @@
+name,view,prediction,score,passes_diagnostic_threshold
+black,center,dandelion,0.9682434797286987,True
+black,full,dandelion,0.9561362862586975,True
+white,center,dandelion,0.5308467149734497,True
+white,full,dandelion,0.522657036781311,True
+gray,center,dandelion,0.6418574452400208,True
+gray,full,dandelion,0.4610859751701355,True
+red,center,tulips,0.9983674883842468,True
+red,full,tulips,0.9992400407791138,True
+green,center,dandelion,0.9987132549285889,True
+green,full,dandelion,0.9991318583488464,True
+blue,center,roses,0.8261074423789978,True
+blue,full,roses,0.8598994612693787,True
+noise_seed42,center,dandelion,0.9554879665374756,True
+noise_seed42,full,dandelion,0.9813680052757263,True
+checkerboard,center,daisy,0.9999276399612427,True
+checkerboard,full,daisy,0.9999634027481079,True
