@@ -4,7 +4,7 @@
 
 当前通过 **v0.6.1：可选整图输入与局限诊断**，并进入 **v1.0 交付准备（尚未最终完成）**。新增 `--view full` 保留图片边缘；同一验证集上准确率从中心裁剪的 82.21% 变为 80.94%，因此默认仍为 center。未知类别识别未可靠解决，简单阈值的实测反例已记录。按用户“无法解决则继续下一版”的要求整理交付材料，真实视频、本人感悟和理解确认仍待完成，不创建最终 v1.0 标签。
 
-交付入口：[项目说明与待填感悟](docs/project-report.md)、[代码阅读指南](docs/code-guide.md)、[运行视频脚本](docs/video-script.md)、[本地包与人工清单](docs/delivery.md)、[交付准备验收](reports/v1.0-preparation/acceptance.md)。代码、文档和报告继续入库；本地交付模型与视频不上传 GitHub。
+交付入口：[项目说明与个人感悟](docs/project-report.md)、[代码阅读指南](docs/code-guide.md)、[运行视频脚本](docs/video-script.md)、[本地包与人工清单](docs/delivery.md)、[交付准备验收](reports/v1.0-preparation/acceptance.md)。个人感悟已按真实协作记录补写，待本人审阅确认。代码、文档和报告继续入库；本地交付模型与视频不上传 GitHub。
 
 v0.5 的真实正式结果保持不变：随机初始化训练 30 轮，每轮完整使用 2,564 张训练和 551 张验证图片，按最小验证损失选择第 21 轮；测试 **446/549 正确，准确率 81.24%，macro-F1 0.8087**。这是一组配置、一个种子的实验，不代表外部新图表现；v0.6 未重训或根据新图调参。
 
@@ -233,4 +233,4 @@ v0.5 在同仓库 `feat/formal-evaluation` 分支按真实顺序开发：`7034fa
 2. **推理状态的两个开关**：`eval()` 固定 BatchNorm，`inference_mode()` 关闭梯度；两者都要用，见 `src/inference.py`。
 3. **预测分数与准确率不同**：softmax 高分也可能错；这个模型只支持五类，其他花种或非花卉也会被分入其中一类，见 `docs/inference.md`。
 
-个人感悟请在 docs/project-report.md 按真实经历填写；视频脚本在 docs/video-script.md，实际视频仍待本人录制。交付准备结束后暂停，由本人查看材料、练习和补齐必要输入，再进行最终验收；不会自动发送成果。
+个人感悟已在 docs/project-report.md 根据真实协作记录补写，请本人审阅并补充实际练习；视频脚本在 docs/video-script.md，实际视频仍待本人录制。由本人查看材料、练习和补齐必要输入后，再进行最终验收；不会自动发送成果。

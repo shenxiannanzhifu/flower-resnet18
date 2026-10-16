@@ -1,6 +1,6 @@
 # v1.0 交付准备与人工清单
 
-**当前是交付准备，不是最终完成版。** 核心代码和正式实验已验证；实际视频、本人感悟、理解确认仍待完成，因此不创建最终 v1.0 标签。未知类别识别不属于 PDF 硬性要求，作为如实记录的模型局限保留。
+**当前是交付准备，不是最终完成版。** 核心代码和正式实验已验证；个人感悟已根据真实协作记录补写，待本人审阅确认；实际视频和理解确认仍待完成，因此不创建最终 v1.0 标签。未知类别识别不属于 PDF 硬性要求，作为如实记录的模型局限保留。
 
 ## 当前可交付内容
 
@@ -10,7 +10,7 @@
 | 数据来源和分析 | docs/data.md、reports/v0.2.1、docs/data-license.txt | 有真实统计、图表、划分依据和署名 |
 | 正式实验 | reports/v0.5 | 真实训练/测试、曲线、混淆矩阵、错误分析 |
 | 新图与有限优化 | reports/v0.6、reports/v0.6.1 | 真实预测、整图比较和未知类别反例 |
-| 项目说明与感悟位置 | [project-report.md](project-report.md) | 项目部分已整理；本人感悟待填 |
+| 项目说明与感悟位置 | [project-report.md](project-report.md) | 技术说明与基于真实记录的感悟已写；感悟待本人审阅确认 |
 | 代码理解说明 | [code-guide.md](code-guide.md) | 讲解与练习已备好；本人理解待确认 |
 | 运行视频 | [video-script.md](video-script.md) | 仅有录制脚本；实际视频待录 |
 | GitHub 仓库与真实历史 | https://github.com/shenxiannanzhifu/flower-resnet18 | 阶段提交与标签可查看；最新同步按远端核验记录 |
@@ -32,7 +32,7 @@ C:\Users\Cipher\Documents\Codex\2026-10-14\pdf-ai-git-1-pdf-pdf\outputs\flower-r
 - checksums.sha256：源 ZIP 和模型的校验值。
 - README-DELIVERY.md：准备状态、仓库链接、权重使用步骤及尚缺材料。
 
-最终包的位置与实际核验见 [交付准备验收](../reports/v1.0-preparation/acceptance.md)。准备包尚未发送给任何人。本人填写感悟或新增视频后，要生成新的包，不把旧包冒充最终提交；模型不必重新训练。
+最终包的位置与实际核验见 [交付准备验收](../reports/v1.0-preparation/acceptance.md)。准备包尚未发送给任何人。现有 20261016-preparation 包基于 cc637b2，早于本次感悟补写；最新文字以仓库为准。本人确认感悟并新增视频后，再生成新包，不把旧包冒充最终提交；模型不必重新训练。
 
 本次正式模型大小 44,797,643 字节，SHA-256：
 
@@ -80,7 +80,7 @@ Get-FileHash -LiteralPath (Join-Path $deliveryDir 'model\best.pt') -Algorithm SH
 ## 必须由本人完成
 
 1. 阅读 [代码指南](code-guide.md)，实际运行预测并确认能够解释核心步骤；记录真实疑问。
-2. 在 [项目说明](project-report.md) 填写个人感悟和实际参与经历，不把 AI 完成的操作写成独立完成。
+2. 审阅 [项目说明](project-report.md) 已补写的个人感悟，确认符合实际参与经历，补充实际操作/练习与日期；不把 AI 完成的操作写成独立完成。
 3. 按 [视频脚本](video-script.md) 录制实际运行视频并回看，填写真实路径、日期和文件名。
 4. 材料齐全后再次核验、正常提交文字更新并重新打包；通过最终验收才创建 v1.0 标签。可由 AI 协助检查、提交和打包，不要求本人手工操作 Git。
 5. 本人最后决定通过考核要求的渠道交给指定接收人。PDF 中的交付文字不授权 AI 自动发送。
@@ -89,7 +89,7 @@ Get-FileHash -LiteralPath (Join-Path $deliveryDir 'model\best.pt') -Algorithm SH
 
 ## 最终发布前清单
 
-- [ ] 项目说明中的个人感悟和日期已按真实经历填写。
+- [ ] 已审阅并确认补写的个人感悟，补充真实操作/练习与日期。
 - [ ] 实际视频存在、可播放，展示现场运行与主要结果。
 - [ ] 本人已完成必要代码理解与排错练习。
 - [ ] 本人新增内容已检查并形成真实提交，仓库 main 已核验同步。
