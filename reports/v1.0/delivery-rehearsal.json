@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "checked_at": "2026-10-16T23:02:37.254302+08:00",
+  "source_commit": "c673241d0deaa72ddea5793e50ebffec37003ae0",
+  "source_files": 251,
+  "source_git_blobs_match": true,
+  "local_markdown_links_checked": 93,
+  "common_token_patterns_found": false,
+  "sensitive_paths_found": false,
+  "tracked_files_over_20MiB": false,
+  "code_dependencies_examples_unchanged_from": "a30e0e4",
+  "historical_reports_unchanged_from": "4122906",
+  "packaged_model_sha256": "c836ddcb3053e88b8d7c92b51decdcea49f6f9adfc62a8aa6d4ffa7260de812b",
+  "packaged_video_sha256": "c01bd8eba8b2fc41d77d31cb8aed73336f6e036a0411c573fbac149fc69ad353",
+  "predictions": [
+    {
+      "view": "center",
+      "exit_code": 0,
+      "predicted_class": "sunflowers",
+      "score": 0.9693570137023926,
+      "max_logit_difference": 0.0,
+      "checkpoint_argument": "../model/best.pt"
+    },
+    {
+      "view": "full",
+      "exit_code": 0,
+      "predicted_class": "sunflowers",
+      "score": 0.8240184187889099,
+      "max_logit_difference": 0.0,
+      "checkpoint_argument": "../model/best.pt"
+    }
+  ],
+  "scope": "归档与包内相对模型路径实际预测，借用本机 venv；非跨机重装。",
+  "secret_scan_scope": "常见 GitHub/AWS 令牌、私钥格式与敏感路径；不声称可检出任意秘密。"
+}

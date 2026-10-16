@@ -1,0 +1,14 @@
+{
+  "status": "PASS_STATIC_CHECK_ONLY",
+  "local_html_links_and_images_checked": 19,
+  "tables": 2,
+  "images": [
+    "../reports/v0.5/training_curves.png",
+    "../reports/v0.5/test/confusion_matrix.png"
+  ],
+  "external_scripts": 0,
+  "renderer": "bundled marked",
+  "browser_visual_review": "未完成；Edge 自动启动返回 spawn EPERM，未改系统权限或绕过限制。",
+  "limitation": "HTML 是 Markdown 的附加阅读副本，已检查文字/图像路径，未声称浏览器布局视觉验收。",
+  "build_issue_fixed": "第一次临时 HTML 生成因 Windows ESM 绝对路径缺少 file:/// 失败；改为标准文件 URL 后在新目录重新构建成功。"
+}
